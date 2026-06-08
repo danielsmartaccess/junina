@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Just Go Access · Foccus Pesquisas — Canaã Junina 2025</title>
+<title>Just Go Access · Foccus Pesquisas — Canaã Cidade Junina 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -228,77 +228,70 @@ body {
   .capa-header { flex-direction:column; align-items:flex-start; }
 }
 </style>
+<style id="extra">
+.cards-wrap { grid-template-columns: 1fr 1fr 1fr; }
+@media (max-width:760px){ .cards-wrap { grid-template-columns:1fr; } }
+.qcard.operacao::after { background:linear-gradient(135deg,rgba(245,166,35,0.07),transparent); }
+.qcard.operacao:hover { border-color:rgba(245,166,35,0.5); }
+.qcard.operacao .qcard-icon { background:rgba(245,166,35,0.14); }
+.qcard.operacao .qcard-tipo { color:var(--jga-gold); }
+.qcard.operacao .qcard-btn { background:rgba(245,166,35,0.18); color:var(--jga-gold); }
+.app-header-tipo.o { color:var(--jga-gold); }
+.prog-bar.o { background:linear-gradient(90deg,var(--jga-gold),#FF8C42); }
+.btn-enviar.o { background:linear-gradient(135deg,var(--jga-gold),#E8841A); color:var(--jga-blue); }
+.likert-legenda { font-size:0.62rem; color:rgba(240,244,255,0.3); margin:4px 0 10px; line-height:1.5; }
+.aval-table th { font-size:0.58rem; }
+.aval-table th:first-child { min-width:110px; }
+</style>
+
 </head>
 <body>
-
 <div class="dev-ribbon"></div>
-<div class="dev-badge">DEV · v0.2.0</div>
+<div class="dev-badge">DEV · v0.3.0</div>
 
 <!-- CAPA -->
 <section id="capa">
-  <div class="grid-bg"></div>
-  <div class="glow-1"></div>
-  <div class="glow-2"></div>
-
+  <div class="grid-bg"></div><div class="glow-1"></div><div class="glow-2"></div>
   <div class="capa-header">
     <div class="logo-jga">
       <div class="logo-mark">JGA</div>
-      <div class="logo-texto">
-        <span class="logo-nome">Just Go Access</span>
-        <span class="logo-sub">Software &amp; Technology</span>
-      </div>
+      <div class="logo-texto"><span class="logo-nome">Just Go Access</span><span class="logo-sub">Software &amp; Technology</span></div>
     </div>
     <div class="cliente-card">
       <span class="cliente-rotulo">Cliente</span>
       <div class="foccus-logo">
-        <div class="foccus-mark">
-          <div class="foccus-bar b1"></div>
-          <div class="foccus-bar b2"></div>
-          <div class="foccus-bar b3"></div>
-        </div>
-        <div class="foccus-txt">
-          <span class="foccus-nome">F<span>occus</span></span>
-          <span class="foccus-sub">Pesquisas</span>
-        </div>
+        <div class="foccus-mark"><div class="foccus-bar b1"></div><div class="foccus-bar b2"></div><div class="foccus-bar b3"></div></div>
+        <div class="foccus-txt"><span class="foccus-nome">F<span>occus</span></span><span class="foccus-sub">Pesquisas</span></div>
       </div>
     </div>
   </div>
-
   <div class="capa-hero">
-    <div class="hero-tag">
-      <span>2025</span>
-      Sistema Digital de Coleta · Festival Canaã Junina
-    </div>
+    <div class="hero-tag"><span>2026</span>Sistema Digital de Coleta · Festival Canaã Cidade Junina</div>
     <h1 class="hero-titulo">Pesquisa de<br><em>Opinião Pública</em></h1>
-    <p class="hero-desc">
-      Plataforma digital de coleta de dados em campo desenvolvida pela Just Go Access
-      sob demanda da Foccus Pesquisas para o Festival Canaã Junina 2025,
-      Canaã dos Carajás — PA.
-    </p>
-
+    <p class="hero-desc">Plataforma de coleta em campo desenvolvida pela Just Go Access para a Foccus Pesquisas — Prefeitura de Canaã dos Carajás. Festival de <strong>24 de junho a 12 de julho de 2026</strong>. Três instrumentos, escala Likert padronizada.</p>
     <div class="cards-wrap">
       <div class="qcard visitante" onclick="iniciar('v')">
-        <div class="qcard-icon">🎪</div>
-        <div class="qcard-tipo">Questionário A</div>
-        <div class="qcard-titulo">Perfil do Visitante</div>
-        <div class="qcard-desc">Participantes do festival — moradores e visitantes de outras cidades.</div>
-        <div class="qcard-meta"><span class="qcard-qtd">≈ 24 questões</span><button class="qcard-btn">Iniciar →</button></div>
+        <div class="qcard-icon">🎪</div><div class="qcard-tipo">Questionário A</div>
+        <div class="qcard-titulo">Visitantes / Turistas</div>
+        <div class="qcard-desc">Participantes do festival — perfil, gasto e experiência.</div>
+        <div class="qcard-meta"><span class="qcard-qtd">amostra: 600</span><button class="qcard-btn">Iniciar →</button></div>
       </div>
       <div class="qcard populacao" onclick="iniciar('p')">
-        <div class="qcard-icon">🏘️</div>
-        <div class="qcard-tipo">Questionário B</div>
-        <div class="qcard-titulo">População Local</div>
-        <div class="qcard-desc">Moradores de Canaã — avaliação 2024 e expectativas 2025.</div>
-        <div class="qcard-meta"><span class="qcard-qtd">≈ 16 questões</span><button class="qcard-btn">Iniciar →</button></div>
+        <div class="qcard-icon">🏘️</div><div class="qcard-tipo">Questionário B</div>
+        <div class="qcard-titulo">Moradores</div>
+        <div class="qcard-desc">Percepção 2025, impacto na comunidade e expectativa 2026.</div>
+        <div class="qcard-meta"><span class="qcard-qtd">amostra: 600</span><button class="qcard-btn">Iniciar →</button></div>
+      </div>
+      <div class="qcard operacao" onclick="iniciar('o')">
+        <div class="qcard-icon">🏪</div><div class="qcard-tipo">Questionário C</div>
+        <div class="qcard-titulo">Expositores / Operação</div>
+        <div class="qcard-desc">Estandes e feirantes — investimento, retorno e operação.</div>
+        <div class="qcard-meta"><span class="qcard-qtd">amostra: 100</span><button class="qcard-btn">Iniciar →</button></div>
       </div>
     </div>
-
     <div class="capa-footer">
-      <div class="footer-left">
-        <strong>Just Go Access</strong> · Software &amp; Technology<br>
-        Instrumento revisado metodologicamente — Ambiente de Desenvolvimento
-      </div>
-      <div class="footer-right"><div class="footer-dot"></div>Build dev · Supabase ready · v0.2.0</div>
+      <div class="footer-left"><strong>Just Go Access</strong> · Software &amp; Technology<br>Instrumento revisado por benchmark — Ambiente de Desenvolvimento</div>
+      <div class="footer-right"><div class="footer-dot"></div>Build dev · Supabase ready · v0.3.0</div>
     </div>
   </div>
 </section>
@@ -307,29 +300,23 @@ body {
 <div id="app">
   <div class="app-header">
     <button class="btn-voltar" onclick="voltarCapa()">← Voltar</button>
-    <div class="app-header-mid">
-      <div class="app-header-tipo" id="h-tipo"></div>
-      <div class="app-header-titulo" id="h-titulo"></div>
-    </div>
+    <div class="app-header-mid"><div class="app-header-tipo" id="h-tipo"></div><div class="app-header-titulo" id="h-titulo"></div></div>
     <div style="font-size:0.72rem;color:var(--muted);white-space:nowrap;" id="h-prog"></div>
   </div>
   <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
   <div class="form-body" id="form-body"></div>
-  <div class="form-footer">
-    <div class="form-footer-inner">
-      <div class="prog-info" id="prog-label">0% concluído</div>
-      <button class="btn-enviar" id="btn-env" onclick="enviar()">Salvar Registro</button>
-    </div>
-  </div>
+  <div class="form-footer"><div class="form-footer-inner">
+    <div class="prog-info" id="prog-label">0%</div>
+    <button class="btn-enviar" id="btn-env" onclick="enviar()">Salvar Registro</button>
+  </div></div>
 </div>
 
 <!-- SUCESSO -->
 <div id="sucesso">
   <div class="suc-icon">✓</div>
   <div class="suc-titulo">Registro salvo!</div>
-  <div class="suc-sub">Dados coletados com sucesso e prontos para sincronização com o banco de dados.</div>
-  <div class="suc-id" id="suc-id"></div>
-  <div class="suc-geo" id="suc-geo"></div>
+  <div class="suc-sub">Dados coletados e prontos para sincronização com o banco.</div>
+  <div class="suc-id" id="suc-id"></div><div class="suc-geo" id="suc-geo"></div>
   <button class="btn-nova" onclick="voltarCapa()">Nova entrevista</button>
 </div>
 
@@ -341,19 +328,15 @@ let geoData = { status:'pendente', lat:null, lng:null, accuracy:null, erro:null 
 /* ════════ GEO ════════ */
 function pedirGeo(){
   const st = document.getElementById('geo-status');
-  if(!navigator.geolocation){
-    geoData.status='indisponivel'; geoData.erro='Navegador sem suporte';
-    if(st){ st.className='geo-status erro'; st.textContent='Indisponível'; }
-    return;
-  }
+  if(!navigator.geolocation){ geoData.status='indisponivel';
+    if(st){ st.className='geo-status erro'; st.textContent='Indisponível'; } return; }
   if(st){ st.className='geo-status pend'; st.textContent='Solicitando...'; }
   navigator.geolocation.getCurrentPosition(
     p=>{ geoData={ status:'ok', lat:+p.coords.latitude.toFixed(6), lng:+p.coords.longitude.toFixed(6), accuracy:Math.round(p.coords.accuracy), erro:null };
       if(st){ st.className='geo-status ok'; st.textContent='📍 Capturado ('+geoData.accuracy+'m)'; } },
     e=>{ geoData={ status:'negado', lat:null, lng:null, accuracy:null, erro:e.message };
       if(st){ st.className='geo-status erro'; st.textContent='Negado'; } },
-    { enableHighAccuracy:true, timeout:10000, maximumAge:60000 }
-  );
+    { enableHighAccuracy:true, timeout:10000, maximumAge:60000 });
 }
 
 /* ════════ HELPERS ════════ */
@@ -361,7 +344,6 @@ function r(n,v,l,t='radio',nsnr=false){
   const cls=(t==='checkbox'?' chk':'')+(nsnr?' nsnr':'');
   return `<label class="opc-item${cls}"><input type="${t}" name="q${n}" value="${encodeURIComponent(v)}"><div class="opc-box">${l}</div></label>`;
 }
-/* perg com NS/NR separado da escala */
 function perg(n,txt,opcoes,tipo='radio',extra='',cond=null,nsnrLabel=null){
   const condClass=cond?' data-cond="'+cond.q+'" data-cond-val="'+cond.val+'"':'';
   const condTag=cond?`<span class="cond-tag">condicional</span>`:'';
@@ -369,8 +351,7 @@ function perg(n,txt,opcoes,tipo='radio',extra='',cond=null,nsnrLabel=null){
   if(nsnrLabel) opcHtml+=`<div class="escala-rotulo">— sem opinião —</div>`+r(n,nsnrLabel,nsnrLabel,tipo,true);
   return `<div class="pcard${cond?' oculta':''}"${condClass} id="pc${n}">
     <div class="pnum">Questão ${n<10?'0'+n:n} ${condTag}</div>
-    <div class="ptexto">${txt}</div>
-    <div class="opc-lista">${opcHtml}${extra}</div></div>`;
+    <div class="ptexto">${txt}</div><div class="opc-lista">${opcHtml}${extra}</div></div>`;
 }
 function pertexto(n,txt,ph='',cond=null,transform='none'){
   const condClass=cond?' data-cond="'+cond.q+'" data-cond-val="'+cond.val+'"':'';
@@ -382,41 +363,50 @@ function pertexto(n,txt,ph='',cond=null,transform='none'){
     <input class="inp mt12" type="text" placeholder="${ph||'Sua resposta...'}"
       oninput="${tf}this.closest('.pcard').classList.toggle('preenchida',this.value.trim().length>0);prog()"></div>`;
 }
+function pernum(n,txt,ph='',cond=null){
+  const condClass=cond?' data-cond="'+cond.q+'" data-cond-val="'+cond.val+'"':'';
+  return `<div class="pcard${cond?' oculta':''}"${condClass} id="pc${n}">
+    <div class="pnum">Questão ${n<10?'0'+n:n}</div><div class="ptexto">${txt}</div>
+    <input class="inp mt12" type="number" min="0" placeholder="${ph||'Número...'}"
+      oninput="this.closest('.pcard').classList.toggle('preenchida',this.value.length>0);prog()"></div>`;
+}
 function outroCampo(){
   return `<label class="opc-item"><div class="opc-box" style="flex-direction:column;align-items:flex-start;gap:6px;">
     <span style="font-size:0.7rem;color:rgba(240,244,255,0.3)">Outros — especifique:</span>
     <input class="inp" type="text" placeholder="..." style="margin:0;width:100%"></div></label>`;
 }
-/* avaliação com coluna NS/NR separada */
+/* AVALIAÇÃO LIKERT 5 PONTOS + NS/NR */
 function aval(n,tit,itens){
-  const esc=['Ótimo','Bom','Regular','N.Sat.'];
-  const ths=esc.map(e=>`<th>${e}</th>`).join('')+`<th class="col-ns">NS/NR</th>`;
+  const esc=['Ótimo','Muito Bom','Bom','Regular','Não Satisf.'];
+  const cod=['Ó','MB','B','R','NS'];
+  const ths=esc.map((e,i)=>`<th>${cod[i]}</th>`).join('')+`<th class="col-ns">N/R</th>`;
   const rows=itens.map((it,i)=>`<tr><td>${it}</td>
-    ${esc.map((_,j)=>`<td><input type="radio" class="raval" id="a${n}_${i}_${j}" name="a${n}_${i}" value="${j}"><label for="a${n}_${i}_${j}">${esc[j].charAt(0)}</label></td>`).join('')}
+    ${esc.map((_,j)=>`<td><input type="radio" class="raval" id="a${n}_${i}_${j}" name="a${n}_${i}" value="${5-j}"><label for="a${n}_${i}_${j}">${cod[j]}</label></td>`).join('')}
     <td class="col-ns"><input type="radio" class="raval ns" id="a${n}_${i}_9" name="a${n}_${i}" value="9"><label for="a${n}_${i}_9">–</label></td>
   </tr>`).join('');
   return `<div class="pcard"><div class="pnum">Questão ${n<10?'0'+n:n}</div><div class="ptexto">${tit}</div>
+    <div class="likert-legenda">Escala Likert: Ó=Ótimo · MB=Muito Bom · B=Bom · R=Regular · NS=Não Satisfatório · N/R=Não sabe/Não respondeu</div>
     <div style="overflow-x:auto"><table class="aval-table"><thead><tr><th>Item</th>${ths}</tr></thead><tbody>${rows}</tbody></table></div></div>`;
 }
+/* escala Likert simples (1 pergunta, 5 opções) */
+function likert(n,txt,cond=null){
+  return perg(n,txt,['Ótimo','Muito Bom','Bom','Regular','Não Satisfatório'],'radio','',cond,'Não Sabe/Não Respondeu');
+}
 
-/* ════════ PROGRESSO + SKIP LOGIC ════════ */
+/* ════════ PROGRESSO + SKIP ════════ */
 function prog(){
-  const visiveis=document.querySelectorAll('.pcard:not(.oculta)');
-  let resp=0;
-  visiveis.forEach(pc=>{ if(pc.querySelector('input:checked')||pc.classList.contains('preenchida')) resp++; });
-  const total=visiveis.length;
-  const pct=total>0?Math.round((resp/total)*100):0;
+  const vis=document.querySelectorAll('.pcard:not(.oculta)'); let resp=0;
+  vis.forEach(pc=>{ if(pc.querySelector('input:checked')||pc.classList.contains('preenchida')) resp++; });
+  const total=vis.length, pct=total>0?Math.round((resp/total)*100):0;
   document.getElementById('prog-bar').style.width=pct+'%';
   document.getElementById('h-prog').textContent=pct+'%';
-  const lbl=document.getElementById('prog-label');
-  if(lbl) lbl.innerHTML=`<strong>${pct}%</strong> · ${resp}/${total}`;
+  const lbl=document.getElementById('prog-label'); if(lbl) lbl.innerHTML=`<strong>${pct}%</strong> · ${resp}/${total}`;
 }
 function aplicarSkipLogic(){
   document.querySelectorAll('.pcard[data-cond]').forEach(pc=>{
     const q=pc.getAttribute('data-cond'), val=pc.getAttribute('data-cond-val');
-    const ancora=document.querySelector(`input[name="q${q}"]:checked`);
-    const mostra=ancora && decodeURIComponent(ancora.value)===val;
-    pc.classList.toggle('oculta',!mostra);
+    const a=document.querySelector(`input[name="q${q}"]:checked`);
+    pc.classList.toggle('oculta', !(a && decodeURIComponent(a.value)===val));
   });
   prog();
 }
@@ -428,19 +418,18 @@ function iniciar(tipo){
   document.getElementById('capa').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('sucesso').style.display='none';
-  const bar=document.getElementById('prog-bar'), btn=document.getElementById('btn-env'), ht=document.getElementById('h-tipo');
   geoData={ status:'pendente', lat:null, lng:null, accuracy:null, erro:null };
-  if(tipo==='v'){
-    ht.textContent='🎪 Questionário A — Visitante'; ht.className='app-header-tipo v';
-    document.getElementById('h-titulo').textContent='Perfil do Participante';
-    bar.className='prog-bar v'; btn.className='btn-enviar v'; renderVisitante();
-  } else {
-    ht.textContent='🏘️ Questionário B — População'; ht.className='app-header-tipo p';
-    document.getElementById('h-titulo').textContent='Comunidade Local';
-    bar.className='prog-bar p'; btn.className='btn-enviar p'; renderPopulacao();
-  }
-  prog(); window.scrollTo(0,0);
-  setTimeout(pedirGeo,400);
+  const bar=document.getElementById('prog-bar'), btn=document.getElementById('btn-env'), ht=document.getElementById('h-tipo');
+  const cfg={
+    v:['🎪 Questionário A — Visitante','v','Visitantes / Turistas',renderVisitante],
+    p:['🏘️ Questionário B — População','p','Moradores',renderPopulacao],
+    o:['🏪 Questionário C — Operação','o','Expositores / Operação',renderOperacao]
+  }[tipo];
+  ht.textContent=cfg[0]; ht.className='app-header-tipo '+cfg[1];
+  document.getElementById('h-titulo').textContent=cfg[2];
+  bar.className='prog-bar '+cfg[1]; btn.className='btn-enviar '+cfg[1];
+  cfg[3]();
+  prog(); window.scrollTo(0,0); setTimeout(pedirGeo,400);
 }
 function voltarCapa(){
   document.getElementById('app').style.display='none';
@@ -448,159 +437,159 @@ function voltarCapa(){
   document.getElementById('capa').style.display='flex';
 }
 
-/* ════════ META + GEO BLOCO ════════ */
-function metaBloco(){
-  return `<div class="geo-bloco">
-    <div class="geo-icon">📍</div>
-    <div class="geo-txt">Captura de <strong>hora e localização</strong> do ponto de coleta. A geolocalização melhora a análise de fluxo — autorize no navegador.</div>
-    <div class="geo-status pend" id="geo-status">Pendente</div>
-  </div>
+/* ════════ META BLOCO ════════ */
+function metaBloco(extra=''){
+  return `<div class="geo-bloco"><div class="geo-icon">📍</div>
+    <div class="geo-txt">Captura de <strong>hora e localização</strong> do ponto de coleta — autorize no navegador.</div>
+    <div class="geo-status pend" id="geo-status">Pendente</div></div>
   <div class="meta-bloco">
-    <div><span class="campo-label">Sexo<span class="obrig">*</span></span>
-      <div class="pill-grupo">
-        <label class="pill"><input type="radio" name="sexo" value="M"><span>Masculino</span></label>
-        <label class="pill"><input type="radio" name="sexo" value="F"><span>Feminino</span></label>
-      </div></div>
+    <div><span class="campo-label">Sexo<span class="obrig">*</span></span><div class="pill-grupo">
+      <label class="pill"><input type="radio" name="sexo" value="M"><span>Masculino</span></label>
+      <label class="pill"><input type="radio" name="sexo" value="F"><span>Feminino</span></label></div></div>
     <div><span class="campo-label">Data</span><input class="inp" type="date" name="data_coleta"></div>
-    <div class="meta-full"><span class="campo-label">Escolaridade<span class="obrig">*</span></span>
-      <div class="pill-grupo">
-        <label class="pill"><input type="radio" name="esc" value="Analfabeto"><span>Analfabeto</span></label>
-        <label class="pill"><input type="radio" name="esc" value="Fundamental"><span>Fundamental</span></label>
-        <label class="pill"><input type="radio" name="esc" value="Médio"><span>Médio</span></label>
-        <label class="pill"><input type="radio" name="esc" value="Superior"><span>Superior</span></label>
-      </div></div>
-    <div class="meta-full"><span class="campo-label">Faixa Etária<span class="obrig">*</span></span>
-      <div class="pill-grupo">
-        <label class="pill"><input type="radio" name="faixa" value="16-19"><span>16–19</span></label>
-        <label class="pill"><input type="radio" name="faixa" value="20-24"><span>20–24</span></label>
-        <label class="pill"><input type="radio" name="faixa" value="25-34"><span>25–34</span></label>
-        <label class="pill"><input type="radio" name="faixa" value="35-44"><span>35–44</span></label>
-        <label class="pill"><input type="radio" name="faixa" value="45-59"><span>45–59</span></label>
-        <label class="pill"><input type="radio" name="faixa" value="60+"><span>60+</span></label>
-      </div></div>
+    <div class="meta-full"><span class="campo-label">Escolaridade<span class="obrig">*</span></span><div class="pill-grupo">
+      <label class="pill"><input type="radio" name="esc" value="Analfabeto"><span>Analfabeto</span></label>
+      <label class="pill"><input type="radio" name="esc" value="Fundamental"><span>Fundamental</span></label>
+      <label class="pill"><input type="radio" name="esc" value="Médio"><span>Médio</span></label>
+      <label class="pill"><input type="radio" name="esc" value="Superior"><span>Superior</span></label></div></div>
+    <div class="meta-full"><span class="campo-label">Faixa Etária<span class="obrig">*</span></span><div class="pill-grupo">
+      <label class="pill"><input type="radio" name="faixa" value="16-19"><span>16–19</span></label>
+      <label class="pill"><input type="radio" name="faixa" value="20-24"><span>20–24</span></label>
+      <label class="pill"><input type="radio" name="faixa" value="25-34"><span>25–34</span></label>
+      <label class="pill"><input type="radio" name="faixa" value="35-44"><span>35–44</span></label>
+      <label class="pill"><input type="radio" name="faixa" value="45-59"><span>45–59</span></label>
+      <label class="pill"><input type="radio" name="faixa" value="60+"><span>60+</span></label></div></div>
+    ${extra}
     <div class="meta-full"><span class="campo-label">Nome do Pesquisador<span class="obrig">*</span></span>
       <input class="inp" type="text" name="pesquisador" placeholder="Identificação do entrevistador..."></div>
   </div>`;
 }
 
-/* ════════ VISITANTE (revisado) ════════ */
+/* ════════ A · VISITANTE ════════ */
 function renderVisitante(){
   document.getElementById('form-body').innerHTML=`
   ${metaBloco()}
   <div class="sec-titulo">01 · Perfil Socioeconômico</div>
-  ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários mínimos','De 3 a 5 salários mínimos','Mais de 5 salários mínimos'],'radio','',null,'Não sabe/Não opinou')}
-  ${perg(2,'Por qual meio você teve conhecimento sobre o Festival Canaã Junina 2025?',['Já conhecia o festival','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp','Facebook/Instagram','Mora próximo ao local','Carro de som','Indicação do trabalho','Venho todo ano'],'checkbox',outroCampo())}
-
-  <div class="sec-titulo">02 · Comportamento no Evento</div>
+  ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou')}
+  ${perg(2,'Como você teve conhecimento do Festival Canaã Cidade Junina 2026?',['Já conhecia','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp','Facebook/Instagram','Mora próximo','Carro de som','Trabalho','Venho todo ano'],'checkbox',outroCampo())}
+  <div class="sec-titulo">02 · Comportamento</div>
   ${perg(3,'Você veio ao evento:',['Sozinho','Com parentes/casal','Amigos/colegas'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(4,'Quantos dias você irá participar do evento?',['1 a 5 dias','5 a 10 dias','Todos os dias'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(5,'Qual meio de transporte você utilizou?',['Carro próprio','Carona','Táxi/Uber','Ônibus de linha'],'radio',outroCampo(),null,'Não Sabe/Não Opinou')}
-
+  ${perg(4,'Quantos dias irá participar?',['1 a 5 dias','5 a 10 dias','Todos os dias'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${perg(5,'Meio de transporte utilizado?',['Carro próprio','Carona','Táxi/Uber','Ônibus de linha'],'radio',outroCampo(),null,'Não Sabe/Não Opinou')}
   <div class="sec-titulo">03 · Origem &amp; Hospedagem</div>
   ${perg(6,'Você mora em Canaã dos Carajás?',['Sim','Não'])}
-  ${pertexto(7,'Em qual cidade você reside?<span class="obrig">*</span>','Ex.: SÃO LUÍS',{q:6,val:'Não'},'upper')}
+  ${pertexto(7,'Em qual cidade você reside?<span class="obrig">*</span>','Ex.: PARAUAPEBAS',{q:6,val:'Não'},'upper')}
   ${perg(8,'Você pernoitou em Canaã dos Carajás?',['Sim','Não'],'radio','',{q:6,val:'Não'})}
   ${perg(9,'Onde você pernoitou?',['Casa de Amigos/Parentes','Hotel/Pousada'],'radio',outroCampo(),{q:8,val:'Sim'},'Não Sabe/Não Opinou')}
-
   <div class="sec-titulo">04 · Impacto Econômico</div>
-  ${perg(10,'O Festival foi o principal motivo da sua vinda à cidade?',['Sim','Não'])}
-  ${perg(11,'Qual o motivo principal da sua vinda?',['Programação Cultural','Comidas Típicas','Atrações musicais e shows','Competições e danças típicas','Negócios/trabalho'],'radio',outroCampo(),{q:10,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(12,'Qual o motivo da sua vinda?',['Negócios/trabalho','Visita amigos/parentes','Lazer/descanso'],'radio',outroCampo(),{q:10,val:'Não'},'Não Sabe/Não Opinou')}
-  ${perg(13,'Pretende comprar no comércio local (vestuário, beleza, supermercado, etc.)?',['Sim','Não'])}
-  ${perg(14,'Qual a faixa de gasto estimada nas compras de comércio?',['R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',{q:13,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(15,'Qual a faixa de gasto total estimada no evento (todos os dias)?',['Até R$ 100','R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou')}
-  <div class="pcard" id="pc16"><div class="pnum">Questão 16</div>
-    <div class="ptexto">Além de você, quantas pessoas estão incluídas nesses gastos?</div>
-    <input class="inp mt12" type="number" min="0" max="50" placeholder="Número de acompanhantes..."
-      oninput="this.closest('.pcard').classList.toggle('preenchida',this.value.length>0);prog()"></div>
-
-  <div class="sec-titulo">05 · Avaliação</div>
-  ${aval(17,'Avalie os aspectos do evento Canaã Junina 2025:',['Acesso/Local','Infraestrutura','Segurança','Competições/Quadrilhas','Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)','Artesanato/Produtos típicos','Barracas de comida (qualidade)','Barracas de comida (preço)','Data/Horário','Receptividade'])}
-  ${aval(18,'Avalie a Estrutura, Planejamento e Organização:',['Tema do evento','Local do evento','Divulgação','Estrutura física','Gastronomia/Pratos','Shows e Atrações','Lixeiras','Banheiros','Estacionamentos','Avaliação Geral'])}
-
-  <div class="sec-titulo">06 · Quadrilhas &amp; Recomendação</div>
+  ${perg(10,'O Festival foi o principal motivo da sua vinda?',['Sim','Não'])}
+  ${perg(11,'Qual o motivo principal da vinda?',['Programação Cultural','Comidas Típicas','Atrações musicais','Competições e danças','Negócios/trabalho'],'radio',outroCampo(),{q:10,val:'Sim'},'Não Sabe/Não Opinou')}
+  ${perg(12,'Qual o motivo da vinda?',['Negócios/trabalho','Visita amigos/parentes','Lazer/descanso'],'radio',outroCampo(),{q:10,val:'Não'},'Não Sabe/Não Opinou')}
+  ${perg(13,'Pretende comprar no comércio local (vestuário, beleza, supermercado)?',['Sim','Não'])}
+  ${perg(14,'Faixa de gasto nas compras de comércio?',['R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',{q:13,val:'Sim'},'Não Sabe/Não Opinou')}
+  ${perg(15,'Faixa de gasto total estimada no evento (todos os dias)?',['Até R$ 100','R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${pernum(16,'Além de você, quantas pessoas estão incluídas nesses gastos?','Nº de acompanhantes')}
+  <div class="sec-titulo">05 · Avaliação (Likert)</div>
+  ${aval(17,'Avalie os aspectos do evento Canaã Cidade Junina 2026:',['Acesso/Local','Infraestrutura','Segurança','Competições/Quadrilhas','Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)','Artesanato/Produtos','Comidas (qualidade)','Comidas (preço)','Data/Horário','Receptividade'])}
+  ${aval(18,'Avalie a Estrutura, Planejamento e Organização:',['Tema do evento','Local do evento','Divulgação','Estrutura física','Gastronomia','Shows e Atrações','Lixeiras','Banheiros','Estacionamentos','Avaliação Geral'])}
+  <div class="sec-titulo">06 · Lealdade &amp; Expectativa</div>
   ${perg(19,'Você conhece as Quadrilhas que irão competir?',['Sim','Não'])}
-  ${pertexto(20,'Qual a sua quadrilha favorita?<span class="obrig">*</span>','Ex.: ARRAIÁ DO POVO',{q:19,val:'Sim'},'upper')}
-  ${perg(21,'Você recomendaria o Festival Canaã Junina 2025?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(22,'Como avalia sua experiência no festival até o momento?',['Excelente — superou expectativas','Boa — estou curtindo bastante','Regular — poderia ser melhor','Abaixo do esperado'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(23,'Quais aspectos você mais gostou?',['Atrações culturais e apresentações','Organização e estrutura','Comidas e bebidas','Atividades para toda família'],'checkbox')}
+  ${pertexto(20,'Qual a sua quadrilha favorita?<span class="obrig">*</span>','Ex.: ARRAIÁ DA ALEGRIA',{q:19,val:'Sim'},'upper')}
+  ${perg(21,'Você recomendaria o Festival a amigos e familiares?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${likert(22,'Como avalia sua experiência no festival até o momento?')}
+  ${likert(23,'Qual sua expectativa para a continuidade da edição 2026?')}
   ${pertexto(24,'Sua sugestão para melhorar edições futuras:','Escreva sua sugestão...')}
   `;
   aplicarSkipLogic();
 }
 
-/* ════════ POPULAÇÃO (revisado) ════════ */
+/* ════════ B · MORADORES ════════ */
 function renderPopulacao(){
   document.getElementById('form-body').innerHTML=`
-  ${metaBloco()}
+  ${metaBloco(`<div class="meta-full"><span class="campo-label">Tempo de moradia em Canaã</span><div class="pill-grupo">
+    <label class="pill"><input type="radio" name="moradia" value="-1"><span>Menos de 1 ano</span></label>
+    <label class="pill"><input type="radio" name="moradia" value="1-5"><span>1 a 5 anos</span></label>
+    <label class="pill"><input type="radio" name="moradia" value="5-10"><span>5 a 10 anos</span></label>
+    <label class="pill"><input type="radio" name="moradia" value="10+"><span>Mais de 10 anos</span></label></div></div>`)}
   <div class="sec-titulo verde">01 · Comunicação &amp; Perfil</div>
-  ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários mínimos','De 3 a 5 salários mínimos','Mais de 5 salários mínimos'],'radio','',null,'Não sabe/Não opinou')}
-  ${perg(2,'Por qual meio você acompanha os eventos de Canaã dos Carajás?',['Sites de notícia','Televisão','Rádio','Celular/WhatsApp','Facebook','Instagram','Jornais impressos'],'checkbox',outroCampo())}
+  ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou')}
+  ${perg(2,'Como você acompanha os eventos de Canaã dos Carajás?',['Sites de notícia','Televisão','Rádio','Celular/WhatsApp','Facebook','Instagram','Jornais impressos'],'checkbox',outroCampo())}
+  ${pertexto(3,'Em qual bairro você reside?','Nome do bairro...','none','title')}
+  <div class="sec-titulo verde">02 · Percepção da edição 2025 (Likert)</div>
+  ${perg(4,'Você participou do Festival Canaã Cidade Junina de 2025?',['Sim','Não'])}
+  ${likert(5,'Avaliação geral da edição 2025:',{q:4,val:'Sim'})}
+  ${likert(6,'Como avalia a Segurança do Festival 2025?',{q:4,val:'Sim'})}
+  ${likert(7,'Como avalia a Infraestrutura do Festival 2025?',{q:4,val:'Sim'})}
+  ${likert(8,'Como avalia a Organização geral de 2025?',{q:4,val:'Sim'})}
+  ${likert(9,'Como avalia a estrutura física (palco, barracas, banheiros)?',{q:4,val:'Sim'})}
+  ${likert(10,'Como avalia os Shows e Atrações de 2025?',{q:4,val:'Sim'})}
+  <div class="sec-titulo verde">03 · Impacto na Comunidade</div>
+  ${likert(11,'O festival trouxe benefício econômico para você/sua família?')}
+  ${perg(12,'Impacto do evento na sua rotina/mobilidade durante os dias de festa:',['Muito positivo','Positivo','Indiferente','Negativo','Muito negativo'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${likert(13,'O festival valoriza a imagem e identidade de Canaã dos Carajás?')}
+  <div class="sec-titulo verde">04 · Expectativa 2026</div>
+  ${perg(14,'Você pretende participar do Festival 2026?',['Sim','Não','Ainda não decidi'])}
+  ${perg(15,'Quanto pretende gastar no evento?',['Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400'],'radio','',{q:14,val:'Sim'},'Não Sabe/Não Opinou')}
+  ${likert(16,'Qual sua expectativa geral para o Festival 2026?')}
+  ${perg(17,'A data de 24/Jun a 12/Jul de 2026, você acha que:',['Ótima — atende ao período junino','Boa, mas poderia ser mais curta','Poderia ser mais longa','Preferia em outro período','Indiferente'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${pertexto(18,'Sua sugestão para o evento:','Escreva sua sugestão...')}
+  `;
+  aplicarSkipLogic();
+}
 
-  <div class="sec-titulo verde">02 · Avaliação — Festival 2024</div>
-  ${perg(3,'Você participou do Festival Canaã Junina de 2024?',['Sim','Não'])}
-  ${perg(4,'O que você achou da edição de 2024?',['Gostei muito','Achei bom','Não gostei muito','Não gostei'],'radio','',{q:3,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(5,'Como avalia a Segurança do Festival 2024?',['Totalmente seguro(a)','Seguro(a) na maior parte','Pouco seguro(a)','Nada seguro(a)'],'radio','',{q:3,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(6,'Como avalia a Infraestrutura do Festival 2024?',['Muito satisfatória','Satisfatória','Regular','Insatisfatória'],'radio','',{q:3,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(7,'Como avalia a organização geral do Festival 2024?',['Muito bem organizada','Bem organizada','Razoável','Mal organizada'],'radio','',{q:3,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(8,'Como avalia a estrutura física (palco, barracas, banheiros)?',['Ótima','Boa','Regular','Ruim','Péssima'],'radio','',{q:3,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(9,'Os banheiros foram suficientes e em boas condições?',['Sim, foram suficientes','Parcialmente','Não foram suficientes'],'radio','',{q:3,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(10,'Você gostou dos shows e atrações do Festival 2024?',['Gostei muito','Gostei','Foi razoável','Não gostei'],'radio','',{q:3,val:'Sim'},'Não Sabe/Não Opinou')}
-
-  <div class="sec-titulo verde">03 · Expectativas — Festival 2025</div>
-  ${perg(11,'Você irá participar do Festival Canaã Junina 2025?',['Sim','Não','Ainda não decidi'])}
-  ${perg(12,'Quanto pretende gastar no evento?',['Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400'],'radio','',{q:11,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(13,'Qual sua expectativa para o Festival 2025?',['Muito Otimista','Otimista','Pessimista','Muito Pessimista'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(14,'Você sabe o local onde será realizado o Festival 2025?',['Sim','Não'])}
-  ${pertexto(15,'Qual o local?<span class="obrig">*</span>','Informe o local...',{q:14,val:'Sim'},'title')}
-  ${perg(16,'A data de 23/Jun a 13/Jul do Festival 2025, você acha que:',['Ótima — atende ao período junino','Boa, mas poderia ser mais curta','Poderia ser mais longa','Preferia em outro período','Indiferente'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${pertexto(17,'Qual evento de Canaã dos Carajás você mais gostou de participar?','Nome do evento...','none','title')}
+/* ════════ C · EXPOSITORES / OPERAÇÃO ════════ */
+function renderOperacao(){
+  document.getElementById('form-body').innerHTML=`
+  ${metaBloco()}
+  <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">01 · Perfil do Negócio</div>
+  ${perg(1,'Tipo de operação no festival:',['Alimentação/Comidas','Bebidas','Artesanato/Produtos típicos','Serviços (beleza, etc.)','Diversões/Parque'],'radio',outroCampo())}
+  ${perg(2,'Origem do expositor:',['Sou de Canaã dos Carajás','Sou de outra cidade'])}
+  ${pertexto(3,'De qual cidade?<span class="obrig">*</span>','Ex.: MARABÁ',{q:2,val:'Sou de outra cidade'},'upper')}
+  ${perg(4,'Já participou de edições anteriores do festival?',['Não, é a primeira vez','Sim, 1 edição','Sim, 2 a 3 edições','Sim, mais de 3 edições'])}
+  ${pernum(5,'Quantas pessoas trabalham no seu estande/operação?','Nº de pessoas')}
+  <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">02 · Investimento &amp; Retorno</div>
+  ${perg(6,'Faixa de investimento para participar (taxa + estrutura + estoque):',['Até R$ 1.000','R$ 1.000 a 3.000','R$ 3.000 a 5.000','R$ 5.000 a 10.000','Mais de R$ 10.000'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${perg(7,'Faixa de faturamento esperado/obtido no evento:',['Até R$ 2.000','R$ 2.000 a 5.000','R$ 5.000 a 10.000','R$ 10.000 a 20.000','Mais de R$ 20.000'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${likert(8,'Como avalia o retorno em relação ao investimento (custo-benefício)?')}
+  ${perg(9,'O movimento comparado à edição anterior foi:',['Muito maior','Maior','Igual','Menor','Muito menor','Primeira participação'],'radio','',null,'Não Sabe/Não Opinou')}
+  <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">03 · Avaliação da Operação (Likert)</div>
+  ${aval(10,'Avalie os aspectos da operação para expositores:',['Organização do espaço','Logística de montagem','Energia elétrica','Água e limpeza','Segurança da área','Comunicação da organização','Custo da taxa/aluguel','Fluxo de público nos estandes'])}
+  <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">04 · Fidelização</div>
+  ${perg(11,'Pretende participar da edição 2026?',['Sim, com certeza','Talvez','Não pretendo'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${perg(12,'Recomendaria participar a outros expositores?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${pertexto(13,'Sua sugestão para melhorar a experiência do expositor:','Escreva sua sugestão...')}
   `;
   aplicarSkipLogic();
 }
 
 /* ════════ VALIDAÇÃO + ENVIO ════════ */
 function validar(){
-  const obrig=['sexo','esc','faixa','pesquisador'];
-  for(const nome of obrig){
-    const campos=document.getElementsByName(nome);
-    if(campos.length===0) continue;
-    if(campos[0].type==='text'){ if(!campos[0].value.trim()) return campos[0]; }
-    else { let ok=false; campos.forEach(c=>{ if(c.checked) ok=true; }); if(!ok) return campos[0]; }
+  for(const nome of ['sexo','esc','faixa','pesquisador']){
+    const c=document.getElementsByName(nome); if(!c.length) continue;
+    if(c[0].type==='text'){ if(!c[0].value.trim()) return c[0]; }
+    else { let ok=false; c.forEach(x=>{if(x.checked)ok=true;}); if(!ok) return c[0]; }
   }
-  // campos texto condicionais visíveis e obrigatórios
-  document.querySelectorAll('.pcard:not(.oculta) .ptexto .obrig').forEach(()=>{});
   return null;
 }
 function enviar(){
-  const inval=validar();
-  if(inval){
-    alert('Preencha os campos obrigatórios (sexo, escolaridade, faixa etária e pesquisador).');
-    inval.scrollIntoView({behavior:'smooth',block:'center'});
-    return;
-  }
-  const btn=document.getElementById('btn-env');
-  btn.textContent='Salvando...'; btn.disabled=true;
-
-  // Payload estruturado — pronto para POST na API Supabase
-  const payload={
-    tipo: tipoAtivo==='v'?'VISITANTE':'POPULACAO',
-    session_id:'SES-'+Date.now(),
-    coletado_em:new Date().toISOString(),
-    geo:{ lat:geoData.lat, lng:geoData.lng, accuracy:geoData.accuracy, status:geoData.status },
-    respostas:{} // populado pela função de coleta (fase de integração)
-  };
-
+  const inv=validar();
+  if(inv){ alert('Preencha os campos obrigatórios: sexo, escolaridade, faixa etária e pesquisador.');
+    inv.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  const btn=document.getElementById('btn-env'); btn.textContent='Salvando...'; btn.disabled=true;
+  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR'}[tipoAtivo];
+  const payload={ tipo:tipoNome, session_id:'SES-'+Date.now(), coletado_em:new Date().toISOString(),
+    geo:{lat:geoData.lat,lng:geoData.lng,accuracy:geoData.accuracy,status:geoData.status}, respostas:{} };
   setTimeout(()=>{
     document.getElementById('app').style.display='none';
     const s=document.getElementById('sucesso'); s.style.display='flex'; s.style.flexDirection='column';
     document.getElementById('suc-id').textContent='ID: '+payload.session_id+' · '+payload.tipo;
-    document.getElementById('suc-geo').textContent=
-      geoData.status==='ok' ? `📍 ${geoData.lat}, ${geoData.lng} (±${geoData.accuracy}m) · ${new Date().toLocaleTimeString('pt-BR')}`
+    document.getElementById('suc-geo').textContent = geoData.status==='ok'
+      ? `📍 ${geoData.lat}, ${geoData.lng} (±${geoData.accuracy}m) · ${new Date().toLocaleTimeString('pt-BR')}`
       : `📍 Localização: ${geoData.status} · ${new Date().toLocaleTimeString('pt-BR')}`;
     btn.textContent='Salvar Registro'; btn.disabled=false;
   },900);
 }
+
 </script>
 </body>
 </html>
