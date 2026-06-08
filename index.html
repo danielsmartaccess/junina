@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Festival Canaã Junina 2025 — Pesquisa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amarelo: #F5C842;
+    --laranja: #E8671A;
+    --vermelho: #C9282D;
+    --verde: #1A6B3A;
+    --azul-esc: #0D1B2A;
+    --creme: #FDF6E3;
+    --branco: #FFFFFF;
+    --cinza: #7A7A8A;
+    --borda: rgba(245,200,66,0.25);
+    --sombra: 0 8px 32px rgba(13,27,42,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--azul-esc);
+    color: var(--creme);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ========== CAPA ========== */
+  #capa {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,103,26,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(201,40,45,0.12) 0%, transparent 70%),
+      var(--azul-esc);
+  }
+
+  .bandeirinhas {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 54px;
+    display: flex;
+    align-items: flex-start;
+    overflow: hidden;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .fio {
+    position: absolute;
+    top: 0; left: -10px; right: -10px;
+    height: 2px;
+    background: rgba(245,200,66,0.4);
+    top: 18px;
+  }
+
+  .bandeirinha {
+    width: 22px;
+    height: 28px;
+    margin: 0 3px;
+    margin-top: 4px;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    flex-shrink: 0;
+    animation: balancoBand 2.5s ease-in-out infinite alternate;
+  }
+  .bandeirinha:nth-child(odd) { animation-delay: -1s; }
+  .bandeirinha:nth-child(3n) { animation-delay: -0.5s; }
+
+  @keyframes balancoBand {
+    0% { transform: rotate(-6deg); }
+    100% { transform: rotate(6deg); }
+  }
+
+  .cores-band {
+    background: linear-gradient(135deg,
+      var(--amarelo) 0%, var(--laranja) 25%, var(--vermelho) 50%,
+      var(--verde) 75%, var(--amarelo) 100%
+    );
+    background-size: 300% 300%;
+    animation: balancoBand 2.5s ease-in-out infinite alternate, corBand 8s linear infinite;
+  }
+  @keyframes corBand {
+    0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
+  }
+
+  .logo-evento {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    background: linear-gradient(135deg, var(--amarelo) 0%, var(--laranja) 50%, var(--vermelho) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    margin-top: 60px;
+    text-shadow: none;
+    filter: drop-shadow(0 4px 24px rgba(232,103,26,0.5));
+  }
+
+  .sub-evento {
+    font-size: 0.95rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: rgba(253,246,227,0.55);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .badge-pesquisa {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245,200,66,0.12);
+    border: 1px solid var(--borda);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: var(--amarelo);
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .badge-pesquisa::before {
+    content: '●';
+    font-size: 0.5rem;
+    animation: pulsar 1.5s infinite;
+  }
+  @keyframes pulsar {
+    0%,100%{opacity:1} 50%{opacity:0.3}
+  }
+
+  .selecao-titulo {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(253,246,227,0.45);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .cards-selecao {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .card-questionario {
+    flex: 1;
+    min-width: 260px;
+    max-width: 320px;
+    background: rgba(253,246,227,0.04);
+    border: 1.5px solid rgba(245,200,66,0.15);
+    border-radius: 20px;
+    padding: 32px 28px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .card-questionario::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(245,200,66,0.06));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card-questionario:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--amarelo);
+    background: rgba(253,246,227,0.07);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,200,66,0.3);
+  }
+  .card-questionario:hover::before { opacity: 1; }
+
+  .card-icone {
+    font-size: 2.4rem;
+    margin-bottom: 16px;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(232,103,26,0.4));
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+  }
+
+  .card-tag.visitante { background: rgba(232,103,26,0.2); color: var(--laranja); }
+  .card-tag.populacao { background: rgba(26,107,58,0.2); color: #4CAF80; }
+
+  .card-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--creme);
+    margin-bottom: 10px;
+  }
+
+  .card-desc {
+    font-size: 0.83rem;
+    color: rgba(253,246,227,0.5);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .card-perguntas {
+    font-size: 0.78rem;
+    color: rgba(253,246,227,0.35);
+    letter-spacing: 0.08em;
+  }
+
+  .btn-selecionar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-selecionar.visitante {
+    background: var(--laranja);
+    color: white;
+  }
+  .btn-selecionar.visitante:hover { background: #d4591a; }
+
+  .btn-selecionar.populacao {
+    background: var(--verde);
+    color: white;
+  }
+  .btn-selecionar.populacao:hover { background: #155c31; }
+
+  .rodape-capa {
+    margin-top: 52px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(253,246,227,0.22);
+    letter-spacing: 0.12em;
+  }
+
+  /* ========== APP PESQUISA ========== */
+  #app {
+    display: none;
+    min-height: 100vh;
+    background: var(--azul-esc);
+  }
+
+  .header-app {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(13,27,42,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,200,66,0.12);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .header-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .header-tipo {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .header-tipo.visitante { color: var(--laranja); }
+  .header-tipo.populacao { color: #4CAF80; }
+
+  .header-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--creme);
+  }
+
+  .btn-voltar {
+    background: rgba(253,246,227,0.07);
+    border: 1px solid rgba(253,246,227,0.12);
+    border-radius: 10px;
+    color: var(--creme);
+    font-size: 0.8rem;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-voltar:hover { background: rgba(253,246,227,0.12); }
+
+  /* barra de progresso */
+  .barra-prog-wrap {
+    background: rgba(255,255,255,0.06);
+    height: 3px;
+  }
+  .barra-prog {
+    height: 100%;
+    background: linear-gradient(90deg, var(--laranja), var(--amarelo));
+    transition: width 0.5s ease;
+    border-radius: 0 2px 2px 0;
+  }
+  .barra-prog.verde {
+    background: linear-gradient(90deg, var(--verde), #4CAF80);
+  }
+
+  /* seções do formulário */
+  .secao-form {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 20px 120px;
+  }
+
+  /* bloco de meta dados */
+  .bloco-meta {
+    background: rgba(253,246,227,0.04);
+    border: 1px solid rgba(245,200,66,0.14);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .bloco-meta-full { grid-column: 1 / -1; }
+
+  .campo-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(253,246,227,0.45);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .radio-grupo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .radio-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .radio-pill input { display: none; }
+
+  .radio-pill span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1.5px solid rgba(253,246,227,0.12);
+    font-size: 0.8rem;
+    color: rgba(253,246,227,0.6);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .radio-pill input:checked + span {
+    border-color: var(--amarelo);
+    background: rgba(245,200,66,0.12);
+    color: var(--amarelo);
+    font-weight: 500;
+  }
+  .radio-pill span:hover { border-color: rgba(245,200,66,0.4); }
+
+  /* pergunta card */
+  .pergunta-card {
+    background: rgba(253,246,227,0.03);
+    border: 1px solid rgba(253,246,227,0.08);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+    transition: border-color 0.25s;
+  }
+  .pergunta-card:has(input:checked),
+  .pergunta-card.tem-valor { border-color: rgba(245,200,66,0.25); }
+
+  .perg-num {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(253,246,227,0.3);
+    margin-bottom: 6px;
+  }
+
+  .perg-texto {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--creme);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .opcoes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .opcao-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .opcao-item input { display: none; }
+  .opcao-box {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(253,246,227,0.1);
+    font-size: 0.85rem;
+    color: rgba(253,246,227,0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .opcao-box::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(253,246,227,0.2);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .opcao-item input:checked + .opcao-box {
+    border-color: var(--amarelo);
+    background: rgba(245,200,66,0.1);
+    color: var(--creme);
+    font-weight: 500;
+  }
+  .opcao-item input:checked + .opcao-box::before {
+    background: var(--amarelo);
+    border-color: var(--amarelo);
+    box-shadow: 0 0 0 3px rgba(245,200,66,0.2);
+  }
+  .opcao-item.checkbox input:checked + .opcao-box::before {
+    border-radius: 4px;
+  }
+  .opcao-box:hover { border-color: rgba(245,200,66,0.3); }
+
+  /* input text / number */
+  .input-texto, .input-numero {
+    width: 100%;
+    background: rgba(253,246,227,0.05);
+    border: 1.5px solid rgba(253,246,227,0.1);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--creme);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .input-texto:focus, .input-numero:focus {
+    border-color: var(--amarelo);
+    background: rgba(245,200,66,0.06);
+  }
+  .input-texto::placeholder, .input-numero::placeholder {
+    color: rgba(253,246,227,0.25);
+  }
+
+  /* avaliação tabela */
+  .avaliacao-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    font-size: 0.82rem;
+  }
+  .avaliacao-table th {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(253,246,227,0.3);
+    padding: 0 8px 8px;
+    text-align: center;
+  }
+  .avaliacao-table th:first-child { text-align: left; }
+  .avaliacao-table td {
+    padding: 10px 8px;
+    background: rgba(253,246,227,0.03);
+    text-align: center;
+    color: rgba(253,246,227,0.7);
+    border: 1px solid rgba(253,246,227,0.06);
+  }
+  .avaliacao-table td:first-child {
+    text-align: left;
+    border-radius: 8px 0 0 8px;
+    padding-left: 12px;
+    font-size: 0.83rem;
+  }
+  .avaliacao-table td:last-child { border-radius: 0 8px 8px 0; }
+
+  .radio-aval { display: none; }
+  .radio-aval + label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1.5px solid rgba(253,246,227,0.12);
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(253,246,227,0.35);
+    transition: all 0.2s;
+  }
+  .radio-aval:checked + label {
+    background: var(--amarelo);
+    border-color: var(--amarelo);
+    color: var(--azul-esc);
+    font-weight: 700;
+  }
+
+  /* gastos */
+  .gastos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .gasto-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .gasto-label {
+    font-size: 0.82rem;
+    color: rgba(253,246,227,0.55);
+    min-width: 130px;
+  }
+  .gasto-input {
+    flex: 1;
+    background: rgba(253,246,227,0.05);
+    border: 1.5px solid rgba(253,246,227,0.1);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--creme);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .gasto-input:focus { border-color: var(--amarelo); }
+  .gasto-input::placeholder { color: rgba(253,246,227,0.2); }
+  .gasto-prefix {
+    font-size: 0.8rem;
+    color: rgba(253,246,227,0.35);
+    white-space: nowrap;
+  }
+
+  /* seção título dentro do form */
+  .secao-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--amarelo);
+    padding: 20px 0 10px;
+    border-bottom: 1px solid rgba(245,200,66,0.15);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  /* footer fixo */
+  .footer-form {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(13,27,42,0.97);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(245,200,66,0.12);
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    max-width: 640px;
+    margin: 0 auto;
+    left: 50%; transform: translateX(-50%);
+  }
+
+  .btn-enviar {
+    flex: 1;
+    max-width: 320px;
+    padding: 16px 24px;
+    border-radius: 14px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.05em;
+  }
+  .btn-enviar.visitante {
+    background: linear-gradient(135deg, var(--laranja), var(--vermelho));
+    color: white;
+    box-shadow: 0 4px 20px rgba(232,103,26,0.4);
+  }
+  .btn-enviar.populacao {
+    background: linear-gradient(135deg, var(--verde), #2E8B57);
+    color: white;
+    box-shadow: 0 4px 20px rgba(26,107,58,0.4);
+  }
+  .btn-enviar:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn-enviar:active { transform: translateY(0); }
+
+  /* ========== TELA SUCESSO ========== */
+  #tela-sucesso {
+    display: none;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 24px;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(26,107,58,0.2) 0%, transparent 70%),
+      var(--azul-esc);
+  }
+
+  .sucesso-icone {
+    font-size: 5rem;
+    margin-bottom: 24px;
+    filter: drop-shadow(0 8px 32px rgba(76,175,128,0.6));
+    animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .sucesso-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--creme);
+    margin-bottom: 12px;
+  }
+
+  .sucesso-sub {
+    font-size: 1rem;
+    color: rgba(253,246,227,0.5);
+    max-width: 320px;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  .btn-nova {
+    padding: 16px 32px;
+    border-radius: 14px;
+    border: 1.5px solid var(--amarelo);
+    background: transparent;
+    color: var(--amarelo);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.05em;
+  }
+  .btn-nova:hover { background: rgba(245,200,66,0.1); transform: translateY(-2px); }
+
+  /* util */
+  .hidden { display: none !important; }
+  .mt-12 { margin-top: 12px; }
+
+  @media (max-width: 500px) {
+    .cards-selecao { flex-direction: column; align-items: center; }
+    .card-questionario { max-width: 100%; min-width: unset; }
+    .bloco-meta { grid-template-columns: 1fr; }
+    .bloco-meta-full { grid-column: 1; }
+    .gasto-label { min-width: 100px; font-size: 0.78rem; }
+    .avaliacao-table th, .avaliacao-table td { padding: 8px 4px; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BANDEIRINHAS GLOBAIS -->
+<div class="bandeirinhas" id="bandeirinhas">
+  <div class="fio"></div>
+</div>
+
+<!-- ===== CAPA ===== -->
+<section id="capa">
+  <div class="logo-evento">Canaã Junina</div>
+  <div class="sub-evento">Festival 2025 · Canaã dos Carajás — PA</div>
+  <div class="badge-pesquisa">Pesquisa de Opinião Pública</div>
+
+  <div class="selecao-titulo">Selecione o questionário</div>
+
+  <div class="cards-selecao">
+
+    <!-- CARD VISITANTE -->
+    <div class="card-questionario" onclick="iniciarPesquisa('visitante')">
+      <span class="card-icone">🎪</span>
+      <span class="card-tag visitante">Visitante</span>
+      <div class="card-titulo">Perfil do Participante</div>
+      <div class="card-desc">Para quem está participando do Festival Canaã Junina 2025 — moradores ou visitantes de outras cidades.</div>
+      <div class="card-perguntas">25 perguntas · ~5 min</div>
+      <button class="btn-selecionar visitante">Iniciar <span>→</span></button>
+    </div>
+
+    <!-- CARD POPULAÇÃO -->
+    <div class="card-questionario" onclick="iniciarPesquisa('populacao')">
+      <span class="card-icone">🏘️</span>
+      <span class="card-tag populacao">População</span>
+      <div class="card-titulo">Festival & Comunidade</div>
+      <div class="card-desc">Para moradores de Canaã dos Carajás — avaliação do Festival 2024 e expectativas para 2025.</div>
+      <div class="card-perguntas">16 perguntas · ~4 min</div>
+      <button class="btn-selecionar populacao">Iniciar <span>→</span></button>
+    </div>
+
+  </div>
+
+  <div class="rodape-capa">QUALIQUANT GAUSS · Pesquisa de Opinião Pública</div>
+</section>
+
+<!-- ===== APP PESQUISA ===== -->
+<div id="app">
+  <div class="header-app">
+    <button class="btn-voltar" onclick="voltarCapa()">← Voltar</button>
+    <div class="header-info">
+      <div class="header-tipo" id="header-tipo"></div>
+      <div class="header-titulo" id="header-titulo"></div>
+    </div>
+    <div style="font-size:0.78rem;color:rgba(253,246,227,0.35);white-space:nowrap;" id="prog-texto"></div>
+  </div>
+  <div class="barra-prog-wrap">
+    <div class="barra-prog" id="barra-prog" style="width:0%"></div>
+  </div>
+
+  <div class="secao-form" id="form-conteudo"></div>
+
+  <div class="footer-form">
+    <button class="btn-enviar" id="btn-enviar" onclick="enviarPesquisa()">Enviar Pesquisa</button>
+  </div>
+</div>
+
+<!-- ===== SUCESSO ===== -->
+<div id="tela-sucesso" style="display:none;flex-direction:column;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:40px 24px;background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(26,107,58,0.2) 0%, transparent 70%), var(--azul-esc);">
+  <div class="sucesso-icone">✅</div>
+  <div class="sucesso-titulo">Pesquisa enviada!</div>
+  <div class="sucesso-sub">Obrigado pela participação. Sua opinião é essencial para o crescimento do Festival Canaã Junina.</div>
+  <button class="btn-nova" onclick="novaPesquisa()">Nova Pesquisa</button>
+</div>
+
+<script>
+/* ─── Bandeirinhas dinâmicas ─── */
+const cores = ['#F5C842','#E8671A','#C9282D','#1A6B3A','#1565C0','#7B1FA2'];
+const wrap = document.getElementById('bandeirinhas');
+const total = Math.ceil(window.innerWidth / 28) + 4;
+for(let i=0;i<total;i++){
+  const b = document.createElement('div');
+  b.className = 'bandeirinha';
+  b.style.background = cores[i % cores.length];
+  b.style.animationDelay = (i * 0.12) + 's';
+  wrap.appendChild(b);
+}
+
+let tipoAtivo = null;
+
+/* ─── Iniciar pesquisa ─── */
+function iniciarPesquisa(tipo) {
+  tipoAtivo = tipo;
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('tela-sucesso').style.display = 'none';
+
+  const headerTipo = document.getElementById('header-tipo');
+  const headerTitulo = document.getElementById('header-titulo');
+  const btnEnviar = document.getElementById('btn-enviar');
+  const barraP = document.getElementById('barra-prog');
+
+  if(tipo === 'visitante') {
+    headerTipo.textContent = '🎪 Visitante';
+    headerTipo.className = 'header-tipo visitante';
+    headerTitulo.textContent = 'Perfil do Participante';
+    btnEnviar.className = 'btn-enviar visitante';
+    barraP.className = 'barra-prog';
+    renderFormVisitante();
+  } else {
+    headerTipo.textContent = '🏘️ População';
+    headerTipo.className = 'header-tipo populacao';
+    headerTitulo.textContent = 'Festival & Comunidade';
+    btnEnviar.className = 'btn-enviar populacao';
+    barraP.className = 'barra-prog verde';
+    renderFormPopulacao();
+  }
+
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+function voltarCapa() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('capa').style.display = 'flex';
+  document.getElementById('tela-sucesso').style.display = 'none';
+}
+
+function novaPesquisa() {
+  document.getElementById('tela-sucesso').style.display = 'none';
+  document.getElementById('capa').style.display = 'flex';
+}
+
+function atualizarProgresso() {
+  const total = document.querySelectorAll('.pergunta-card').length;
+  const resp = document.querySelectorAll('.pergunta-card input:checked, .pergunta-card.tem-valor').length;
+  const pct = total > 0 ? Math.round((resp/total)*100) : 0;
+  document.getElementById('barra-prog').style.width = pct + '%';
+  document.getElementById('prog-texto').textContent = pct + '%';
+}
+
+document.addEventListener('change', atualizarProgresso);
+
+/* ─── helpers ─── */
+function criarRadio(nome, valor, label, tipo='radio') {
+  const extraClass = tipo === 'checkbox' ? ' checkbox' : '';
+  return `<label class="opcao-item${extraClass}">
+    <input type="${tipo}" name="${nome}" value="${encodeURIComponent(valor)}">
+    <div class="opcao-box">${label}</div>
+  </label>`;
+}
+
+function pergunta(num, texto, opcoes, tipo='radio', extra='') {
+  const opcoesHtml = opcoes.map(o => criarRadio('p'+num, o, o, tipo)).join('');
+  return `<div class="pergunta-card">
+    <div class="perg-num">Pergunta ${num}</div>
+    <div class="perg-texto">${texto}</div>
+    <div class="opcoes-grid">${opcoesHtml}${extra}</div>
+  </div>`;
+}
+
+function perguntaTexto(num, texto, ph='') {
+  return `<div class="pergunta-card">
+    <div class="perg-num">Pergunta ${num}</div>
+    <div class="perg-texto">${texto}</div>
+    <input class="input-texto mt-12" type="text" placeholder="${ph||'Sua resposta...'}" oninput="this.closest('.pergunta-card').classList.toggle('tem-valor',this.value.length>0);atualizarProgresso()">
+  </div>`;
+}
+
+function avaliacao(num, titulo, itens, escalas=['Ótimo','Bom','Regular','Não Satisf.']) {
+  const ths = escalas.map(e=>`<th>${e}</th>`).join('');
+  const rows = itens.map((it,i)=>`<tr>
+    <td>${it}</td>
+    ${escalas.map((_,j)=>`<td>
+      <input type="radio" class="radio-aval" id="a${num}_${i}_${j}" name="a${num}_${i}" value="${j}">
+      <label for="a${num}_${i}_${j}">${escalas[j].charAt(0)}</label>
+    </td>`).join('')}
+  </tr>`).join('');
+
+  return `<div class="pergunta-card">
+    <div class="perg-num">Pergunta ${num}</div>
+    <div class="perg-texto">${titulo}</div>
+    <div style="overflow-x:auto;margin-top:8px">
+    <table class="avaliacao-table">
+      <thead><tr><th>Item</th>${ths}</tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
+}
+
+/* ─── FORM VISITANTE ─── */
+function renderFormVisitante() {
+  const c = document.getElementById('form-conteudo');
+  c.innerHTML = `
+  <!-- META -->
+  <div class="bloco-meta">
+    <div>
+      <span class="campo-label">Sexo</span>
+      <div class="radio-grupo">
+        <label class="radio-pill"><input type="radio" name="sexo" value="M"><span>Masculino</span></label>
+        <label class="radio-pill"><input type="radio" name="sexo" value="F"><span>Feminino</span></label>
+      </div>
+    </div>
+    <div>
+      <span class="campo-label">Data</span>
+      <input class="input-texto" type="date" name="data">
+    </div>
+    <div class="bloco-meta-full">
+      <span class="campo-label">Escolaridade</span>
+      <div class="radio-grupo">
+        <label class="radio-pill"><input type="radio" name="esc" value="Analfabeto"><span>Analfabeto</span></label>
+        <label class="radio-pill"><input type="radio" name="esc" value="1º Grau"><span>1º Grau</span></label>
+        <label class="radio-pill"><input type="radio" name="esc" value="2º Grau"><span>2º Grau</span></label>
+        <label class="radio-pill"><input type="radio" name="esc" value="Superior"><span>Superior</span></label>
+      </div>
+    </div>
+    <div class="bloco-meta-full">
+      <span class="campo-label">Faixa Etária</span>
+      <div class="radio-grupo">
+        <label class="radio-pill"><input type="radio" name="faixa" value="16-24"><span>16–24</span></label>
+        <label class="radio-pill"><input type="radio" name="faixa" value="25-34"><span>25–34</span></label>
+        <label class="radio-pill"><input type="radio" name="faixa" value="35-59"><span>35–59</span></label>
+        <label class="radio-pill"><input type="radio" name="faixa" value="60+"><span>+60</span></label>
+      </div>
+    </div>
+    <div class="bloco-meta-full">
+      <span class="campo-label">Pesquisador</span>
+      <input class="input-texto" type="text" name="pesquisador" placeholder="Nome do pesquisador">
+    </div>
+  </div>
+
+  <div class="secao-titulo">📋 Informações do Participante</div>
+
+  ${pergunta(1,'Qual a sua renda familiar?',[
+    'Até 1 salário mínimo','De 1 a 2 salários mínimos',
+    'De 3 a 5 salários mínimos','Mais de 5 salários mínimos'
+  ])}
+
+  ${pergunta(2,'Por qual meio de comunicação você teve conhecimento sobre o Festival Canaã Junina 2025?',[
+    'Já conhece','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp',
+    'Facebook/Instagram','Mora próximo','Carro de som','Trabalho',
+    'Venho todo ano','Não sabe/Não opinou'
+  ],'checkbox',`<label class="opcao-item">
+    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
+      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
+      <input class="input-texto" type="text" placeholder="Especifique..." style="margin:0">
+    </div></label>`)}
+
+  ${pergunta(3,'Você veio ao evento:',[
+    'Sozinho','Com parentes/casal','Amigos/colegas','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(4,'Quantos dias você irá participar do evento?',[
+    '1 a 5 dias','5 a 10 dias','Todos os dias','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(5,'Qual meio de transporte você utilizou para chegar no evento?',[
+    'Carro próprio','Carona','Táxi/Uber','Ônibus de linha','Não Sabe/Não Opinou'
+  ],'radio',`<label class="opcao-item">
+    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
+      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
+      <input class="input-texto" type="text" placeholder="Especifique...">
+    </div></label>`)}
+
+  ${pergunta(6,'Você mora em Canaã dos Carajás?',['Sim','Não'])}
+
+  ${perguntaTexto(7,'Se não, qual cidade você reside?','Nome da cidade...')}
+
+  ${pergunta(8,'Se reside em outra cidade, você pernoitou em Canaã dos Carajás?',['Sim','Não'])}
+
+  ${pergunta(9,'Se sim, onde você pernoitou?',[
+    'Residente Local','Casa de Amigos/Parentes','Hotel/Pousada','Não Sabe/Não Opinou'
+  ],'radio',`<label class="opcao-item">
+    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
+      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
+      <input class="input-texto" type="text" placeholder="Especifique...">
+    </div></label>`)}
+
+  <!-- GASTOS -->
+  <div class="pergunta-card">
+    <div class="perg-num">Pergunta 10</div>
+    <div class="perg-texto">Detalhamento de gastos:</div>
+    <div class="gastos-grid mt-12">
+      ${[['Hospedagem','hosp'],['Alimentação','alim'],['Atrativos/Entretenimento','atrat'],['Transporte/Combustível','transp'],['Compras/Lembranças','compras']].map(([l,n])=>`
+      <div class="gasto-item">
+        <span class="gasto-label">${l}</span>
+        <span class="gasto-prefix">R$</span>
+        <input class="gasto-input" type="number" name="gasto_${n}" placeholder="0,00" min="0">
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="secao-titulo">🎯 Motivação & Consumo</div>
+
+  ${pergunta(11,'O Festival Canaã Junina 2025 foi o principal motivo da sua vinda à cidade?',['Sim','Não'])}
+
+  ${pergunta(12,'Se sim, qual foi o motivo:',[
+    'Programação Cultural','Comidas Típicas','Atrações musicais e shows',
+    'Competições e danças típicas','Negócios/trabalho','Não Sabe/Não Opinou'
+  ],'radio',`<label class="opcao-item">
+    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
+      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
+      <input class="input-texto" type="text" placeholder="Especifique...">
+    </div></label>`)}
+
+  ${pergunta(13,'Se não, qual foi o motivo:',[
+    'Negócios/trabalho','Visita amigos/parentes','Lazer/descanso','Não Sabe/Não Opinou'
+  ],'radio',`<label class="opcao-item">
+    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
+      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
+      <input class="input-texto" type="text" placeholder="Especifique...">
+    </div></label>`)}
+
+  ${pergunta(14,'Você pretende adquirir/comprar no comércio da cidade (vestuário, beleza, supermercado, etc.)?',['Sim','Não'])}
+
+  ${pergunta(15,'Se sim, qual a média do valor gasto:',[
+    'R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(16,'Qual será/foi seu gasto estimado nos dias que você participará/participou do evento?',[
+    'R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000','Não Sabe/Não Opinou'
+  ])}
+
+  <!-- P17 -->
+  <div class="pergunta-card">
+    <div class="perg-num">Pergunta 17</div>
+    <div class="perg-texto">Além de você, quantas pessoas estão incluídas nesses gastos?</div>
+    <input class="input-numero mt-12" type="number" min="0" max="50" placeholder="Número de pessoas..." oninput="this.closest('.pergunta-card').classList.toggle('tem-valor',this.value.length>0);atualizarProgresso()">
+  </div>
+
+  <div class="secao-titulo">⭐ Avaliação do Evento</div>
+
+  ${avaliacao(18,'Como você avalia o evento Canaã Junina 2025:',[
+    'Acesso/Local','Infraestrutura','Segurança','Competições/quadrilhas',
+    'Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)',
+    'Artesanato/Produtos típicos','Barracas de comidas (qualidade)',
+    'Barracas de comidas (preço)','Data/horário','Receptividade'
+  ])}
+
+  ${avaliacao(19,'Como você avalia a Estrutura, Planejamento e Organização do evento Canaã Junina 2025:',[
+    'Tema do evento','Local do evento','Divulgação/evento','Estrutura do evento',
+    'Gastronomia/Pratos','Shows/Atrações Culturais','Lixeiras','Banheiros',
+    'Estacionamentos','Avaliação Geral do evento'
+  ])}
+
+  ${pergunta(20,'Você sabe quais são as Quadrilhas que irão participar das competições durante o evento?',['Sim','Não'])}
+
+  ${perguntaTexto(21,'Se sim, qual a sua quadrilha favorita?','Nome da quadrilha...')}
+
+  ${pergunta(22,'Você recomendaria o Festival Canaã Junina 2025 para amigos e familiares?',[
+    'Sim, com certeza','Talvez','Não recomendaria','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(23,'Como você avalia a sua experiência no Festival Canaã Junina 2025 até o momento?',[
+    'Excelente, está superando minhas expectativas','Boa, estou curtindo bastante',
+    'Regular, achei que poderia ser melhor','Não estou aproveitando quanto esperava',
+    'Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(24,'Quais aspectos do festival você mais gostou até agora?',[
+    'Atrações culturais e apresentações','Organização e estrutura do evento',
+    'Comidas e bebidas','Atividades para toda família','Não Sabe/Não Opinou'
+  ],'checkbox')}
+
+  ${perguntaTexto(25,'Qual a sua sugestão para ajudar a melhorar o evento futuro?','Escreva sua sugestão...')}
+  `;
+}
+
+/* ─── FORM POPULAÇÃO ─── */
+function renderFormPopulacao() {
+  const c = document.getElementById('form-conteudo');
+  c.innerHTML = `
+  <!-- META -->
+  <div class="bloco-meta">
+    <div>
+      <span class="campo-label">Sexo</span>
+      <div class="radio-grupo">
+        <label class="radio-pill"><input type="radio" name="sexo" value="M"><span>Masculino</span></label>
+        <label class="radio-pill"><input type="radio" name="sexo" value="F"><span>Feminino</span></label>
+      </div>
+    </div>
+    <div>
+      <span class="campo-label">Data</span>
+      <input class="input-texto" type="date" name="data">
+    </div>
+    <div class="bloco-meta-full">
+      <span class="campo-label">Escolaridade</span>
+      <div class="radio-grupo">
+        <label class="radio-pill"><input type="radio" name="esc" value="Analfabeto"><span>Analfabeto</span></label>
+        <label class="radio-pill"><input type="radio" name="esc" value="1º Grau"><span>1º Grau</span></label>
+        <label class="radio-pill"><input type="radio" name="esc" value="2º Grau"><span>2º Grau</span></label>
+        <label class="radio-pill"><input type="radio" name="esc" value="Superior"><span>Superior</span></label>
+      </div>
+    </div>
+    <div class="bloco-meta-full">
+      <span class="campo-label">Faixa Etária</span>
+      <div class="radio-grupo">
+        <label class="radio-pill"><input type="radio" name="faixa" value="16-24"><span>16–24</span></label>
+        <label class="radio-pill"><input type="radio" name="faixa" value="25-34"><span>25–34</span></label>
+        <label class="radio-pill"><input type="radio" name="faixa" value="35-59"><span>35–59</span></label>
+        <label class="radio-pill"><input type="radio" name="faixa" value="60+"><span>+60</span></label>
+      </div>
+    </div>
+    <div class="bloco-meta-full">
+      <span class="campo-label">Pesquisador</span>
+      <input class="input-texto" type="text" name="pesquisador" placeholder="Nome do pesquisador">
+    </div>
+  </div>
+
+  <div class="secao-titulo">📡 Comunicação & Perfil</div>
+
+  ${pergunta(1,'Qual a sua renda familiar?',[
+    'Até 1 salário mínimo','De 1 a 2 salários mínimos',
+    'De 3 a 5 salários mínimos','Mais de 5 salários mínimos'
+  ])}
+
+  ${pergunta(2,'Por qual meio de comunicação você tem conhecimento dos acontecimentos/eventos de Canaã dos Carajás?',[
+    'Sites de notícia','Televisão','Rádio','Celular/WhatsApp',
+    'Facebook','Instagram','Jornais impressos','Não sabe/Não opinou'
+  ],'checkbox',`<label class="opcao-item">
+    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
+      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
+      <input class="input-texto" type="text" placeholder="Especifique...">
+    </div></label>`)}
+
+  <div class="secao-titulo">🎭 Avaliação Festival 2024</div>
+
+  ${pergunta(3,'Você participou do Festival Canaã Junina de 2024?',['Sim','Não'])}
+
+  ${pergunta(4,'Se sim, o que você achou?',[
+    'Gostei muito','Achei bom','Não gostei muito','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(5,'Quanto à Segurança do Festival Canaã Junina de 2024, como você avalia?',[
+    'Senti-me totalmente seguro(a) durante o evento',
+    'Senti-me seguro(a) na maior parte do tempo',
+    'Não me senti seguro(a)',
+    'Senti que faltou totalmente segurança',
+    'Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(6,'Quanto à Infraestrutura do Festival Canaã Junina de 2024, como você avalia?',[
+    'Muito satisfatória','Satisfatória','Regular','Insatisfatória','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(7,'Como você avalia a organização geral do Festival Canaã Junina 2024?',[
+    'Muito bem organizada','Bem organizada','Razoável','Mal organizada','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(8,'Como você avalia a estrutura física do local (palco, barracas, banheiros, etc.)?',[
+    'Ótima','Boa','Regular','Ruim','Péssima','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(9,'Os banheiros disponíveis foram suficientes e estavam em boas condições de uso?',[
+    'Sim, foi suficiente','Parcialmente','Não foi suficiente'
+  ])}
+
+  ${pergunta(10,'Você gostou dos Shows/atrações do Festival Canaã Junina 2024?',[
+    'Sim, gostei muito','Sim, gostei','Foi razoável','Não gostei','Não Sabe/Não Opinou'
+  ])}
+
+  <div class="secao-titulo">🌟 Expectativas 2025</div>
+
+  ${pergunta(11,'Quanto ao Festival Canaã Junina de 2025, você irá participar?',['Sim','Não'])}
+
+  ${pergunta(12,'Se sim, quanto pretende gastar no evento?',[
+    'Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400','Não Sabe/Não Opinou'
+  ])}
+
+  ${pergunta(13,'Qual sua expectativa quanto ao Festival Canaã Junina de 2025?',[
+    'Otimista','Muito Otimista','Pessimista','Muito Pessimista','Não Sabe/Não Opinou'
+  ])}
+
+  ${perguntaTexto(14,'Você sabe o local onde é realizado o Festival Canaã Junina 2025?','Informe o local...')}
+
+  ${pergunta(15,'A data de 23 de Junho a 13 de Julho do Festival Canaã Junina 2025, você acha que:',[
+    'Está muito boa, atende bem ao período das festas juninas',
+    'Está boa, mas poderia ser um pouco mais curta',
+    'Poderia ser um pouco mais longa',
+    'Não gostei das datas, preferia em outro período',
+    'Indiferente, as datas não interferem na minha participação',
+    'Não Sabe/Não Opinou'
+  ])}
+
+  ${perguntaTexto(16,'Qual evento de Canaã dos Carajás que você participou e gostou mais?','Escreva o nome do evento...')}
+  `;
+}
+
+/* ─── Enviar ─── */
+function enviarPesquisa() {
+  const btn = document.getElementById('btn-enviar');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+  setTimeout(()=>{
+    document.getElementById('app').style.display = 'none';
+    const ts = document.getElementById('tela-sucesso');
+    ts.style.display = 'flex';
+    ts.style.flexDirection = 'column';
+  }, 800);
+}
+</script>
+</body>
+</html>
