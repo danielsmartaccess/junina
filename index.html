@@ -2,1233 +2,1267 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Festival Canaã Junina 2025 — Pesquisa</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Just Go Access · Canaã Junina 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --amarelo: #F5C842;
-    --laranja: #E8671A;
-    --vermelho: #C9282D;
-    --verde: #1A6B3A;
-    --azul-esc: #0D1B2A;
-    --creme: #FDF6E3;
-    --branco: #FFFFFF;
-    --cinza: #7A7A8A;
-    --borda: rgba(245,200,66,0.25);
-    --sombra: 0 8px 32px rgba(13,27,42,0.18);
-  }
+:root {
+  --jga-blue:   #0A1628;
+  --jga-navy:   #0F2145;
+  --jga-accent: #00C2FF;
+  --jga-gold:   #F5A623;
+  --jga-green:  #00D68F;
+  --jga-red:    #FF4757;
+  --creme:      #F0F4FF;
+  --muted:      rgba(240,244,255,0.45);
+  --border:     rgba(0,194,255,0.15);
+  --card-bg:    rgba(255,255,255,0.03);
+  --r:          14px;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--azul-esc);
-    color: var(--creme);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--jga-blue);
+  color: var(--creme);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  /* ========== CAPA ========== */
-  #capa {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    position: relative;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,103,26,0.18) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(201,40,45,0.12) 0%, transparent 70%),
-      var(--azul-esc);
-  }
+/* ── DEV BADGE ── */
+.dev-ribbon {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    -45deg,
+    #F5A623 0px, #F5A623 10px,
+    #0A1628 10px, #0A1628 20px
+  );
+  height: 4px;
+}
+.dev-badge {
+  position: fixed;
+  top: 10px; right: 12px;
+  z-index: 9999;
+  background: rgba(245,166,35,0.15);
+  border: 1px solid rgba(245,166,35,0.5);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--jga-gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(8px);
+}
+.dev-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--jga-gold);
+  animation: blink 1.4s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
-  .bandeirinhas {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 54px;
-    display: flex;
-    align-items: flex-start;
-    overflow: hidden;
-    z-index: 100;
-    pointer-events: none;
-  }
+/* ── CAPA ── */
+#capa {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 80px 24px 48px;
+  position: relative;
+  overflow: hidden;
+}
 
-  .fio {
-    position: absolute;
-    top: 0; left: -10px; right: -10px;
-    height: 2px;
-    background: rgba(245,200,66,0.4);
-    top: 18px;
-  }
+/* grid decorativo */
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,194,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,194,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
 
-  .bandeirinha {
-    width: 22px;
-    height: 28px;
-    margin: 0 3px;
-    margin-top: 4px;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    flex-shrink: 0;
-    animation: balancoBand 2.5s ease-in-out infinite alternate;
-  }
-  .bandeirinha:nth-child(odd) { animation-delay: -1s; }
-  .bandeirinha:nth-child(3n) { animation-delay: -0.5s; }
+/* glows */
+.glow-1 {
+  position: absolute;
+  top: -120px; left: -80px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,194,255,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.glow-2 {
+  position: absolute;
+  bottom: -100px; right: -60px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,214,143,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
 
-  @keyframes balancoBand {
-    0% { transform: rotate(-6deg); }
-    100% { transform: rotate(6deg); }
-  }
+/* header da capa */
+.capa-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 64px;
+  position: relative;
+}
 
-  .cores-band {
-    background: linear-gradient(135deg,
-      var(--amarelo) 0%, var(--laranja) 25%, var(--vermelho) 50%,
-      var(--verde) 75%, var(--amarelo) 100%
-    );
-    background-size: 300% 300%;
-    animation: balancoBand 2.5s ease-in-out infinite alternate, corBand 8s linear infinite;
-  }
-  @keyframes corBand {
-    0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
-  }
+.logo-jga {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .logo-evento {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.6rem, 8vw, 5.2rem);
-    font-weight: 900;
-    line-height: 1;
-    text-align: center;
-    background: linear-gradient(135deg, var(--amarelo) 0%, var(--laranja) 50%, var(--vermelho) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-    margin-top: 60px;
-    text-shadow: none;
-    filter: drop-shadow(0 4px 24px rgba(232,103,26,0.5));
-  }
+.logo-mark {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--jga-accent), var(--jga-green));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--jga-blue);
+  letter-spacing: -0.05em;
+  flex-shrink: 0;
+}
 
-  .sub-evento {
-    font-size: 0.95rem;
-    font-weight: 300;
-    letter-spacing: 0.3em;
-    color: rgba(253,246,227,0.55);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    text-align: center;
-  }
+.logo-texto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.logo-nome {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--creme);
+  letter-spacing: 0.01em;
+}
+.logo-sub {
+  font-size: 0.62rem;
+  color: var(--jga-accent);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 2px;
+}
 
-  .badge-pesquisa {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(245,200,66,0.12);
-    border: 1px solid var(--borda);
-    border-radius: 100px;
-    padding: 6px 18px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    color: var(--amarelo);
-    text-transform: uppercase;
-    margin-bottom: 48px;
-  }
+.cliente-badge {
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.5;
+}
+.cliente-badge strong {
+  display: block;
+  color: var(--creme);
+  font-size: 0.75rem;
+}
 
-  .badge-pesquisa::before {
-    content: '●';
-    font-size: 0.5rem;
-    animation: pulsar 1.5s infinite;
-  }
-  @keyframes pulsar {
-    0%,100%{opacity:1} 50%{opacity:0.3}
-  }
+/* hero */
+.capa-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
 
-  .selecao-titulo {
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(253,246,227,0.45);
-    margin-bottom: 20px;
-    text-align: center;
-  }
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,194,255,0.08);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 5px 14px 5px 8px;
+  font-size: 0.72rem;
+  color: var(--jga-accent);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+.hero-tag span {
+  background: var(--jga-accent);
+  color: var(--jga-blue);
+  border-radius: 100px;
+  padding: 2px 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
 
-  .cards-selecao {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 700px;
-    width: 100%;
-  }
+.hero-titulo {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  color: var(--creme);
+}
+.hero-titulo em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--jga-accent), var(--jga-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-  .card-questionario {
-    flex: 1;
-    min-width: 260px;
-    max-width: 320px;
-    background: rgba(253,246,227,0.04);
-    border: 1.5px solid rgba(245,200,66,0.15);
-    border-radius: 20px;
-    padding: 32px 28px;
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
-    position: relative;
-    overflow: hidden;
-    text-align: left;
-  }
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 48px;
+}
 
-  .card-questionario::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 40%, rgba(245,200,66,0.06));
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
+/* cards de seleção */
+.cards-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
+}
 
-  .card-questionario:hover {
-    transform: translateY(-8px) scale(1.02);
-    border-color: var(--amarelo);
-    background: rgba(253,246,227,0.07);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,200,66,0.3);
-  }
-  .card-questionario:hover::before { opacity: 1; }
+.qcard {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+  overflow: hidden;
+}
+.qcard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.qcard.visitante::after {
+  background: linear-gradient(135deg, rgba(0,194,255,0.06), transparent);
+}
+.qcard.populacao::after {
+  background: linear-gradient(135deg, rgba(0,214,143,0.06), transparent);
+}
+.qcard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.qcard.visitante:hover { border-color: rgba(0,194,255,0.5); }
+.qcard.populacao:hover { border-color: rgba(0,214,143,0.5); }
+.qcard:hover::after { opacity: 1; }
 
-  .card-icone {
-    font-size: 2.4rem;
-    margin-bottom: 16px;
-    display: block;
-    filter: drop-shadow(0 4px 12px rgba(232,103,26,0.4));
-  }
+.qcard-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+}
+.qcard.visitante .qcard-icon { background: rgba(0,194,255,0.12); }
+.qcard.populacao .qcard-icon { background: rgba(0,214,143,0.12); }
 
-  .card-tag {
-    display: inline-block;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 100px;
-    margin-bottom: 12px;
-  }
+.qcard-tipo {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.qcard.visitante .qcard-tipo { color: var(--jga-accent); }
+.qcard.populacao .qcard-tipo { color: var(--jga-green); }
 
-  .card-tag.visitante { background: rgba(232,103,26,0.2); color: var(--laranja); }
-  .card-tag.populacao { background: rgba(26,107,58,0.2); color: #4CAF80; }
+.qcard-titulo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--creme);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
 
-  .card-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--creme);
-    margin-bottom: 10px;
-  }
+.qcard-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
 
-  .card-desc {
-    font-size: 0.83rem;
-    color: rgba(253,246,227,0.5);
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
+.qcard-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+}
+.qcard-qtd {
+  color: rgba(240,244,255,0.3);
+}
+.qcard-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.qcard.visitante .qcard-btn {
+  background: rgba(0,194,255,0.15);
+  color: var(--jga-accent);
+}
+.qcard.populacao .qcard-btn {
+  background: rgba(0,214,143,0.15);
+  color: var(--jga-green);
+}
 
-  .card-perguntas {
-    font-size: 0.78rem;
-    color: rgba(253,246,227,0.35);
-    letter-spacing: 0.08em;
-  }
+/* rodapé capa */
+.capa-footer {
+  position: relative;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-left {
+  font-size: 0.72rem;
+  color: rgba(240,244,255,0.22);
+  line-height: 1.6;
+}
+.footer-left strong { color: rgba(240,244,255,0.4); }
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  color: rgba(240,244,255,0.2);
+}
+.footer-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--jga-green);
+  animation: blink 2s infinite;
+}
 
-  .btn-selecionar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 20px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s;
-    letter-spacing: 0.05em;
-  }
+/* ── APP FORM ── */
+#app { display: none; min-height: 100vh; }
 
-  .btn-selecionar.visitante {
-    background: var(--laranja);
-    color: white;
-  }
-  .btn-selecionar.visitante:hover { background: #d4591a; }
+.app-header {
+  position: sticky;
+  top: 0; z-index: 50;
+  background: rgba(10,22,40,0.96);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-  .btn-selecionar.populacao {
-    background: var(--verde);
-    color: white;
-  }
-  .btn-selecionar.populacao:hover { background: #155c31; }
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.app-logo .logo-mark { width: 30px; height: 30px; font-size: 0.75rem; border-radius: 8px; }
+.app-logo .logo-nome { font-size: 0.82rem; }
+.app-logo .logo-sub { font-size: 0.55rem; }
 
-  .rodape-capa {
-    margin-top: 52px;
-    text-align: center;
-    font-size: 0.75rem;
-    color: rgba(253,246,227,0.22);
-    letter-spacing: 0.12em;
-  }
+.app-header-mid {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+.app-header-tipo {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.app-header-tipo.v { color: var(--jga-accent); }
+.app-header-tipo.p { color: var(--jga-green); }
 
-  /* ========== APP PESQUISA ========== */
-  #app {
-    display: none;
-    min-height: 100vh;
-    background: var(--azul-esc);
-  }
+.app-header-titulo {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--creme);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  .header-app {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(13,27,42,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(245,200,66,0.12);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
+.btn-voltar {
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding: 7px 14px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-voltar:hover { color: var(--creme); border-color: rgba(255,255,255,0.2); }
 
-  .header-info {
-    flex: 1;
-    min-width: 0;
-  }
+/* progress */
+.prog-wrap { height: 2px; background: rgba(255,255,255,0.05); }
+.prog-bar {
+  height: 100%;
+  transition: width 0.6s ease;
+  border-radius: 0 2px 2px 0;
+}
+.prog-bar.v { background: linear-gradient(90deg, var(--jga-accent), var(--jga-green)); }
+.prog-bar.p { background: linear-gradient(90deg, var(--jga-green), #00C2FF); }
 
-  .header-tipo {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-  .header-tipo.visitante { color: var(--laranja); }
-  .header-tipo.populacao { color: #4CAF80; }
+/* form body */
+.form-body {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px 20px 130px;
+}
 
-  .header-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--creme);
-  }
+/* bloco meta */
+.meta-bloco {
+  background: rgba(0,194,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.meta-full { grid-column: 1 / -1; }
 
-  .btn-voltar {
-    background: rgba(253,246,227,0.07);
-    border: 1px solid rgba(253,246,227,0.12);
-    border-radius: 10px;
-    color: var(--creme);
-    font-size: 0.8rem;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .btn-voltar:hover { background: rgba(253,246,227,0.12); }
+.campo-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240,244,255,0.35);
+  margin-bottom: 10px;
+}
 
-  /* barra de progresso */
-  .barra-prog-wrap {
-    background: rgba(255,255,255,0.06);
-    height: 3px;
-  }
-  .barra-prog {
-    height: 100%;
-    background: linear-gradient(90deg, var(--laranja), var(--amarelo));
-    transition: width 0.5s ease;
-    border-radius: 0 2px 2px 0;
-  }
-  .barra-prog.verde {
-    background: linear-gradient(90deg, var(--verde), #4CAF80);
-  }
+.pill-grupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.pill {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.pill input { display: none; }
+.pill span {
+  padding: 5px 13px;
+  border-radius: 100px;
+  border: 1.5px solid rgba(240,244,255,0.1);
+  font-size: 0.78rem;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.pill input:checked + span {
+  border-color: var(--jga-accent);
+  background: rgba(0,194,255,0.12);
+  color: var(--jga-accent);
+  font-weight: 600;
+}
 
-  /* seções do formulário */
-  .secao-form {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 24px 20px 120px;
-  }
+/* input */
+.inp {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  color: var(--creme);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.inp:focus { border-color: var(--jga-accent); background: rgba(0,194,255,0.04); }
+.inp::placeholder { color: rgba(240,244,255,0.18); }
 
-  /* bloco de meta dados */
-  .bloco-meta {
-    background: rgba(253,246,227,0.04);
-    border: 1px solid rgba(245,200,66,0.14);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .bloco-meta-full { grid-column: 1 / -1; }
+/* seção título */
+.sec-titulo {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--jga-accent);
+  padding: 24px 0 12px;
+  border-bottom: 1px solid rgba(0,194,255,0.12);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec-titulo.verde { color: var(--jga-green); border-color: rgba(0,214,143,0.12); }
 
-  .campo-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(253,246,227,0.45);
-    margin-bottom: 8px;
-    display: block;
-  }
+/* pergunta card */
+.pcard {
+  background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--r);
+  padding: 18px 18px 20px;
+  margin-bottom: 12px;
+  transition: border-color 0.25s;
+}
+.pcard:has(input:checked),
+.pcard.preenchida { border-color: rgba(0,194,255,0.2); }
 
-  .radio-grupo {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+.pnum {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240,244,255,0.22);
+  margin-bottom: 5px;
+}
+.ptexto {
+  font-size: 0.92rem;
+  color: var(--creme);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  font-weight: 400;
+}
 
-  .radio-pill {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-  }
+/* opção item */
+.opc-lista { display: flex; flex-direction: column; gap: 7px; }
 
-  .radio-pill input { display: none; }
+.opc-item { display: flex; cursor: pointer; }
+.opc-item input { display: none; }
+.opc-box {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 9px;
+  border: 1.5px solid rgba(255,255,255,0.08);
+  font-size: 0.84rem;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.18s;
+  background: transparent;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.opc-box::before {
+  content: '';
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(240,244,255,0.18);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.opc-item.chk .opc-box::before { border-radius: 4px; }
+.opc-item input:checked + .opc-box {
+  border-color: var(--jga-accent);
+  background: rgba(0,194,255,0.08);
+  color: var(--creme);
+  font-weight: 500;
+}
+.opc-item input:checked + .opc-box::before {
+  background: var(--jga-accent);
+  border-color: var(--jga-accent);
+}
 
-  .radio-pill span {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 6px 14px;
-    border-radius: 100px;
-    border: 1.5px solid rgba(253,246,227,0.12);
-    font-size: 0.8rem;
-    color: rgba(253,246,227,0.6);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-    user-select: none;
-  }
-  .radio-pill input:checked + span {
-    border-color: var(--amarelo);
-    background: rgba(245,200,66,0.12);
-    color: var(--amarelo);
-    font-weight: 500;
-  }
-  .radio-pill span:hover { border-color: rgba(245,200,66,0.4); }
+/* avaliação */
+.aval-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  font-size: 0.8rem;
+  margin-top: 8px;
+}
+.aval-table th {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240,244,255,0.25);
+  padding: 0 6px 8px;
+  text-align: center;
+}
+.aval-table th:first-child { text-align: left; min-width: 120px; }
+.aval-table td {
+  background: rgba(255,255,255,0.025);
+  padding: 9px 6px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--muted);
+}
+.aval-table td:first-child {
+  text-align: left;
+  padding-left: 12px;
+  border-radius: 8px 0 0 8px;
+  font-size: 0.8rem;
+  color: rgba(240,244,255,0.65);
+}
+.aval-table td:last-child { border-radius: 0 8px 8px 0; }
 
-  /* pergunta card */
-  .pergunta-card {
-    background: rgba(253,246,227,0.03);
-    border: 1px solid rgba(253,246,227,0.08);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 14px;
-    transition: border-color 0.25s;
-  }
-  .pergunta-card:has(input:checked),
-  .pergunta-card.tem-valor { border-color: rgba(245,200,66,0.25); }
+.raval { display: none; }
+.raval + label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: rgba(240,244,255,0.3);
+  transition: all 0.18s;
+}
+.raval:checked + label {
+  background: var(--jga-accent);
+  border-color: var(--jga-accent);
+  color: var(--jga-blue);
+}
 
-  .perg-num {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(253,246,227,0.3);
-    margin-bottom: 6px;
-  }
+/* gastos */
+.gastos { display: grid; gap: 10px; margin-top: 12px; }
+.gasto-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gasto-lbl {
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-width: 140px;
+}
+.gasto-prefix {
+  font-size: 0.78rem;
+  color: rgba(240,244,255,0.3);
+  white-space: nowrap;
+}
+.gasto-inp {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.84rem;
+  color: var(--creme);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.gasto-inp:focus { border-color: var(--jga-accent); }
+.gasto-inp::placeholder { color: rgba(240,244,255,0.15); }
 
-  .perg-texto {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--creme);
-    line-height: 1.5;
-    margin-bottom: 16px;
-  }
+/* footer form */
+.form-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(10,22,40,0.98);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  padding: 14px 20px;
+}
+.form-footer-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.prog-info {
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.prog-info strong { color: var(--jga-accent); }
 
-  .opcoes-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+.btn-enviar {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.04em;
+}
+.btn-enviar.v {
+  background: linear-gradient(135deg, var(--jga-accent), #0099CC);
+  color: var(--jga-blue);
+}
+.btn-enviar.p {
+  background: linear-gradient(135deg, var(--jga-green), #00A86B);
+  color: var(--jga-blue);
+}
+.btn-enviar:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
 
-  .opcao-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-  }
-  .opcao-item input { display: none; }
-  .opcao-box {
-    flex: 1;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1.5px solid rgba(253,246,227,0.1);
-    font-size: 0.85rem;
-    color: rgba(253,246,227,0.7);
-    cursor: pointer;
-    transition: all 0.2s;
-    background: transparent;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .opcao-box::before {
-    content: '';
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(253,246,227,0.2);
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-  .opcao-item input:checked + .opcao-box {
-    border-color: var(--amarelo);
-    background: rgba(245,200,66,0.1);
-    color: var(--creme);
-    font-weight: 500;
-  }
-  .opcao-item input:checked + .opcao-box::before {
-    background: var(--amarelo);
-    border-color: var(--amarelo);
-    box-shadow: 0 0 0 3px rgba(245,200,66,0.2);
-  }
-  .opcao-item.checkbox input:checked + .opcao-box::before {
-    border-radius: 4px;
-  }
-  .opcao-box:hover { border-color: rgba(245,200,66,0.3); }
+/* ── SUCESSO ── */
+#sucesso {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 48px 24px;
+}
+.suc-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(0,214,143,0.12);
+  border: 2px solid rgba(0,214,143,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 28px;
+  animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes popIn { 0%{transform:scale(0);opacity:0} 100%{transform:scale(1);opacity:1} }
+.suc-titulo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--creme);
+  margin-bottom: 10px;
+}
+.suc-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 320px;
+  margin: 0 auto 12px;
+  line-height: 1.6;
+}
+.suc-id {
+  font-size: 0.72rem;
+  color: rgba(240,244,255,0.25);
+  font-family: monospace;
+  margin-bottom: 36px;
+  letter-spacing: 0.1em;
+}
+.btn-nova {
+  padding: 14px 32px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--jga-accent);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-nova:hover { background: rgba(0,194,255,0.08); transform: translateY(-2px); }
 
-  /* input text / number */
-  .input-texto, .input-numero {
-    width: 100%;
-    background: rgba(253,246,227,0.05);
-    border: 1.5px solid rgba(253,246,227,0.1);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    color: var(--creme);
-    outline: none;
-    transition: border-color 0.2s;
-    -webkit-appearance: none;
-  }
-  .input-texto:focus, .input-numero:focus {
-    border-color: var(--amarelo);
-    background: rgba(245,200,66,0.06);
-  }
-  .input-texto::placeholder, .input-numero::placeholder {
-    color: rgba(253,246,227,0.25);
-  }
-
-  /* avaliação tabela */
-  .avaliacao-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 6px;
-    font-size: 0.82rem;
-  }
-  .avaliacao-table th {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(253,246,227,0.3);
-    padding: 0 8px 8px;
-    text-align: center;
-  }
-  .avaliacao-table th:first-child { text-align: left; }
-  .avaliacao-table td {
-    padding: 10px 8px;
-    background: rgba(253,246,227,0.03);
-    text-align: center;
-    color: rgba(253,246,227,0.7);
-    border: 1px solid rgba(253,246,227,0.06);
-  }
-  .avaliacao-table td:first-child {
-    text-align: left;
-    border-radius: 8px 0 0 8px;
-    padding-left: 12px;
-    font-size: 0.83rem;
-  }
-  .avaliacao-table td:last-child { border-radius: 0 8px 8px 0; }
-
-  .radio-aval { display: none; }
-  .radio-aval + label {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    border: 1.5px solid rgba(253,246,227,0.12);
-    cursor: pointer;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: rgba(253,246,227,0.35);
-    transition: all 0.2s;
-  }
-  .radio-aval:checked + label {
-    background: var(--amarelo);
-    border-color: var(--amarelo);
-    color: var(--azul-esc);
-    font-weight: 700;
-  }
-
-  /* gastos */
-  .gastos-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  .gasto-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .gasto-label {
-    font-size: 0.82rem;
-    color: rgba(253,246,227,0.55);
-    min-width: 130px;
-  }
-  .gasto-input {
-    flex: 1;
-    background: rgba(253,246,227,0.05);
-    border: 1.5px solid rgba(253,246,227,0.1);
-    border-radius: 8px;
-    padding: 9px 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    color: var(--creme);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .gasto-input:focus { border-color: var(--amarelo); }
-  .gasto-input::placeholder { color: rgba(253,246,227,0.2); }
-  .gasto-prefix {
-    font-size: 0.8rem;
-    color: rgba(253,246,227,0.35);
-    white-space: nowrap;
-  }
-
-  /* seção título dentro do form */
-  .secao-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--amarelo);
-    padding: 20px 0 10px;
-    border-bottom: 1px solid rgba(245,200,66,0.15);
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
-  }
-
-  /* footer fixo */
-  .footer-form {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: rgba(13,27,42,0.97);
-    backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(245,200,66,0.12);
-    padding: 16px 20px;
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    max-width: 640px;
-    margin: 0 auto;
-    left: 50%; transform: translateX(-50%);
-  }
-
-  .btn-enviar {
-    flex: 1;
-    max-width: 320px;
-    padding: 16px 24px;
-    border-radius: 14px;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.25s;
-    letter-spacing: 0.05em;
-  }
-  .btn-enviar.visitante {
-    background: linear-gradient(135deg, var(--laranja), var(--vermelho));
-    color: white;
-    box-shadow: 0 4px 20px rgba(232,103,26,0.4);
-  }
-  .btn-enviar.populacao {
-    background: linear-gradient(135deg, var(--verde), #2E8B57);
-    color: white;
-    box-shadow: 0 4px 20px rgba(26,107,58,0.4);
-  }
-  .btn-enviar:hover { transform: translateY(-2px); filter: brightness(1.1); }
-  .btn-enviar:active { transform: translateY(0); }
-
-  /* ========== TELA SUCESSO ========== */
-  #tela-sucesso {
-    display: none;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 40px 24px;
-    background:
-      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(26,107,58,0.2) 0%, transparent 70%),
-      var(--azul-esc);
-  }
-
-  .sucesso-icone {
-    font-size: 5rem;
-    margin-bottom: 24px;
-    filter: drop-shadow(0 8px 32px rgba(76,175,128,0.6));
-    animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  @keyframes popIn {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-
-  .sucesso-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--creme);
-    margin-bottom: 12px;
-  }
-
-  .sucesso-sub {
-    font-size: 1rem;
-    color: rgba(253,246,227,0.5);
-    max-width: 320px;
-    line-height: 1.6;
-    margin-bottom: 36px;
-  }
-
-  .btn-nova {
-    padding: 16px 32px;
-    border-radius: 14px;
-    border: 1.5px solid var(--amarelo);
-    background: transparent;
-    color: var(--amarelo);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s;
-    letter-spacing: 0.05em;
-  }
-  .btn-nova:hover { background: rgba(245,200,66,0.1); transform: translateY(-2px); }
-
-  /* util */
-  .hidden { display: none !important; }
-  .mt-12 { margin-top: 12px; }
-
-  @media (max-width: 500px) {
-    .cards-selecao { flex-direction: column; align-items: center; }
-    .card-questionario { max-width: 100%; min-width: unset; }
-    .bloco-meta { grid-template-columns: 1fr; }
-    .bloco-meta-full { grid-column: 1; }
-    .gasto-label { min-width: 100px; font-size: 0.78rem; }
-    .avaliacao-table th, .avaliacao-table td { padding: 8px 4px; font-size: 0.75rem; }
-  }
+/* ── utils ── */
+.mt8 { margin-top: 8px; }
+.mt12 { margin-top: 12px; }
+@media (max-width: 480px) {
+  .cards-wrap { grid-template-columns: 1fr; }
+  .meta-bloco { grid-template-columns: 1fr; }
+  .meta-full { grid-column: 1; }
+  .gasto-lbl { min-width: 90px; font-size: 0.75rem; }
+  .aval-table { font-size: 0.72rem; }
+  .aval-table th, .aval-table td { padding: 7px 3px; }
+  .hero-titulo { font-size: 2rem; }
+  .capa-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
 </style>
 </head>
 <body>
 
-<!-- BANDEIRINHAS GLOBAIS -->
-<div class="bandeirinhas" id="bandeirinhas">
-  <div class="fio"></div>
-</div>
+<!-- DEV INDICATORS -->
+<div class="dev-ribbon"></div>
+<div class="dev-badge">DEV · v0.1.0</div>
 
-<!-- ===== CAPA ===== -->
+<!-- ═══════════════════════════════════════
+     CAPA
+═══════════════════════════════════════ -->
 <section id="capa">
-  <div class="logo-evento">Canaã Junina</div>
-  <div class="sub-evento">Festival 2025 · Canaã dos Carajás — PA</div>
-  <div class="badge-pesquisa">Pesquisa de Opinião Pública</div>
+  <div class="grid-bg"></div>
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
 
-  <div class="selecao-titulo">Selecione o questionário</div>
-
-  <div class="cards-selecao">
-
-    <!-- CARD VISITANTE -->
-    <div class="card-questionario" onclick="iniciarPesquisa('visitante')">
-      <span class="card-icone">🎪</span>
-      <span class="card-tag visitante">Visitante</span>
-      <div class="card-titulo">Perfil do Participante</div>
-      <div class="card-desc">Para quem está participando do Festival Canaã Junina 2025 — moradores ou visitantes de outras cidades.</div>
-      <div class="card-perguntas">25 perguntas · ~5 min</div>
-      <button class="btn-selecionar visitante">Iniciar <span>→</span></button>
+  <div class="capa-header">
+    <div class="logo-jga">
+      <div class="logo-mark">JGA</div>
+      <div class="logo-texto">
+        <span class="logo-nome">Just Go Access</span>
+        <span class="logo-sub">Software & Technology</span>
+      </div>
     </div>
-
-    <!-- CARD POPULAÇÃO -->
-    <div class="card-questionario" onclick="iniciarPesquisa('populacao')">
-      <span class="card-icone">🏘️</span>
-      <span class="card-tag populacao">População</span>
-      <div class="card-titulo">Festival & Comunidade</div>
-      <div class="card-desc">Para moradores de Canaã dos Carajás — avaliação do Festival 2024 e expectativas para 2025.</div>
-      <div class="card-perguntas">16 perguntas · ~4 min</div>
-      <button class="btn-selecionar populacao">Iniciar <span>→</span></button>
+    <div class="cliente-badge">
+      Solução desenvolvida para<br>
+      <strong>Qualiquant Gauss · Pesquisa de Opinião</strong>
     </div>
-
   </div>
 
-  <div class="rodape-capa">QUALIQUANT GAUSS · Pesquisa de Opinião Pública</div>
+  <div class="capa-hero">
+    <div class="hero-tag">
+      <span>2025</span>
+      Sistema Digital de Coleta · Festival Canaã Junina
+    </div>
+
+    <h1 class="hero-titulo">
+      Pesquisa de<br>
+      <em>Opinião Pública</em>
+    </h1>
+
+    <p class="hero-desc">
+      Plataforma digital de coleta de dados em campo desenvolvida pela Just Go Access
+      sob demanda da Qualiquant Gauss para o Festival Canaã Junina 2025,
+      Canaã dos Carajás — PA.
+    </p>
+
+    <div class="cards-wrap">
+      <!-- VISITANTE -->
+      <div class="qcard visitante" onclick="iniciar('v')">
+        <div class="qcard-icon">🎪</div>
+        <div class="qcard-tipo">Questionário A</div>
+        <div class="qcard-titulo">Perfil do Visitante</div>
+        <div class="qcard-desc">Participantes do festival — moradores e visitantes de outras cidades.</div>
+        <div class="qcard-meta">
+          <span class="qcard-qtd">25 questões</span>
+          <button class="qcard-btn">Iniciar →</button>
+        </div>
+      </div>
+
+      <!-- POPULAÇÃO -->
+      <div class="qcard populacao" onclick="iniciar('p')">
+        <div class="qcard-icon">🏘️</div>
+        <div class="qcard-tipo">Questionário B</div>
+        <div class="qcard-titulo">População Local</div>
+        <div class="qcard-desc">Moradores de Canaã — avaliação 2024 e expectativas 2025.</div>
+        <div class="qcard-meta">
+          <span class="qcard-qtd">16 questões</span>
+          <button class="qcard-btn">Iniciar →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="capa-footer">
+      <div class="footer-left">
+        <strong>Just Go Access</strong> · Software & Technology<br>
+        Sistema de Coleta Digital — Ambiente de Desenvolvimento
+      </div>
+      <div class="footer-right">
+        <div class="footer-dot"></div>
+        Build dev · MySQL ready · v0.1.0
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ===== APP PESQUISA ===== -->
+<!-- ═══════════════════════════════════════
+     APP FORM
+═══════════════════════════════════════ -->
 <div id="app">
-  <div class="header-app">
+  <div class="app-header">
     <button class="btn-voltar" onclick="voltarCapa()">← Voltar</button>
-    <div class="header-info">
-      <div class="header-tipo" id="header-tipo"></div>
-      <div class="header-titulo" id="header-titulo"></div>
+    <div class="app-header-mid">
+      <div class="app-header-tipo" id="h-tipo"></div>
+      <div class="app-header-titulo" id="h-titulo"></div>
     </div>
-    <div style="font-size:0.78rem;color:rgba(253,246,227,0.35);white-space:nowrap;" id="prog-texto"></div>
+    <div style="font-size:0.72rem;color:var(--muted);white-space:nowrap;" id="h-prog"></div>
   </div>
-  <div class="barra-prog-wrap">
-    <div class="barra-prog" id="barra-prog" style="width:0%"></div>
+  <div class="prog-wrap">
+    <div class="prog-bar" id="prog-bar" style="width:0%"></div>
   </div>
-
-  <div class="secao-form" id="form-conteudo"></div>
-
-  <div class="footer-form">
-    <button class="btn-enviar" id="btn-enviar" onclick="enviarPesquisa()">Enviar Pesquisa</button>
+  <div class="form-body" id="form-body"></div>
+  <div class="form-footer">
+    <div class="form-footer-inner">
+      <div class="prog-info" id="prog-label">0% concluído</div>
+      <button class="btn-enviar" id="btn-env" onclick="enviar()">Salvar Registro</button>
+    </div>
   </div>
 </div>
 
-<!-- ===== SUCESSO ===== -->
-<div id="tela-sucesso" style="display:none;flex-direction:column;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:40px 24px;background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(26,107,58,0.2) 0%, transparent 70%), var(--azul-esc);">
-  <div class="sucesso-icone">✅</div>
-  <div class="sucesso-titulo">Pesquisa enviada!</div>
-  <div class="sucesso-sub">Obrigado pela participação. Sua opinião é essencial para o crescimento do Festival Canaã Junina.</div>
-  <button class="btn-nova" onclick="novaPesquisa()">Nova Pesquisa</button>
+<!-- ═══════════════════════════════════════
+     SUCESSO
+═══════════════════════════════════════ -->
+<div id="sucesso">
+  <div class="suc-icon">✓</div>
+  <div class="suc-titulo">Registro salvo!</div>
+  <div class="suc-sub">Os dados foram coletados com sucesso e estão prontos para sincronização com o banco de dados.</div>
+  <div class="suc-id" id="suc-id"></div>
+  <button class="btn-nova" onclick="voltarCapa()">Nova entrevista</button>
 </div>
 
 <script>
-/* ─── Bandeirinhas dinâmicas ─── */
-const cores = ['#F5C842','#E8671A','#C9282D','#1A6B3A','#1565C0','#7B1FA2'];
-const wrap = document.getElementById('bandeirinhas');
-const total = Math.ceil(window.innerWidth / 28) + 4;
-for(let i=0;i<total;i++){
-  const b = document.createElement('div');
-  b.className = 'bandeirinha';
-  b.style.background = cores[i % cores.length];
-  b.style.animationDelay = (i * 0.12) + 's';
-  wrap.appendChild(b);
-}
-
+/* ──────────────────────────────────
+   HELPERS
+────────────────────────────────── */
 let tipoAtivo = null;
 
-/* ─── Iniciar pesquisa ─── */
-function iniciarPesquisa(tipo) {
-  tipoAtivo = tipo;
-  document.getElementById('capa').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  document.getElementById('tela-sucesso').style.display = 'none';
-
-  const headerTipo = document.getElementById('header-tipo');
-  const headerTitulo = document.getElementById('header-titulo');
-  const btnEnviar = document.getElementById('btn-enviar');
-  const barraP = document.getElementById('barra-prog');
-
-  if(tipo === 'visitante') {
-    headerTipo.textContent = '🎪 Visitante';
-    headerTipo.className = 'header-tipo visitante';
-    headerTitulo.textContent = 'Perfil do Participante';
-    btnEnviar.className = 'btn-enviar visitante';
-    barraP.className = 'barra-prog';
-    renderFormVisitante();
-  } else {
-    headerTipo.textContent = '🏘️ População';
-    headerTipo.className = 'header-tipo populacao';
-    headerTitulo.textContent = 'Festival & Comunidade';
-    btnEnviar.className = 'btn-enviar populacao';
-    barraP.className = 'barra-prog verde';
-    renderFormPopulacao();
-  }
-
-  atualizarProgresso();
-  window.scrollTo(0,0);
-}
-
-function voltarCapa() {
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('capa').style.display = 'flex';
-  document.getElementById('tela-sucesso').style.display = 'none';
-}
-
-function novaPesquisa() {
-  document.getElementById('tela-sucesso').style.display = 'none';
-  document.getElementById('capa').style.display = 'flex';
-}
-
-function atualizarProgresso() {
-  const total = document.querySelectorAll('.pergunta-card').length;
-  const resp = document.querySelectorAll('.pergunta-card input:checked, .pergunta-card.tem-valor').length;
-  const pct = total > 0 ? Math.round((resp/total)*100) : 0;
-  document.getElementById('barra-prog').style.width = pct + '%';
-  document.getElementById('prog-texto').textContent = pct + '%';
-}
-
-document.addEventListener('change', atualizarProgresso);
-
-/* ─── helpers ─── */
-function criarRadio(nome, valor, label, tipo='radio') {
-  const extraClass = tipo === 'checkbox' ? ' checkbox' : '';
-  return `<label class="opcao-item${extraClass}">
-    <input type="${tipo}" name="${nome}" value="${encodeURIComponent(valor)}">
-    <div class="opcao-box">${label}</div>
+function r(n,v,l,t='radio'){
+  const cls = t==='checkbox' ? ' chk' : '';
+  return `<label class="opc-item${cls}">
+    <input type="${t}" name="q${n}" value="${encodeURIComponent(v)}">
+    <div class="opc-box">${l}</div>
   </label>`;
 }
 
-function pergunta(num, texto, opcoes, tipo='radio', extra='') {
-  const opcoesHtml = opcoes.map(o => criarRadio('p'+num, o, o, tipo)).join('');
-  return `<div class="pergunta-card">
-    <div class="perg-num">Pergunta ${num}</div>
-    <div class="perg-texto">${texto}</div>
-    <div class="opcoes-grid">${opcoesHtml}${extra}</div>
+function perg(n, txt, opcoes, tipo='radio', extra=''){
+  return `<div class="pcard">
+    <div class="pnum">Questão ${n < 10 ? '0'+n : n}</div>
+    <div class="ptexto">${txt}</div>
+    <div class="opc-lista">${opcoes.map(o=>r(n,o,o,tipo)).join('')}${extra}</div>
   </div>`;
 }
 
-function perguntaTexto(num, texto, ph='') {
-  return `<div class="pergunta-card">
-    <div class="perg-num">Pergunta ${num}</div>
-    <div class="perg-texto">${texto}</div>
-    <input class="input-texto mt-12" type="text" placeholder="${ph||'Sua resposta...'}" oninput="this.closest('.pergunta-card').classList.toggle('tem-valor',this.value.length>0);atualizarProgresso()">
+function pertexto(n, txt, ph=''){
+  return `<div class="pcard">
+    <div class="pnum">Questão ${n < 10 ? '0'+n : n}</div>
+    <div class="ptexto">${txt}</div>
+    <input class="inp mt12" type="text" placeholder="${ph||'Sua resposta...'}"
+      oninput="this.closest('.pcard').classList.toggle('preenchida',this.value.length>0);prog()">
   </div>`;
 }
 
-function avaliacao(num, titulo, itens, escalas=['Ótimo','Bom','Regular','Não Satisf.']) {
-  const ths = escalas.map(e=>`<th>${e}</th>`).join('');
+function outroCampo(){
+  return `<label class="opc-item">
+    <div class="opc-box" style="flex-direction:column;align-items:flex-start;gap:6px;">
+      <span style="font-size:0.7rem;color:rgba(240,244,255,0.3)">Outros — especifique:</span>
+      <input class="inp" type="text" placeholder="..." style="margin:0;width:100%">
+    </div></label>`;
+}
+
+function aval(n, tit, itens){
+  const esc = ['Ótimo','Bom','Regular','N. Satisf.'];
+  const ths = esc.map(e=>`<th>${e}</th>`).join('');
   const rows = itens.map((it,i)=>`<tr>
     <td>${it}</td>
-    ${escalas.map((_,j)=>`<td>
-      <input type="radio" class="radio-aval" id="a${num}_${i}_${j}" name="a${num}_${i}" value="${j}">
-      <label for="a${num}_${i}_${j}">${escalas[j].charAt(0)}</label>
+    ${esc.map((_,j)=>`<td>
+      <input type="radio" class="raval" id="a${n}_${i}_${j}" name="a${n}_${i}" value="${j}">
+      <label for="a${n}_${i}_${j}">${esc[j].charAt(0)}</label>
     </td>`).join('')}
   </tr>`).join('');
-
-  return `<div class="pergunta-card">
-    <div class="perg-num">Pergunta ${num}</div>
-    <div class="perg-texto">${titulo}</div>
-    <div style="overflow-x:auto;margin-top:8px">
-    <table class="avaliacao-table">
+  return `<div class="pcard">
+    <div class="pnum">Questão ${n < 10 ? '0'+n : n}</div>
+    <div class="ptexto">${tit}</div>
+    <div style="overflow-x:auto">
+    <table class="aval-table">
       <thead><tr><th>Item</th>${ths}</tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
   </div>`;
 }
 
-/* ─── FORM VISITANTE ─── */
-function renderFormVisitante() {
-  const c = document.getElementById('form-conteudo');
-  c.innerHTML = `
-  <!-- META -->
-  <div class="bloco-meta">
+function prog(){
+  const total = document.querySelectorAll('.pcard').length;
+  const resp  = document.querySelectorAll('.pcard input:checked, .pcard.preenchida').length;
+  const pct   = total > 0 ? Math.round((resp/total)*100) : 0;
+  document.getElementById('prog-bar').style.width = pct+'%';
+  document.getElementById('h-prog').textContent = pct+'%';
+  const lbl = document.getElementById('prog-label');
+  if(lbl) lbl.innerHTML = `<strong>${pct}%</strong> concluído`;
+}
+document.addEventListener('change', prog);
+
+/* ──────────────────────────────────
+   NAVEGAÇÃO
+────────────────────────────────── */
+function iniciar(tipo){
+  tipoAtivo = tipo;
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display  = 'block';
+  document.getElementById('sucesso').style.display = 'none';
+
+  const bar = document.getElementById('prog-bar');
+  const btn = document.getElementById('btn-env');
+  const ht  = document.getElementById('h-tipo');
+
+  if(tipo === 'v'){
+    ht.textContent = '🎪 Questionário A — Visitante';
+    ht.className = 'app-header-tipo v';
+    document.getElementById('h-titulo').textContent = 'Perfil do Participante';
+    bar.className = 'prog-bar v';
+    btn.className = 'btn-enviar v';
+    renderVisitante();
+  } else {
+    ht.textContent = '🏘️ Questionário B — População';
+    ht.className = 'app-header-tipo p';
+    document.getElementById('h-titulo').textContent = 'Comunidade Local';
+    bar.className = 'prog-bar p';
+    btn.className = 'btn-enviar p';
+    renderPopulacao();
+  }
+  prog();
+  window.scrollTo(0,0);
+}
+
+function voltarCapa(){
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('sucesso').style.display = 'none';
+  document.getElementById('capa').style.display = 'flex';
+}
+
+/* ──────────────────────────────────
+   META BLOCO COMUM
+────────────────────────────────── */
+function metaBloco(){
+  return `<div class="meta-bloco">
     <div>
       <span class="campo-label">Sexo</span>
-      <div class="radio-grupo">
-        <label class="radio-pill"><input type="radio" name="sexo" value="M"><span>Masculino</span></label>
-        <label class="radio-pill"><input type="radio" name="sexo" value="F"><span>Feminino</span></label>
+      <div class="pill-grupo">
+        <label class="pill"><input type="radio" name="sexo" value="M"><span>Masculino</span></label>
+        <label class="pill"><input type="radio" name="sexo" value="F"><span>Feminino</span></label>
       </div>
     </div>
     <div>
-      <span class="campo-label">Data</span>
-      <input class="input-texto" type="date" name="data">
+      <span class="campo-label">Data da coleta</span>
+      <input class="inp" type="date" name="data_coleta">
     </div>
-    <div class="bloco-meta-full">
+    <div class="meta-full">
       <span class="campo-label">Escolaridade</span>
-      <div class="radio-grupo">
-        <label class="radio-pill"><input type="radio" name="esc" value="Analfabeto"><span>Analfabeto</span></label>
-        <label class="radio-pill"><input type="radio" name="esc" value="1º Grau"><span>1º Grau</span></label>
-        <label class="radio-pill"><input type="radio" name="esc" value="2º Grau"><span>2º Grau</span></label>
-        <label class="radio-pill"><input type="radio" name="esc" value="Superior"><span>Superior</span></label>
+      <div class="pill-grupo">
+        <label class="pill"><input type="radio" name="esc" value="Analfabeto"><span>Analfabeto</span></label>
+        <label class="pill"><input type="radio" name="esc" value="1º Grau"><span>1º Grau</span></label>
+        <label class="pill"><input type="radio" name="esc" value="2º Grau"><span>2º Grau</span></label>
+        <label class="pill"><input type="radio" name="esc" value="Superior"><span>Superior</span></label>
       </div>
     </div>
-    <div class="bloco-meta-full">
+    <div class="meta-full">
       <span class="campo-label">Faixa Etária</span>
-      <div class="radio-grupo">
-        <label class="radio-pill"><input type="radio" name="faixa" value="16-24"><span>16–24</span></label>
-        <label class="radio-pill"><input type="radio" name="faixa" value="25-34"><span>25–34</span></label>
-        <label class="radio-pill"><input type="radio" name="faixa" value="35-59"><span>35–59</span></label>
-        <label class="radio-pill"><input type="radio" name="faixa" value="60+"><span>+60</span></label>
+      <div class="pill-grupo">
+        <label class="pill"><input type="radio" name="faixa" value="16-24"><span>16–24 anos</span></label>
+        <label class="pill"><input type="radio" name="faixa" value="25-34"><span>25–34 anos</span></label>
+        <label class="pill"><input type="radio" name="faixa" value="35-59"><span>35–59 anos</span></label>
+        <label class="pill"><input type="radio" name="faixa" value="60+"><span>60+ anos</span></label>
       </div>
     </div>
-    <div class="bloco-meta-full">
-      <span class="campo-label">Pesquisador</span>
-      <input class="input-texto" type="text" name="pesquisador" placeholder="Nome do pesquisador">
+    <div class="meta-full">
+      <span class="campo-label">Nome do Pesquisador</span>
+      <input class="inp" type="text" name="pesquisador" placeholder="Identificação do entrevistador...">
     </div>
-  </div>
+  </div>`;
+}
 
-  <div class="secao-titulo">📋 Informações do Participante</div>
+/* ──────────────────────────────────
+   VISITANTE
+────────────────────────────────── */
+function renderVisitante(){
+  document.getElementById('form-body').innerHTML = `
+  ${metaBloco()}
 
-  ${pergunta(1,'Qual a sua renda familiar?',[
+  <div class="sec-titulo">01 · Perfil Socioeconômico</div>
+
+  ${perg(1,'Qual a sua renda familiar?',[
     'Até 1 salário mínimo','De 1 a 2 salários mínimos',
-    'De 3 a 5 salários mínimos','Mais de 5 salários mínimos'
-  ])}
+    'De 3 a 5 salários mínimos','Mais de 5 salários mínimos'])}
 
-  ${pergunta(2,'Por qual meio de comunicação você teve conhecimento sobre o Festival Canaã Junina 2025?',[
-    'Já conhece','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp',
-    'Facebook/Instagram','Mora próximo','Carro de som','Trabalho',
-    'Venho todo ano','Não sabe/Não opinou'
-  ],'checkbox',`<label class="opcao-item">
-    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
-      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
-      <input class="input-texto" type="text" placeholder="Especifique..." style="margin:0">
-    </div></label>`)}
+  ${perg(2,'Por qual meio de comunicação você teve conhecimento sobre o Festival Canaã Junina 2025?',[
+    'Já conhecia o festival','Sites da Prefeitura','Rádio/TV',
+    'Celular/WhatsApp','Facebook/Instagram','Mora próximo ao local',
+    'Carro de som','Indicação do trabalho','Venho todo ano','Não sabe/Não opinou'
+  ],'checkbox',outroCampo())}
 
-  ${pergunta(3,'Você veio ao evento:',[
-    'Sozinho','Com parentes/casal','Amigos/colegas','Não Sabe/Não Opinou'
-  ])}
+  <div class="sec-titulo">02 · Comportamento no Evento</div>
 
-  ${pergunta(4,'Quantos dias você irá participar do evento?',[
-    '1 a 5 dias','5 a 10 dias','Todos os dias','Não Sabe/Não Opinou'
-  ])}
+  ${perg(3,'Você veio ao evento:',['Sozinho','Com parentes/casal','Amigos/colegas','Não Sabe/Não Opinou'])}
+  ${perg(4,'Quantos dias você irá participar do evento?',['1 a 5 dias','5 a 10 dias','Todos os dias','Não Sabe/Não Opinou'])}
+  ${perg(5,'Qual meio de transporte você utilizou?',
+    ['Carro próprio','Carona','Táxi/Uber','Ônibus de linha','Não Sabe/Não Opinou'],
+    'radio', outroCampo())}
 
-  ${pergunta(5,'Qual meio de transporte você utilizou para chegar no evento?',[
-    'Carro próprio','Carona','Táxi/Uber','Ônibus de linha','Não Sabe/Não Opinou'
-  ],'radio',`<label class="opcao-item">
-    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
-      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
-      <input class="input-texto" type="text" placeholder="Especifique...">
-    </div></label>`)}
+  <div class="sec-titulo">03 · Origem & Hospedagem</div>
 
-  ${pergunta(6,'Você mora em Canaã dos Carajás?',['Sim','Não'])}
+  ${perg(6,'Você mora em Canaã dos Carajás?',['Sim','Não'])}
+  ${pertexto(7,'Se não, qual cidade você reside?','Nome da cidade...')}
+  ${perg(8,'Se reside em outra cidade, você pernoitou em Canaã dos Carajás?',['Sim','Não'])}
+  ${perg(9,'Se sim, onde você pernoitou?',
+    ['Residente Local','Casa de Amigos/Parentes','Hotel/Pousada','Não Sabe/Não Opinou'],
+    'radio', outroCampo())}
 
-  ${perguntaTexto(7,'Se não, qual cidade você reside?','Nome da cidade...')}
+  <div class="sec-titulo">04 · Impacto Econômico</div>
 
-  ${pergunta(8,'Se reside em outra cidade, você pernoitou em Canaã dos Carajás?',['Sim','Não'])}
-
-  ${pergunta(9,'Se sim, onde você pernoitou?',[
-    'Residente Local','Casa de Amigos/Parentes','Hotel/Pousada','Não Sabe/Não Opinou'
-  ],'radio',`<label class="opcao-item">
-    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
-      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
-      <input class="input-texto" type="text" placeholder="Especifique...">
-    </div></label>`)}
-
-  <!-- GASTOS -->
-  <div class="pergunta-card">
-    <div class="perg-num">Pergunta 10</div>
-    <div class="perg-texto">Detalhamento de gastos:</div>
-    <div class="gastos-grid mt-12">
-      ${[['Hospedagem','hosp'],['Alimentação','alim'],['Atrativos/Entretenimento','atrat'],['Transporte/Combustível','transp'],['Compras/Lembranças','compras']].map(([l,n])=>`
-      <div class="gasto-item">
-        <span class="gasto-label">${l}</span>
+  <div class="pcard">
+    <div class="pnum">Questão 10</div>
+    <div class="ptexto">Detalhamento de gastos durante o evento (R$):</div>
+    <div class="gastos">
+      ${[['Hospedagem','hosp'],['Alimentação','alim'],
+         ['Atrativos/Entretenimento','atrat'],['Transporte/Combustível','transp'],
+         ['Compras/Lembranças','compras']].map(([l,k])=>`
+      <div class="gasto-row">
+        <span class="gasto-lbl">${l}</span>
         <span class="gasto-prefix">R$</span>
-        <input class="gasto-input" type="number" name="gasto_${n}" placeholder="0,00" min="0">
+        <input class="gasto-inp" type="number" name="gasto_${k}" min="0" placeholder="0,00">
       </div>`).join('')}
     </div>
   </div>
 
-  <div class="secao-titulo">🎯 Motivação & Consumo</div>
+  ${perg(11,'O Festival foi o principal motivo da sua vinda à cidade?',['Sim','Não'])}
+  ${perg(12,'Se sim, qual o motivo principal:',
+    ['Programação Cultural','Comidas Típicas','Atrações musicais e shows',
+     'Competições e danças típicas','Negócios/trabalho','Não Sabe/Não Opinou'],
+    'radio', outroCampo())}
+  ${perg(13,'Se não, qual o motivo da vinda:',
+    ['Negócios/trabalho','Visita amigos/parentes','Lazer/descanso','Não Sabe/Não Opinou'],
+    'radio', outroCampo())}
+  ${perg(14,'Pretende comprar no comércio local (vestuário, beleza, supermercado, etc.)?',['Sim','Não'])}
+  ${perg(15,'Se sim, qual a média de gasto estimada:',
+    ['R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000','Não Sabe/Não Opinou'])}
+  ${perg(16,'Gasto estimado total no evento:',
+    ['R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000','Não Sabe/Não Opinou'])}
 
-  ${pergunta(11,'O Festival Canaã Junina 2025 foi o principal motivo da sua vinda à cidade?',['Sim','Não'])}
-
-  ${pergunta(12,'Se sim, qual foi o motivo:',[
-    'Programação Cultural','Comidas Típicas','Atrações musicais e shows',
-    'Competições e danças típicas','Negócios/trabalho','Não Sabe/Não Opinou'
-  ],'radio',`<label class="opcao-item">
-    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
-      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
-      <input class="input-texto" type="text" placeholder="Especifique...">
-    </div></label>`)}
-
-  ${pergunta(13,'Se não, qual foi o motivo:',[
-    'Negócios/trabalho','Visita amigos/parentes','Lazer/descanso','Não Sabe/Não Opinou'
-  ],'radio',`<label class="opcao-item">
-    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
-      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
-      <input class="input-texto" type="text" placeholder="Especifique...">
-    </div></label>`)}
-
-  ${pergunta(14,'Você pretende adquirir/comprar no comércio da cidade (vestuário, beleza, supermercado, etc.)?',['Sim','Não'])}
-
-  ${pergunta(15,'Se sim, qual a média do valor gasto:',[
-    'R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000','Não Sabe/Não Opinou'
-  ])}
-
-  ${pergunta(16,'Qual será/foi seu gasto estimado nos dias que você participará/participou do evento?',[
-    'R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000','Não Sabe/Não Opinou'
-  ])}
-
-  <!-- P17 -->
-  <div class="pergunta-card">
-    <div class="perg-num">Pergunta 17</div>
-    <div class="perg-texto">Além de você, quantas pessoas estão incluídas nesses gastos?</div>
-    <input class="input-numero mt-12" type="number" min="0" max="50" placeholder="Número de pessoas..." oninput="this.closest('.pergunta-card').classList.toggle('tem-valor',this.value.length>0);atualizarProgresso()">
+  <div class="pcard">
+    <div class="pnum">Questão 17</div>
+    <div class="ptexto">Além de você, quantas pessoas estão incluídas nesses gastos?</div>
+    <input class="inp mt12" type="number" min="0" max="50" placeholder="Número de acompanhantes..."
+      oninput="this.closest('.pcard').classList.toggle('preenchida',this.value.length>0);prog()">
   </div>
 
-  <div class="secao-titulo">⭐ Avaliação do Evento</div>
+  <div class="sec-titulo">05 · Avaliação</div>
 
-  ${avaliacao(18,'Como você avalia o evento Canaã Junina 2025:',[
-    'Acesso/Local','Infraestrutura','Segurança','Competições/quadrilhas',
-    'Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)',
-    'Artesanato/Produtos típicos','Barracas de comidas (qualidade)',
-    'Barracas de comidas (preço)','Data/horário','Receptividade'
-  ])}
+  ${aval(18,'Avalie os aspectos do evento Canaã Junina 2025:',
+    ['Acesso/Local','Infraestrutura','Segurança','Competições/Quadrilhas',
+     'Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)',
+     'Artesanato/Produtos típicos','Barracas de comida (qualidade)',
+     'Barracas de comida (preço)','Data/Horário','Receptividade'])}
 
-  ${avaliacao(19,'Como você avalia a Estrutura, Planejamento e Organização do evento Canaã Junina 2025:',[
-    'Tema do evento','Local do evento','Divulgação/evento','Estrutura do evento',
-    'Gastronomia/Pratos','Shows/Atrações Culturais','Lixeiras','Banheiros',
-    'Estacionamentos','Avaliação Geral do evento'
-  ])}
+  ${aval(19,'Avalie a Estrutura, Planejamento e Organização:',
+    ['Tema do evento','Local do evento','Divulgação','Estrutura física',
+     'Gastronomia/Pratos','Shows e Atrações Culturais','Lixeiras',
+     'Banheiros','Estacionamentos','Avaliação Geral'])}
 
-  ${pergunta(20,'Você sabe quais são as Quadrilhas que irão participar das competições durante o evento?',['Sim','Não'])}
+  <div class="sec-titulo">06 · Quadrilhas & Recomendação</div>
 
-  ${perguntaTexto(21,'Se sim, qual a sua quadrilha favorita?','Nome da quadrilha...')}
-
-  ${pergunta(22,'Você recomendaria o Festival Canaã Junina 2025 para amigos e familiares?',[
-    'Sim, com certeza','Talvez','Não recomendaria','Não Sabe/Não Opinou'
-  ])}
-
-  ${pergunta(23,'Como você avalia a sua experiência no Festival Canaã Junina 2025 até o momento?',[
-    'Excelente, está superando minhas expectativas','Boa, estou curtindo bastante',
-    'Regular, achei que poderia ser melhor','Não estou aproveitando quanto esperava',
-    'Não Sabe/Não Opinou'
-  ])}
-
-  ${pergunta(24,'Quais aspectos do festival você mais gostou até agora?',[
-    'Atrações culturais e apresentações','Organização e estrutura do evento',
-    'Comidas e bebidas','Atividades para toda família','Não Sabe/Não Opinou'
-  ],'checkbox')}
-
-  ${perguntaTexto(25,'Qual a sua sugestão para ajudar a melhorar o evento futuro?','Escreva sua sugestão...')}
+  ${perg(20,'Você conhece as Quadrilhas que irão competir?',['Sim','Não'])}
+  ${pertexto(21,'Se sim, qual a sua quadrilha favorita?','Nome da quadrilha...')}
+  ${perg(22,'Você recomendaria o Festival Canaã Junina 2025?',
+    ['Sim, com certeza','Talvez','Não recomendaria','Não Sabe/Não Opinou'])}
+  ${perg(23,'Como avalia sua experiência no festival até o momento?',
+    ['Excelente — superou minhas expectativas','Boa — estou curtindo bastante',
+     'Regular — poderia ser melhor','Abaixo do esperado','Não Sabe/Não Opinou'])}
+  ${perg(24,'Quais aspectos você mais gostou?',
+    ['Atrações culturais e apresentações','Organização e estrutura',
+     'Comidas e bebidas','Atividades para toda família','Não Sabe/Não Opinou'],'checkbox')}
+  ${pertexto(25,'Sua sugestão para melhorar edições futuras:','Escreva sua sugestão...')}
   `;
 }
 
-/* ─── FORM POPULAÇÃO ─── */
-function renderFormPopulacao() {
-  const c = document.getElementById('form-conteudo');
-  c.innerHTML = `
-  <!-- META -->
-  <div class="bloco-meta">
-    <div>
-      <span class="campo-label">Sexo</span>
-      <div class="radio-grupo">
-        <label class="radio-pill"><input type="radio" name="sexo" value="M"><span>Masculino</span></label>
-        <label class="radio-pill"><input type="radio" name="sexo" value="F"><span>Feminino</span></label>
-      </div>
-    </div>
-    <div>
-      <span class="campo-label">Data</span>
-      <input class="input-texto" type="date" name="data">
-    </div>
-    <div class="bloco-meta-full">
-      <span class="campo-label">Escolaridade</span>
-      <div class="radio-grupo">
-        <label class="radio-pill"><input type="radio" name="esc" value="Analfabeto"><span>Analfabeto</span></label>
-        <label class="radio-pill"><input type="radio" name="esc" value="1º Grau"><span>1º Grau</span></label>
-        <label class="radio-pill"><input type="radio" name="esc" value="2º Grau"><span>2º Grau</span></label>
-        <label class="radio-pill"><input type="radio" name="esc" value="Superior"><span>Superior</span></label>
-      </div>
-    </div>
-    <div class="bloco-meta-full">
-      <span class="campo-label">Faixa Etária</span>
-      <div class="radio-grupo">
-        <label class="radio-pill"><input type="radio" name="faixa" value="16-24"><span>16–24</span></label>
-        <label class="radio-pill"><input type="radio" name="faixa" value="25-34"><span>25–34</span></label>
-        <label class="radio-pill"><input type="radio" name="faixa" value="35-59"><span>35–59</span></label>
-        <label class="radio-pill"><input type="radio" name="faixa" value="60+"><span>+60</span></label>
-      </div>
-    </div>
-    <div class="bloco-meta-full">
-      <span class="campo-label">Pesquisador</span>
-      <input class="input-texto" type="text" name="pesquisador" placeholder="Nome do pesquisador">
-    </div>
-  </div>
+/* ──────────────────────────────────
+   POPULAÇÃO
+────────────────────────────────── */
+function renderPopulacao(){
+  document.getElementById('form-body').innerHTML = `
+  ${metaBloco()}
 
-  <div class="secao-titulo">📡 Comunicação & Perfil</div>
+  <div class="sec-titulo verde">01 · Comunicação & Perfil</div>
 
-  ${pergunta(1,'Qual a sua renda familiar?',[
+  ${perg(1,'Qual a sua renda familiar?',[
     'Até 1 salário mínimo','De 1 a 2 salários mínimos',
-    'De 3 a 5 salários mínimos','Mais de 5 salários mínimos'
-  ])}
+    'De 3 a 5 salários mínimos','Mais de 5 salários mínimos'])}
 
-  ${pergunta(2,'Por qual meio de comunicação você tem conhecimento dos acontecimentos/eventos de Canaã dos Carajás?',[
-    'Sites de notícia','Televisão','Rádio','Celular/WhatsApp',
-    'Facebook','Instagram','Jornais impressos','Não sabe/Não opinou'
-  ],'checkbox',`<label class="opcao-item">
-    <div class="opcao-box" style="flex-direction:column;align-items:flex-start;">
-      <span style="font-size:0.75rem;color:rgba(253,246,227,0.4);margin-bottom:4px">Outros:</span>
-      <input class="input-texto" type="text" placeholder="Especifique...">
-    </div></label>`)}
+  ${perg(2,'Por qual meio você acompanha os eventos de Canaã dos Carajás?',
+    ['Sites de notícia','Televisão','Rádio','Celular/WhatsApp',
+     'Facebook','Instagram','Jornais impressos','Não sabe/Não opinou'],
+    'checkbox', outroCampo())}
 
-  <div class="secao-titulo">🎭 Avaliação Festival 2024</div>
+  <div class="sec-titulo verde">02 · Avaliação — Festival 2024</div>
 
-  ${pergunta(3,'Você participou do Festival Canaã Junina de 2024?',['Sim','Não'])}
+  ${perg(3,'Você participou do Festival Canaã Junina de 2024?',['Sim','Não'])}
+  ${perg(4,'Se sim, o que você achou?',['Gostei muito','Achei bom','Não gostei muito','Não Sabe/Não Opinou'])}
+  ${perg(5,'Como avalia a Segurança do Festival 2024?',
+    ['Senti-me totalmente seguro(a)','Seguro(a) na maior parte do tempo',
+     'Não me senti seguro(a)','Faltou totalmente segurança','Não Sabe/Não Opinou'])}
+  ${perg(6,'Como avalia a Infraestrutura do Festival 2024?',
+    ['Muito satisfatória','Satisfatória','Regular','Insatisfatória','Não Sabe/Não Opinou'])}
+  ${perg(7,'Como avalia a organização geral do Festival 2024?',
+    ['Muito bem organizada','Bem organizada','Razoável','Mal organizada','Não Sabe/Não Opinou'])}
+  ${perg(8,'Como avalia a estrutura física (palco, barracas, banheiros, etc.)?',
+    ['Ótima','Boa','Regular','Ruim','Péssima','Não Sabe/Não Opinou'])}
+  ${perg(9,'Os banheiros foram suficientes e em boas condições?',
+    ['Sim, foram suficientes','Parcialmente','Não foram suficientes'])}
+  ${perg(10,'Você gostou dos shows e atrações do Festival 2024?',
+    ['Sim, gostei muito','Sim, gostei','Foi razoável','Não gostei','Não Sabe/Não Opinou'])}
 
-  ${pergunta(4,'Se sim, o que você achou?',[
-    'Gostei muito','Achei bom','Não gostei muito','Não Sabe/Não Opinou'
-  ])}
+  <div class="sec-titulo verde">03 · Expectativas — Festival 2025</div>
 
-  ${pergunta(5,'Quanto à Segurança do Festival Canaã Junina de 2024, como você avalia?',[
-    'Senti-me totalmente seguro(a) durante o evento',
-    'Senti-me seguro(a) na maior parte do tempo',
-    'Não me senti seguro(a)',
-    'Senti que faltou totalmente segurança',
-    'Não Sabe/Não Opinou'
-  ])}
-
-  ${pergunta(6,'Quanto à Infraestrutura do Festival Canaã Junina de 2024, como você avalia?',[
-    'Muito satisfatória','Satisfatória','Regular','Insatisfatória','Não Sabe/Não Opinou'
-  ])}
-
-  ${pergunta(7,'Como você avalia a organização geral do Festival Canaã Junina 2024?',[
-    'Muito bem organizada','Bem organizada','Razoável','Mal organizada','Não Sabe/Não Opinou'
-  ])}
-
-  ${pergunta(8,'Como você avalia a estrutura física do local (palco, barracas, banheiros, etc.)?',[
-    'Ótima','Boa','Regular','Ruim','Péssima','Não Sabe/Não Opinou'
-  ])}
-
-  ${pergunta(9,'Os banheiros disponíveis foram suficientes e estavam em boas condições de uso?',[
-    'Sim, foi suficiente','Parcialmente','Não foi suficiente'
-  ])}
-
-  ${pergunta(10,'Você gostou dos Shows/atrações do Festival Canaã Junina 2024?',[
-    'Sim, gostei muito','Sim, gostei','Foi razoável','Não gostei','Não Sabe/Não Opinou'
-  ])}
-
-  <div class="secao-titulo">🌟 Expectativas 2025</div>
-
-  ${pergunta(11,'Quanto ao Festival Canaã Junina de 2025, você irá participar?',['Sim','Não'])}
-
-  ${pergunta(12,'Se sim, quanto pretende gastar no evento?',[
-    'Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400','Não Sabe/Não Opinou'
-  ])}
-
-  ${pergunta(13,'Qual sua expectativa quanto ao Festival Canaã Junina de 2025?',[
-    'Otimista','Muito Otimista','Pessimista','Muito Pessimista','Não Sabe/Não Opinou'
-  ])}
-
-  ${perguntaTexto(14,'Você sabe o local onde é realizado o Festival Canaã Junina 2025?','Informe o local...')}
-
-  ${pergunta(15,'A data de 23 de Junho a 13 de Julho do Festival Canaã Junina 2025, você acha que:',[
-    'Está muito boa, atende bem ao período das festas juninas',
-    'Está boa, mas poderia ser um pouco mais curta',
-    'Poderia ser um pouco mais longa',
-    'Não gostei das datas, preferia em outro período',
-    'Indiferente, as datas não interferem na minha participação',
-    'Não Sabe/Não Opinou'
-  ])}
-
-  ${perguntaTexto(16,'Qual evento de Canaã dos Carajás que você participou e gostou mais?','Escreva o nome do evento...')}
+  ${perg(11,'Você irá participar do Festival Canaã Junina 2025?',['Sim','Não'])}
+  ${perg(12,'Se sim, quanto pretende gastar no evento?',
+    ['Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400','Não Sabe/Não Opinou'])}
+  ${perg(13,'Qual sua expectativa para o Festival 2025?',
+    ['Muito Otimista','Otimista','Pessimista','Muito Pessimista','Não Sabe/Não Opinou'])}
+  ${pertexto(14,'Você sabe o local onde será realizado o Festival Canaã Junina 2025?','Informe o local...')}
+  ${perg(15,'A data de 23 de Junho a 13 de Julho do Festival 2025, você acha que:',
+    ['Está ótima — atende bem ao período junino',
+     'Está boa, mas poderia ser um pouco mais curta',
+     'Poderia ser um pouco mais longa',
+     'Não gostei — preferia em outro período',
+     'Indiferente — as datas não afetam minha participação',
+     'Não Sabe/Não Opinou'])}
+  ${pertexto(16,'Qual evento de Canaã dos Carajás você mais gostou de participar?','Nome do evento...')}
   `;
 }
 
-/* ─── Enviar ─── */
-function enviarPesquisa() {
-  const btn = document.getElementById('btn-enviar');
-  btn.textContent = 'Enviando...';
+/* ──────────────────────────────────
+   ENVIO (mock → MySQL ready)
+────────────────────────────────── */
+function enviar(){
+  const btn = document.getElementById('btn-env');
+  btn.textContent = 'Salvando...';
   btn.disabled = true;
+
+  // Coletar dados do formulário (estrutura preparada para POST /api/respostas)
+  const payload = {
+    tipo: tipoAtivo === 'v' ? 'VISITANTE' : 'POPULACAO',
+    timestamp: new Date().toISOString(),
+    session_id: 'SES-' + Date.now(),
+    dados: {}
+  };
+
+  // Simular delay de rede (mock — será substituído por fetch('/api/respostas', {...}))
   setTimeout(()=>{
     document.getElementById('app').style.display = 'none';
-    const ts = document.getElementById('tela-sucesso');
-    ts.style.display = 'flex';
-    ts.style.flexDirection = 'column';
-  }, 800);
+    const s = document.getElementById('sucesso');
+    s.style.display = 'flex';
+    s.style.flexDirection = 'column';
+    document.getElementById('suc-id').textContent =
+      'ID: ' + payload.session_id + ' · ' + payload.tipo;
+    btn.disabled = false;
+  }, 900);
 }
 </script>
 </body>
