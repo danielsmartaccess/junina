@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Just Go · Foccus Pesquisas — Canaã Cidade Junina 2026</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00C2FF">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -227,6 +230,25 @@ body {
   .hero-titulo { font-size:2rem; }
   .capa-header { flex-direction:column; align-items:flex-start; }
 }
+
+/* badge de sincronização offline */
+.sync-badge{position:fixed;bottom:88px;right:14px;z-index:200;font-size:0.72rem;font-weight:600;
+  padding:8px 14px;border-radius:100px;backdrop-filter:blur(10px);border:1px solid;transition:all .3s;
+  box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+.sync-badge.ok{background:rgba(0,214,143,0.15);border-color:rgba(0,214,143,0.4);color:#00D68F}
+.sync-badge.sync{background:rgba(0,194,255,0.15);border-color:rgba(0,194,255,0.4);color:#00C2FF}
+.sync-badge.pend{background:rgba(245,166,35,0.15);border-color:rgba(245,166,35,0.4);color:#F5A623}
+.token-modal{position:fixed;inset:0;z-index:500;background:rgba(7,14,26,0.96);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;padding:24px}
+.token-box{background:var(--panel,#0D1B2E);border:1px solid rgba(0,194,255,0.2);border-radius:18px;
+  padding:32px 28px;max-width:340px;width:100%;text-align:center}
+.token-box h3{font-family:'Syne',sans-serif;font-size:1.2rem;margin-bottom:8px;color:var(--ink,#EAF2FF)}
+.token-box p{font-size:0.82rem;color:rgba(234,242,255,0.5);margin-bottom:20px;line-height:1.5}
+.token-box input{width:100%;background:rgba(255,255,255,0.05);border:1.5px solid rgba(0,194,255,0.2);
+  border-radius:10px;padding:13px;font-size:1rem;color:#EAF2FF;text-align:center;letter-spacing:0.1em;
+  text-transform:uppercase;outline:none;margin-bottom:16px;font-family:'DM Sans',sans-serif}
+.token-box button{width:100%;background:linear-gradient(135deg,#00C2FF,#0099CC);color:#070E1A;border:none;
+  border-radius:10px;padding:13px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer}
 </style>
 <style id="extra">
 .cards-wrap { grid-template-columns: 1fr 1fr 1fr; }
@@ -265,7 +287,8 @@ body {
 </head>
 <body>
 <div class="dev-ribbon"></div>
-<div class="dev-badge">DEV · v0.4.0</div>
+<div class="dev-badge">DEV · v0.5.0</div>
+<div class="sync-badge ok" id="sync-badge">✓ Pronto</div>
 
 <!-- CAPA -->
 <section id="capa">
@@ -605,25 +628,270 @@ function validar(){
   }
   return null;
 }
-function enviar(){
+function coletarRespostas(){
+  const resp = {};
+  // radios e checkboxes (q1, q2, ...)
+  document.querySelectorAll('.pcard:not(.oculta) input[type="radio"]:checked, .pcard:not(.oculta) input[type="checkbox"]:checked').forEach(el=>{
+    const nome = el.name; const val = decodeURIComponent(el.value);
+    if(nome.startsWith('a')){ // avaliação Likert: a18_0 etc → valor numérico
+      resp[nome] = { valor: val, valor_num: (val==='9'?9:parseInt(val)||null) };
+    } else if(el.type==='checkbox'){ // múltipla: acumula
+      resp[nome] = resp[nome] ? resp[nome]+'; '+val : val;
+    } else {
+      resp[nome] = val;
+    }
+  });
+  // textos e números
+  document.querySelectorAll('.pcard:not(.oculta) input[type="text"], .pcard:not(.oculta) input[type="number"]').forEach(el=>{
+    if(el.value.trim()){
+      const pc = el.closest('.pcard');
+      const qid = pc ? pc.id.replace('pc','q') : ('extra_'+Math.random().toString(36).slice(2,6));
+      resp[qid] = el.value.trim();
+    }
+  });
+  return resp;
+}
+
+async function enviar(){
   const inv=validar();
   if(inv){ alert('Preencha os campos obrigatórios: sexo, escolaridade, faixa etária e pesquisador.');
     inv.scrollIntoView({behavior:'smooth',block:'center'}); return; }
   const btn=document.getElementById('btn-env'); btn.textContent='Salvando...'; btn.disabled=true;
   const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR'}[tipoAtivo];
-  const payload={ tipo:tipoNome, session_id:'SES-'+Date.now(), coletado_em:new Date().toISOString(),
-    geo:{lat:geoData.lat,lng:geoData.lng,accuracy:geoData.accuracy,status:geoData.status}, respostas:{} };
+
+  // capturar demografia comum
+  const get = nome => { const el=document.querySelector(`input[name="${nome}"]:checked`); return el?decodeURIComponent(el.value):null; };
+  const getText = nome => { const el=document.querySelector(`input[name="${nome}"]`); return el?el.value.trim():null; };
+
+  const entrevista = {
+    tipo: tipoNome,
+    session_id: 'SES-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),
+    coletado_em: new Date().toISOString(),
+    pesquisador: getText('pesquisador'),
+    sexo: get('sexo'),
+    faixa_etaria: get('faixa'),
+    escolaridade: get('esc'),
+    geo: { lat:geoData.lat, lng:geoData.lng, accuracy:geoData.accuracy, status:geoData.status },
+    respostas: coletarRespostas()
+  };
+
+  try {
+    // 1) SEMPRE salva local primeiro (offline-first)
+    await salvarLocal(entrevista);
+    await atualizarBadgeSync();
+    // 2) tenta sincronizar se online (não bloqueia)
+    if(navigator.onLine) sincronizar();
+  } catch(e){
+    console.error('Erro ao salvar local', e);
+    alert('Erro ao salvar. Tente novamente.');
+    btn.textContent='Salvar Registro'; btn.disabled=false; return;
+  }
+
   setTimeout(()=>{
     document.getElementById('app').style.display='none';
     const s=document.getElementById('sucesso'); s.style.display='flex'; s.style.flexDirection='column';
-    document.getElementById('suc-id').textContent='ID: '+payload.session_id+' · '+payload.tipo;
-    document.getElementById('suc-geo').textContent = geoData.status==='ok'
-      ? `📍 ${geoData.lat}, ${geoData.lng} (±${geoData.accuracy}m) · ${new Date().toLocaleTimeString('pt-BR')}`
-      : `📍 Localização: ${geoData.status} · ${new Date().toLocaleTimeString('pt-BR')}`;
+    document.getElementById('suc-id').textContent='ID: '+entrevista.session_id+' · '+entrevista.tipo;
+    document.getElementById('suc-geo').textContent = navigator.onLine
+      ? '☁️ Salvo e sincronizando...'
+      : '📴 Salvo localmente — sincroniza ao reconectar';
     btn.textContent='Salvar Registro'; btn.disabled=false;
-  },900);
+  },600);
 }
 
 </script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   CAMADA OFFLINE-FIRST · Just Go · Canaã Junina 2026
+   IndexedDB (armazenamento local) + Fila de sincronização
+═══════════════════════════════════════════════════════════ */
+
+const DB_NAME = 'canaa_junina_2026';
+const DB_VERSION = 1;
+const STORE = 'entrevistas_pendentes';
+
+// config do Supabase (chave pública — segura para client-side)
+const SUPABASE_URL = 'https://zhioebfzuugfjhblhfwp.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpoaW9lYmZ6dXVnZmpoYmxoZndwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyODU0NDMsImV4cCI6MjA5Njg2MTQ0M30.1peRPKPBTM2GtMh-d6l6ut5kIxmEgn7e-PEY1ztSnS8';
+
+let db = null;
+
+/* ─── abrir/criar o banco local ─── */
+function abrirDB(){
+  return new Promise((resolve, reject)=>{
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e=>{
+      const d = e.target.result;
+      if(!d.objectStoreNames.contains(STORE)){
+        const store = d.createObjectStore(STORE, { keyPath:'session_id' });
+        store.createIndex('sincronizado', 'sincronizado', { unique:false });
+        store.createIndex('coletado_em', 'coletado_em', { unique:false });
+      }
+    };
+    req.onsuccess = e=>{ db = e.target.result; resolve(db); };
+    req.onerror = e=>reject(e.target.error);
+  });
+}
+
+/* ─── salvar entrevista localmente (SEMPRE funciona) ─── */
+async function salvarLocal(entrevista){
+  if(!db) await abrirDB();
+  entrevista.sincronizado = 0;          // 0 = pendente, 1 = sincronizado
+  entrevista.salvo_em = new Date().toISOString();
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, 'readwrite');
+    tx.objectStore(STORE).put(entrevista);
+    tx.oncomplete = ()=>resolve(entrevista);
+    tx.onerror = e=>reject(e.target.error);
+  });
+}
+
+/* ─── contar pendentes ─── */
+async function contarPendentes(){
+  if(!db) await abrirDB();
+  return new Promise((resolve)=>{
+    const tx = db.transaction(STORE, 'readonly');
+    const req = tx.objectStore(STORE).index('sincronizado').count(IDBKeyRange.only(0));
+    req.onsuccess = ()=>resolve(req.result);
+    req.onerror = ()=>resolve(0);
+  });
+}
+
+/* ─── listar pendentes ─── */
+async function listarPendentes(){
+  if(!db) await abrirDB();
+  return new Promise((resolve)=>{
+    const tx = db.transaction(STORE, 'readonly');
+    const req = tx.objectStore(STORE).index('sincronizado').getAll(IDBKeyRange.only(0));
+    req.onsuccess = ()=>resolve(req.result || []);
+    req.onerror = ()=>resolve([]);
+  });
+}
+
+/* ─── marcar como sincronizado ─── */
+async function marcarSincronizado(session_id){
+  if(!db) await abrirDB();
+  return new Promise((resolve)=>{
+    const tx = db.transaction(STORE, 'readwrite');
+    const store = tx.objectStore(STORE);
+    const req = store.get(session_id);
+    req.onsuccess = ()=>{
+      const item = req.result;
+      if(item){ item.sincronizado = 1; item.sincronizado_em = new Date().toISOString(); store.put(item); }
+      resolve();
+    };
+  });
+}
+
+/* ─── enviar UMA entrevista ao Supabase ─── */
+async function enviarEntrevista(ent){
+  // 1) inserir a entrevista (registro-pai)
+  const respEnt = await fetch(`${SUPABASE_URL}/rest/v1/entrevistas`, {
+    method:'POST',
+    headers:{
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type':'application/json',
+      'Prefer':'return=representation'
+    },
+    body: JSON.stringify({
+      tipo: ent.tipo,
+      session_id: ent.session_id,
+      pesquisador: ent.pesquisador || null,
+      sexo: ent.sexo || null,
+      faixa_etaria: ent.faixa_etaria || null,
+      escolaridade: ent.escolaridade || null,
+      coletado_em: ent.coletado_em,
+      geo_lat: ent.geo?.lat ?? null,
+      geo_lng: ent.geo?.lng ?? null,
+      geo_accuracy: ent.geo?.accuracy ?? null,
+      geo_status: ent.geo?.status ?? null,
+      device_info: navigator.userAgent.slice(0,120)
+    })
+  });
+  if(!respEnt.ok){
+    // se for conflito (já existe), trata como sucesso (idempotência)
+    if(respEnt.status === 409) return true;
+    throw new Error('Falha ao inserir entrevista: ' + respEnt.status);
+  }
+  const [criada] = await respEnt.json();
+  const entrevista_id = criada.id;
+
+  // 2) inserir as respostas (lote)
+  const respostas = Object.entries(ent.respostas || {}).map(([questao, v])=>({
+    entrevista_id,
+    questao,
+    valor: (typeof v === 'object' ? v.valor : v),
+    valor_num: (typeof v === 'object' ? v.valor_num : (isNaN(+v)?null:null))
+  }));
+  if(respostas.length){
+    const respResp = await fetch(`${SUPABASE_URL}/rest/v1/respostas`, {
+      method:'POST',
+      headers:{
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(respostas)
+    });
+    if(!respResp.ok) throw new Error('Falha ao inserir respostas: ' + respResp.status);
+  }
+  return true;
+}
+
+/* ─── SINCRONIZAR a fila inteira ─── */
+async function sincronizar(){
+  if(!navigator.onLine) return { ok:false, motivo:'offline' };
+  const pendentes = await listarPendentes();
+  let enviadas = 0, falhas = 0;
+  for(const ent of pendentes){
+    try{
+      await enviarEntrevista(ent);
+      await marcarSincronizado(ent.session_id);
+      enviadas++;
+    }catch(e){
+      falhas++;
+      console.warn('Falha ao sincronizar', ent.session_id, e.message);
+    }
+  }
+  atualizarBadgeSync();
+  return { ok:true, enviadas, falhas, total:pendentes.length };
+}
+
+/* ─── badge visual de status de sincronização ─── */
+async function atualizarBadgeSync(){
+  const pend = await contarPendentes();
+  const badge = document.getElementById('sync-badge');
+  if(!badge) return;
+  if(pend === 0){
+    badge.className = 'sync-badge ok';
+    badge.innerHTML = navigator.onLine ? '☁️ Tudo sincronizado' : '✓ Salvo localmente';
+  } else {
+    badge.className = navigator.onLine ? 'sync-badge sync' : 'sync-badge pend';
+    badge.innerHTML = navigator.onLine
+      ? `🔄 Sincronizando ${pend}...`
+      : `📴 ${pend} pendente(s) — offline`;
+  }
+}
+
+/* ─── auto-sync: quando a internet volta ─── */
+window.addEventListener('online', ()=>{ atualizarBadgeSync(); sincronizar(); });
+window.addEventListener('offline', ()=>{ atualizarBadgeSync(); });
+
+/* ─── sync periódico (a cada 30s, se online e houver pendentes) ─── */
+setInterval(async ()=>{
+  if(navigator.onLine && (await contarPendentes()) > 0) sincronizar();
+}, 30000);
+
+/* inicializar ao carregar */
+abrirDB().then(()=>atualizarBadgeSync());
+
+
+/* registrar service worker (PWA) */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(e=>console.warn('SW',e)));
+}
+</script>
+
 </body>
 </html>
