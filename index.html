@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Just Go Access · Foccus Pesquisas — Canaã Cidade Junina 2026</title>
+<title>Just Go · Foccus Pesquisas — Canaã Cidade Junina 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -243,22 +243,41 @@ body {
 .aval-table th { font-size:0.58rem; }
 .aval-table th:first-child { min-width:110px; }
 </style>
+<style id="leg-css">
+/* Legenda para o pesquisador — DNA da pesquisa */
+.leg-pesq {
+  display:flex; gap:8px; align-items:flex-start;
+  background:rgba(0,194,255,0.06);
+  border-left:3px solid var(--jga-accent);
+  border-radius:0 8px 8px 0;
+  padding:9px 12px; margin:0 0 14px;
+  font-size:0.76rem; color:rgba(240,244,255,0.6); line-height:1.5;
+}
+.leg-pesq strong { color:var(--jga-accent); font-weight:600; }
+.leg-icon { font-size:0.85rem; flex-shrink:0; margin-top:1px; }
+.app-logo-jga { display:flex; align-items:center; height:30px; }
+.app-logo-jga svg { height:26px; width:auto; }
+/* logo na capa */
+.capa-jga-logo { display:flex; align-items:center; gap:11px; }
+.capa-jga-logo svg { height:42px; width:auto; }
+</style>
 
 </head>
 <body>
 <div class="dev-ribbon"></div>
-<div class="dev-badge">DEV · v0.3.0</div>
+<div class="dev-badge">DEV · v0.4.0</div>
 
 <!-- CAPA -->
 <section id="capa">
   <div class="grid-bg"></div><div class="glow-1"></div><div class="glow-2"></div>
   <div class="capa-header">
-    <div class="logo-jga">
-      <div class="logo-mark">JGA</div>
-      <div class="logo-texto"><span class="logo-nome">Just Go Access</span><span class="logo-sub">Software &amp; Technology</span></div>
-    </div>
+    <div class="capa-jga-logo"><svg viewBox="0 0 210 58" xmlns="http://www.w3.org/2000/svg" aria-label="Just Go Smart Access" style="height:44px;width:auto">
+<text x="2" y="28" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#F0F4FF" letter-spacing="-1.5">Just</text>
+<text x="80" y="28" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#00C2FF" letter-spacing="-1.5">Go</text>
+<text x="2" y="50" font-family="DM Sans, sans-serif" font-weight="600" font-size="10" fill="rgba(240,244,255,0.45)" letter-spacing="4">SMART ACCESS</text>
+</svg></div>
     <div class="cliente-card">
-      <span class="cliente-rotulo">Cliente</span>
+      <span class="cliente-rotulo">Pesquisa para</span>
       <div class="foccus-logo">
         <div class="foccus-mark"><div class="foccus-bar b1"></div><div class="foccus-bar b2"></div><div class="foccus-bar b3"></div></div>
         <div class="foccus-txt"><span class="foccus-nome">F<span>occus</span></span><span class="foccus-sub">Pesquisas</span></div>
@@ -268,12 +287,12 @@ body {
   <div class="capa-hero">
     <div class="hero-tag"><span>2026</span>Sistema Digital de Coleta · Festival Canaã Cidade Junina</div>
     <h1 class="hero-titulo">Pesquisa de<br><em>Opinião Pública</em></h1>
-    <p class="hero-desc">Plataforma de coleta em campo desenvolvida pela Just Go Access para a Foccus Pesquisas — Prefeitura de Canaã dos Carajás. Festival de <strong>24 de junho a 12 de julho de 2026</strong>. Três instrumentos, escala Likert padronizada.</p>
+    <p class="hero-desc">Plataforma de coleta em campo desenvolvida pela <strong>Just Go</strong> para a <strong>Foccus Pesquisas</strong> — Prefeitura de Canaã dos Carajás. Festival de <strong>24 de junho a 12 de julho de 2026</strong>. Três instrumentos, escala Likert padronizada, com orientação ao pesquisador em cada questão.</p>
     <div class="cards-wrap">
       <div class="qcard visitante" onclick="iniciar('v')">
         <div class="qcard-icon">🎪</div><div class="qcard-tipo">Questionário A</div>
         <div class="qcard-titulo">Visitantes / Turistas</div>
-        <div class="qcard-desc">Participantes do festival — perfil, gasto e experiência.</div>
+        <div class="qcard-desc">Perfil, gasto desagregado, turismo e experiência.</div>
         <div class="qcard-meta"><span class="qcard-qtd">amostra: 600</span><button class="qcard-btn">Iniciar →</button></div>
       </div>
       <div class="qcard populacao" onclick="iniciar('p')">
@@ -285,13 +304,13 @@ body {
       <div class="qcard operacao" onclick="iniciar('o')">
         <div class="qcard-icon">🏪</div><div class="qcard-tipo">Questionário C</div>
         <div class="qcard-titulo">Expositores / Operação</div>
-        <div class="qcard-desc">Estandes e feirantes — investimento, retorno e operação.</div>
+        <div class="qcard-desc">Investimento, retorno (ROI), empregos e operação.</div>
         <div class="qcard-meta"><span class="qcard-qtd">amostra: 100</span><button class="qcard-btn">Iniciar →</button></div>
       </div>
     </div>
     <div class="capa-footer">
-      <div class="footer-left"><strong>Just Go Access</strong> · Software &amp; Technology<br>Instrumento revisado por benchmark — Ambiente de Desenvolvimento</div>
-      <div class="footer-right"><div class="footer-dot"></div>Build dev · Supabase ready · v0.3.0</div>
+      <div class="footer-left"><strong>Just Go · Smart Access</strong> — tecnologia de coleta<br>Pesquisa conduzida pela Foccus Pesquisas · Ambiente de Desenvolvimento</div>
+      <div class="footer-right"><div class="footer-dot"></div>Build dev · Supabase ready · v0.4.0</div>
     </div>
   </div>
 </section>
@@ -299,7 +318,11 @@ body {
 <!-- APP -->
 <div id="app">
   <div class="app-header">
-    <button class="btn-voltar" onclick="voltarCapa()">← Voltar</button>
+    <button class="btn-voltar" onclick="voltarCapa()">←</button>
+    <div class="app-logo-jga"><svg viewBox="0 0 210 32" xmlns="http://www.w3.org/2000/svg" style="height:24px;width:auto">
+<text x="2" y="26" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#F0F4FF" letter-spacing="-1.5">Just</text>
+<text x="80" y="26" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#00C2FF" letter-spacing="-1.5">Go</text>
+</svg></div>
     <div class="app-header-mid"><div class="app-header-tipo" id="h-tipo"></div><div class="app-header-titulo" id="h-titulo"></div></div>
     <div style="font-size:0.72rem;color:var(--muted);white-space:nowrap;" id="h-prog"></div>
   </div>
@@ -340,33 +363,40 @@ function pedirGeo(){
 }
 
 /* ════════ HELPERS ════════ */
+function leg(txt){
+  return `<div class="leg-pesq"><span class="leg-icon">🎯</span><div><strong>Para o pesquisador:</strong> ${txt}</div></div>`;
+}
 function r(n,v,l,t='radio',nsnr=false){
   const cls=(t==='checkbox'?' chk':'')+(nsnr?' nsnr':'');
   return `<label class="opc-item${cls}"><input type="${t}" name="q${n}" value="${encodeURIComponent(v)}"><div class="opc-box">${l}</div></label>`;
 }
-function perg(n,txt,opcoes,tipo='radio',extra='',cond=null,nsnrLabel=null){
+function perg(n,txt,opcoes,tipo='radio',extra='',cond=null,nsnrLabel=null,legenda=null){
   const condClass=cond?' data-cond="'+cond.q+'" data-cond-val="'+cond.val+'"':'';
   const condTag=cond?`<span class="cond-tag">condicional</span>`:'';
   let opcHtml=opcoes.map(o=>r(n,o,o,tipo)).join('');
   if(nsnrLabel) opcHtml+=`<div class="escala-rotulo">— sem opinião —</div>`+r(n,nsnrLabel,nsnrLabel,tipo,true);
   return `<div class="pcard${cond?' oculta':''}"${condClass} id="pc${n}">
     <div class="pnum">Questão ${n<10?'0'+n:n} ${condTag}</div>
-    <div class="ptexto">${txt}</div><div class="opc-lista">${opcHtml}${extra}</div></div>`;
+    <div class="ptexto">${txt}</div>
+    ${legenda?leg(legenda):''}
+    <div class="opc-lista">${opcHtml}${extra}</div></div>`;
 }
-function pertexto(n,txt,ph='',cond=null,transform='none'){
+function pertexto(n,txt,ph='',cond=null,transform='none',legenda=null){
   const condClass=cond?' data-cond="'+cond.q+'" data-cond-val="'+cond.val+'"':'';
   const condTag=cond?`<span class="cond-tag">condicional</span>`:'';
   const tf=transform==='upper'?'this.value=this.value.toUpperCase();':transform==='title'?'this.value=this.value.replace(/\\w\\S*/g,function(t){return t.charAt(0).toUpperCase()+t.substr(1).toLowerCase()});':'';
   return `<div class="pcard${cond?' oculta':''}"${condClass} id="pc${n}">
     <div class="pnum">Questão ${n<10?'0'+n:n} ${condTag}</div>
     <div class="ptexto">${txt}</div>
+    ${legenda?leg(legenda):''}
     <input class="inp mt12" type="text" placeholder="${ph||'Sua resposta...'}"
       oninput="${tf}this.closest('.pcard').classList.toggle('preenchida',this.value.trim().length>0);prog()"></div>`;
 }
-function pernum(n,txt,ph='',cond=null){
+function pernum(n,txt,ph='',cond=null,legenda=null){
   const condClass=cond?' data-cond="'+cond.q+'" data-cond-val="'+cond.val+'"':'';
   return `<div class="pcard${cond?' oculta':''}"${condClass} id="pc${n}">
     <div class="pnum">Questão ${n<10?'0'+n:n}</div><div class="ptexto">${txt}</div>
+    ${legenda?leg(legenda):''}
     <input class="inp mt12" type="number" min="0" placeholder="${ph||'Número...'}"
       oninput="this.closest('.pcard').classList.toggle('preenchida',this.value.length>0);prog()"></div>`;
 }
@@ -375,8 +405,7 @@ function outroCampo(){
     <span style="font-size:0.7rem;color:rgba(240,244,255,0.3)">Outros — especifique:</span>
     <input class="inp" type="text" placeholder="..." style="margin:0;width:100%"></div></label>`;
 }
-/* AVALIAÇÃO LIKERT 5 PONTOS + NS/NR */
-function aval(n,tit,itens){
+function aval(n,tit,itens,legenda=null){
   const esc=['Ótimo','Muito Bom','Bom','Regular','Não Satisf.'];
   const cod=['Ó','MB','B','R','NS'];
   const ths=esc.map((e,i)=>`<th>${cod[i]}</th>`).join('')+`<th class="col-ns">N/R</th>`;
@@ -385,12 +414,12 @@ function aval(n,tit,itens){
     <td class="col-ns"><input type="radio" class="raval ns" id="a${n}_${i}_9" name="a${n}_${i}" value="9"><label for="a${n}_${i}_9">–</label></td>
   </tr>`).join('');
   return `<div class="pcard"><div class="pnum">Questão ${n<10?'0'+n:n}</div><div class="ptexto">${tit}</div>
-    <div class="likert-legenda">Escala Likert: Ó=Ótimo · MB=Muito Bom · B=Bom · R=Regular · NS=Não Satisfatório · N/R=Não sabe/Não respondeu</div>
+    ${legenda?leg(legenda):''}
+    <div class="likert-legenda">Escala Likert: Ó=Ótimo (5) · MB=Muito Bom (4) · B=Bom (3) · R=Regular (2) · NS=Não Satisfatório (1) · N/R=Não sabe/Não respondeu</div>
     <div style="overflow-x:auto"><table class="aval-table"><thead><tr><th>Item</th>${ths}</tr></thead><tbody>${rows}</tbody></table></div></div>`;
 }
-/* escala Likert simples (1 pergunta, 5 opções) */
-function likert(n,txt,cond=null){
-  return perg(n,txt,['Ótimo','Muito Bom','Bom','Regular','Não Satisfatório'],'radio','',cond,'Não Sabe/Não Respondeu');
+function likert(n,txt,cond=null,legenda=null){
+  return perg(n,txt,['Ótimo','Muito Bom','Bom','Regular','Não Satisfatório'],'radio','',cond,'Não Sabe/Não Respondeu',legenda);
 }
 
 /* ════════ PROGRESSO + SKIP ════════ */
@@ -470,35 +499,38 @@ function renderVisitante(){
   document.getElementById('form-body').innerHTML=`
   ${metaBloco()}
   <div class="sec-titulo">01 · Perfil Socioeconômico</div>
-  ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou')}
-  ${perg(2,'Como você teve conhecimento do Festival Canaã Cidade Junina 2026?',['Já conhecia','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp','Facebook/Instagram','Mora próximo','Carro de som','Trabalho','Venho todo ano'],'checkbox',outroCampo())}
+  ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou','Classifica o poder aquisitivo do público. Cruzado com o gasto, mostra quanto cada faixa de renda injeta na economia local.')}
+  ${perg(2,'Como você teve conhecimento do Festival Canaã Cidade Junina 2026?',['Já conhecia','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp','Facebook/Instagram','Mora próximo','Carro de som','Trabalho','Venho todo ano'],'checkbox',outroCampo(),null,null,'Mede a eficácia de cada canal de divulgação. Orienta onde investir o marketing das próximas edições.')}
   <div class="sec-titulo">02 · Comportamento</div>
-  ${perg(3,'Você veio ao evento:',['Sozinho','Com parentes/casal','Amigos/colegas'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(4,'Quantos dias irá participar?',['1 a 5 dias','5 a 10 dias','Todos os dias'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(5,'Meio de transporte utilizado?',['Carro próprio','Carona','Táxi/Uber','Ônibus de linha'],'radio',outroCampo(),null,'Não Sabe/Não Opinou')}
-  <div class="sec-titulo">03 · Origem &amp; Hospedagem</div>
-  ${perg(6,'Você mora em Canaã dos Carajás?',['Sim','Não'])}
-  ${pertexto(7,'Em qual cidade você reside?<span class="obrig">*</span>','Ex.: PARAUAPEBAS',{q:6,val:'Não'},'upper')}
-  ${perg(8,'Você pernoitou em Canaã dos Carajás?',['Sim','Não'],'radio','',{q:6,val:'Não'})}
-  ${perg(9,'Onde você pernoitou?',['Casa de Amigos/Parentes','Hotel/Pousada'],'radio',outroCampo(),{q:8,val:'Sim'},'Não Sabe/Não Opinou')}
-  <div class="sec-titulo">04 · Impacto Econômico</div>
-  ${perg(10,'O Festival foi o principal motivo da sua vinda?',['Sim','Não'])}
-  ${perg(11,'Qual o motivo principal da vinda?',['Programação Cultural','Comidas Típicas','Atrações musicais','Competições e danças','Negócios/trabalho'],'radio',outroCampo(),{q:10,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(12,'Qual o motivo da vinda?',['Negócios/trabalho','Visita amigos/parentes','Lazer/descanso'],'radio',outroCampo(),{q:10,val:'Não'},'Não Sabe/Não Opinou')}
-  ${perg(13,'Pretende comprar no comércio local (vestuário, beleza, supermercado)?',['Sim','Não'])}
-  ${perg(14,'Faixa de gasto nas compras de comércio?',['R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',{q:13,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${perg(15,'Faixa de gasto total estimada no evento (todos os dias)?',['Até R$ 100','R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${pernum(16,'Além de você, quantas pessoas estão incluídas nesses gastos?','Nº de acompanhantes')}
+  ${perg(3,'Você veio ao evento:',['Sozinho','Com parentes/casal','Amigos/colegas'],'radio','',null,'Não Sabe/Não Opinou','Indica o tamanho médio do grupo — multiplica o gasto individual para estimar o impacto por família.')}
+  ${perg(4,'Quantos dias irá participar?',['1 a 5 dias','5 a 10 dias','Todos os dias'],'radio','',null,'Não Sabe/Não Opinou','Mede o tempo de permanência. Quanto mais dias, maior o gasto acumulado e o impacto na rede hoteleira.')}
+  ${perg(5,'Meio de transporte utilizado para chegar ao evento?',['Carro próprio','Carona','Táxi/Uber','Ônibus de linha','A pé'],'radio',outroCampo(),null,'Não Sabe/Não Opinou','Mapeia a mobilidade. O uso de Táxi/Uber alimenta a estimativa de impacto no setor de transporte (demanda da contratante).')}
+  <div class="sec-titulo">03 · Origem &amp; Turismo</div>
+  ${perg(6,'Você mora em Canaã dos Carajás?',['Sim','Não'],'radio','',null,null,'Separa morador de turista. É a base para calcular o percentual de visitantes de fora — indicador-chave de atração turística.')}
+  ${pertexto(7,'Em qual cidade você reside?<span class="obrig">*</span>','Ex.: PARAUAPEBAS',{q:6,val:'Não'},'upper','Registra a origem exata. Permite mapear de quantos municípios o evento atrai público (demanda turismo da contratante).')}
+  ${perg(8,'Qual o seu estado de origem?',['Pará (PA)','Maranhão (MA)','Tocantins (TO)','Outro estado do Norte','Nordeste','Sul/Sudeste/Centro-Oeste'],'radio','',{q:6,val:'Não'},'Não Sabe/Não Opinou','Quantifica a abrangência geográfica: visitantes de outros estados elevam o status do evento de regional para nacional.')}
+  ${perg(9,'Você pernoitou em Canaã dos Carajás?',['Sim','Não'],'radio','',{q:6,val:'Não'},null,'Distingue o turista que dorme na cidade (gera receita hoteleira) do que vem e volta no mesmo dia.')}
+  ${perg(10,'Onde você pernoitou?',['Casa de Amigos/Parentes','Hotel/Pousada'],'radio',outroCampo(),{q:9,val:'Sim'},'Não Sabe/Não Opinou','Mede a taxa de ocupação da rede hoteleira (demanda direta da contratante). Hotel/Pousada = receita formal do setor.')}
+  <div class="sec-titulo">04 · Impacto Econômico (gasto desagregado)</div>
+  ${perg(11,'O Festival foi o principal motivo da sua vinda à cidade?',['Sim','Não'],'radio','',null,null,'Isola o impacto atribuível ao evento. Só o gasto de quem veio PELO festival conta como impacto gerado por ele.')}
+  ${perg(12,'Faixa de gasto com HOSPEDAGEM (total nos dias):',['Não terei gasto','Até R$ 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou','Estima a movimentação financeira na rede hoteleira (hotéis e pousadas) — item 2b da contratante.')}
+  ${perg(13,'Faixa de gasto com ALIMENTAÇÃO (restaurantes, lanchonetes, bares):',['Até R$ 100','R$ 100 a 300','R$ 300 a 600','Mais de R$ 600'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto em restaurantes, lanchonetes e bares — item 2c da contratante.')}
+  ${perg(14,'Faixa de gasto em SUPERMERCADOS / MERCADOS / DISTRIBUIDORAS:',['Não terei gasto','Até R$ 100','R$ 100 a 300','Mais de R$ 300'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto no varejo de alimentos e distribuidoras — itens 2d e 2e da contratante.')}
+  ${perg(15,'Faixa de gasto com TRANSPORTE / COMBUSTÍVEL / UBER:',['Não terei gasto','Até R$ 100','R$ 100 a 300','Mais de R$ 300'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto no setor de transporte e aplicativos — item 2g da contratante.')}
+  ${perg(16,'Faixa de gasto com COMPRAS no comércio (vestuário, beleza, lembranças):',['Não terei gasto','R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto no comércio local em geral — item 2f da contratante.')}
+  ${pernum(17,'Além de você, quantas pessoas estão incluídas nesses gastos?','Nº de acompanhantes',null,'Converte o gasto individual em gasto do grupo. Essencial para projetar o impacto total a partir da amostra.')}
   <div class="sec-titulo">05 · Avaliação (Likert)</div>
-  ${aval(17,'Avalie os aspectos do evento Canaã Cidade Junina 2026:',['Acesso/Local','Infraestrutura','Segurança','Competições/Quadrilhas','Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)','Artesanato/Produtos','Comidas (qualidade)','Comidas (preço)','Data/Horário','Receptividade'])}
-  ${aval(18,'Avalie a Estrutura, Planejamento e Organização:',['Tema do evento','Local do evento','Divulgação','Estrutura física','Gastronomia','Shows e Atrações','Lixeiras','Banheiros','Estacionamentos','Avaliação Geral'])}
-  <div class="sec-titulo">06 · Lealdade &amp; Expectativa</div>
-  ${perg(19,'Você conhece as Quadrilhas que irão competir?',['Sim','Não'])}
-  ${pertexto(20,'Qual a sua quadrilha favorita?<span class="obrig">*</span>','Ex.: ARRAIÁ DA ALEGRIA',{q:19,val:'Sim'},'upper')}
-  ${perg(21,'Você recomendaria o Festival a amigos e familiares?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${likert(22,'Como avalia sua experiência no festival até o momento?')}
-  ${likert(23,'Qual sua expectativa para a continuidade da edição 2026?')}
-  ${pertexto(24,'Sua sugestão para melhorar edições futuras:','Escreva sua sugestão...')}
+  ${aval(18,'Avalie os aspectos do evento Canaã Cidade Junina 2026:',['Acesso/Local','Infraestrutura','Segurança','Competições/Quadrilhas','Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)','Artesanato/Produtos','Comidas (qualidade)','Comidas (preço)','Data/Horário','Receptividade'],'Avaliação detalhada por item gera o mapa de calor de satisfação. Itens \"Regular\" ou \"Não Satisfatório\" viram prioridades de melhoria.')}
+  ${aval(19,'Avalie a Estrutura, Planejamento e Organização:',['Tema do evento','Local do evento','Divulgação','Estrutura física','Gastronomia','Shows e Atrações','Lixeiras','Banheiros','Estacionamentos','Avaliação Geral'],'Avalia a percepção sobre a gestão do evento. A \"Avaliação Geral\" funciona como nota-síntese da organização.')}
+  <div class="sec-titulo">06 · Acessibilidade &amp; Inclusão</div>
+  ${likert(20,'Como você avalia a acessibilidade e inclusão no evento (rampas, espaços para PcD, sinalização)?',null,'Mede a percepção de acessibilidade — indicador social pedido pela contratante (item 10b). Base para ações de inclusão futuras.')}
+  <div class="sec-titulo">07 · Lealdade &amp; Expectativa</div>
+  ${perg(21,'Você conhece as Quadrilhas que irão competir?',['Sim','Não'],'radio','',null,null,'Mede o engajamento com o elemento cultural central (quadrilhas). Alta resposta indica forte identificação com a tradição junina.')}
+  ${pertexto(22,'Qual a sua quadrilha favorita?<span class="obrig">*</span>','Ex.: ARRAIÁ DA ALEGRIA',{q:21,val:'Sim'},'upper','Identifica as quadrilhas mais populares — dado útil para a organização valorizar os grupos de maior apelo.')}
+  ${perg(23,'Você recomendaria o Festival a amigos e familiares?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou','Base do NPS (Net Promoter Score) — indicador-síntese de aprovação. \"Com certeza\" = promotor; \"Não\" = detrator.')}
+  ${likert(24,'Como avalia sua experiência no festival até o momento?',null,'Nota geral de satisfação do visitante. Comparável entre edições para medir evolução da qualidade percebida.')}
+  ${likert(25,'Qual sua expectativa para a continuidade da edição 2026?',null,'Mede o otimismo em relação ao restante do evento — antecipa a tendência de satisfação final.')}
+  ${pertexto(26,'Sua sugestão para melhorar edições futuras:','Escreva sua sugestão...','none','none','Captura melhorias na voz do público. Respostas recorrentes viram recomendações no relatório final.')}
   `;
   aplicarSkipLogic();
 }
@@ -512,27 +544,29 @@ function renderPopulacao(){
     <label class="pill"><input type="radio" name="moradia" value="5-10"><span>5 a 10 anos</span></label>
     <label class="pill"><input type="radio" name="moradia" value="10+"><span>Mais de 10 anos</span></label></div></div>`)}
   <div class="sec-titulo verde">01 · Comunicação &amp; Perfil</div>
-  ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou')}
-  ${perg(2,'Como você acompanha os eventos de Canaã dos Carajás?',['Sites de notícia','Televisão','Rádio','Celular/WhatsApp','Facebook','Instagram','Jornais impressos'],'checkbox',outroCampo())}
-  ${pertexto(3,'Em qual bairro você reside?','Nome do bairro...','none','title')}
+  ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou','Classifica o perfil socioeconômico do morador. Permite analisar a percepção do evento por faixa de renda.')}
+  ${perg(2,'Como você acompanha os eventos de Canaã dos Carajás?',['Sites de notícia','Televisão','Rádio','Celular/WhatsApp','Facebook','Instagram','Jornais impressos'],'checkbox',outroCampo(),null,null,'Mapeia os canais de informação do morador — orienta a comunicação institucional da Prefeitura.')}
+  ${pertexto(3,'Em qual bairro você reside?','Nome do bairro...','none','title','Permite análise geográfica: quais bairros mais participam e como a percepção varia por região da cidade.')}
   <div class="sec-titulo verde">02 · Percepção da edição 2025 (Likert)</div>
-  ${perg(4,'Você participou do Festival Canaã Cidade Junina de 2025?',['Sim','Não'])}
-  ${likert(5,'Avaliação geral da edição 2025:',{q:4,val:'Sim'})}
-  ${likert(6,'Como avalia a Segurança do Festival 2025?',{q:4,val:'Sim'})}
-  ${likert(7,'Como avalia a Infraestrutura do Festival 2025?',{q:4,val:'Sim'})}
-  ${likert(8,'Como avalia a Organização geral de 2025?',{q:4,val:'Sim'})}
-  ${likert(9,'Como avalia a estrutura física (palco, barracas, banheiros)?',{q:4,val:'Sim'})}
-  ${likert(10,'Como avalia os Shows e Atrações de 2025?',{q:4,val:'Sim'})}
+  ${perg(4,'Você participou do Festival Canaã Cidade Junina de 2025?',['Sim','Não'],'radio','',null,null,'Filtro essencial: só quem participou avalia 2025. Quem não foi pula direto para expectativas de 2026.')}
+  ${likert(5,'Avaliação geral da edição 2025:',{q:4,val:'Sim'},'Nota-síntese da última edição na ótica do morador. Base de comparação para medir evolução em 2026.')}
+  ${likert(6,'Como avalia a Segurança do Festival 2025?',{q:4,val:'Sim'},'Segurança é fator decisivo de participação. Notas baixas sinalizam necessidade de reforço no policiamento.')}
+  ${likert(7,'Como avalia a Infraestrutura do Festival 2025?',{q:4,val:'Sim'},'Mede a percepção sobre a estrutura física geral. Orienta investimentos em melhorias.')}
+  ${likert(8,'Como avalia a Organização geral de 2025?',{q:4,val:'Sim'},'Avalia a gestão do evento. Comparável com a avaliação dos visitantes para checar convergência.')}
+  ${likert(9,'Como avalia a estrutura física (palco, barracas, banheiros)?',{q:4,val:'Sim'},'Detalha a percepção sobre os equipamentos do evento — banheiros e barracas costumam ser pontos críticos.')}
+  ${likert(10,'Como avalia os Shows e Atrações de 2025?',{q:4,val:'Sim'},'Mede a aprovação da programação artística — principal fator de atração de público.')}
   <div class="sec-titulo verde">03 · Impacto na Comunidade</div>
-  ${likert(11,'O festival trouxe benefício econômico para você/sua família?')}
-  ${perg(12,'Impacto do evento na sua rotina/mobilidade durante os dias de festa:',['Muito positivo','Positivo','Indiferente','Negativo','Muito negativo'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${likert(13,'O festival valoriza a imagem e identidade de Canaã dos Carajás?')}
-  <div class="sec-titulo verde">04 · Expectativa 2026</div>
-  ${perg(14,'Você pretende participar do Festival 2026?',['Sim','Não','Ainda não decidi'])}
-  ${perg(15,'Quanto pretende gastar no evento?',['Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400'],'radio','',{q:14,val:'Sim'},'Não Sabe/Não Opinou')}
-  ${likert(16,'Qual sua expectativa geral para o Festival 2026?')}
-  ${perg(17,'A data de 24/Jun a 12/Jul de 2026, você acha que:',['Ótima — atende ao período junino','Boa, mas poderia ser mais curta','Poderia ser mais longa','Preferia em outro período','Indiferente'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${pertexto(18,'Sua sugestão para o evento:','Escreva sua sugestão...')}
+  ${likert(11,'O festival trouxe benefício econômico para você/sua família?',null,'Mede o impacto econômico percebido pelo morador (renda, vendas, trabalho temporário) — valor social do evento.')}
+  ${perg(12,'Impacto do evento na sua rotina/mobilidade durante os dias de festa:',['Muito positivo','Positivo','Indiferente','Negativo','Muito negativo'],'radio','',null,'Não Sabe/Não Opinou','Captura externalidades negativas (trânsito, barulho) e positivas. Equilibra a visão sobre o evento.')}
+  ${likert(13,'O festival valoriza a imagem e identidade de Canaã dos Carajás?',null,'Mede o orgulho local e o valor simbólico do evento — justifica o investimento público além do retorno financeiro.')}
+  <div class="sec-titulo verde">04 · Acessibilidade</div>
+  ${likert(14,'Como você avalia a acessibilidade e inclusão no evento (rampas, espaços PcD, sinalização)?',null,'Indicador social de acessibilidade percebida pelo morador — item 10b da contratante.')}
+  <div class="sec-titulo verde">05 · Expectativa 2026</div>
+  ${perg(15,'Você pretende participar do Festival 2026?',['Sim','Não','Ainda não decidi'],'radio','',null,null,'Mede a intenção de participação local — projeta o público morador esperado para a próxima edição.')}
+  ${perg(16,'Quanto pretende gastar no evento?',['Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400'],'radio','',{q:15,val:'Sim'},'Não Sabe/Não Opinou','Estima o gasto do público local. Cada faixa representa um nível de injeção financeira do morador: até R$100 (consumo pontual), R$100-200 (moderado), R$200-400 (alto), acima de R$400 (intenso).')}
+  ${likert(17,'Qual sua expectativa geral para o Festival 2026?',null,'Mede o otimismo da comunidade. Expectativa alta indica boa reputação acumulada das edições anteriores.')}
+  ${perg(18,'A data de 24/Jun a 12/Jul de 2026, você acha que:',['Ótima — atende ao período junino','Boa, mas poderia ser mais curta','Poderia ser mais longa','Preferia em outro período','Indiferente'],'radio','',null,'Não Sabe/Não Opinou','Avalia a adequação do calendário na ótica de quem vive na cidade. \"Ótima\" valida a janela; respostas dispersas sugerem revisar as datas.')}
+  ${pertexto(19,'Sua sugestão para o evento:','Escreva sua sugestão...','none','none','Captura a voz do morador. Sugestões recorrentes sinalizam demandas legítimas da comunidade.')}
   `;
   aplicarSkipLogic();
 }
@@ -542,22 +576,22 @@ function renderOperacao(){
   document.getElementById('form-body').innerHTML=`
   ${metaBloco()}
   <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">01 · Perfil do Negócio</div>
-  ${perg(1,'Tipo de operação no festival:',['Alimentação/Comidas','Bebidas','Artesanato/Produtos típicos','Serviços (beleza, etc.)','Diversões/Parque'],'radio',outroCampo())}
-  ${perg(2,'Origem do expositor:',['Sou de Canaã dos Carajás','Sou de outra cidade'])}
-  ${pertexto(3,'De qual cidade?<span class="obrig">*</span>','Ex.: MARABÁ',{q:2,val:'Sou de outra cidade'},'upper')}
-  ${perg(4,'Já participou de edições anteriores do festival?',['Não, é a primeira vez','Sim, 1 edição','Sim, 2 a 3 edições','Sim, mais de 3 edições'])}
-  ${pernum(5,'Quantas pessoas trabalham no seu estande/operação?','Nº de pessoas')}
+  ${perg(1,'Tipo de operação no festival:',['Alimentação/Comidas','Bebidas','Artesanato/Produtos típicos','Serviços (beleza, etc.)','Diversões/Parque'],'radio',outroCampo(),null,null,'Classifica os tipos de negócio presentes. Permite contar e segmentar expositores por categoria (demanda 4 da contratante).')}
+  ${perg(2,'Origem do expositor:',['Sou de Canaã dos Carajás','Sou de outra cidade'],'radio','',null,null,'Mede quanto do comércio do evento é local x externo. Expositor local retém renda na cidade; o de fora indica atração regional.')}
+  ${pertexto(3,'De qual cidade?<span class="obrig">*</span>','Ex.: MARABÁ',{q:2,val:'Sou de outra cidade'},'upper','Mapeia a origem dos expositores de fora — mostra o alcance econômico do evento como gerador de negócios regionais.')}
+  ${perg(4,'Já participou de edições anteriores do festival?',['Não, é a primeira vez','Sim, 1 edição','Sim, 2 a 3 edições','Sim, mais de 3 edições'],'radio','',null,null,'Mede a fidelização do expositor. Alta recorrência indica que o evento dá retorno e vale o reinvestimento.')}
+  ${pernum(5,'Quantas pessoas trabalham no seu estande/operação?','Nº de pessoas',null,'Estima a geração de empregos diretos e indiretos durante o evento (demanda 3 da contratante). Somado, projeta o total de postos temporários.')}
   <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">02 · Investimento &amp; Retorno</div>
-  ${perg(6,'Faixa de investimento para participar (taxa + estrutura + estoque):',['Até R$ 1.000','R$ 1.000 a 3.000','R$ 3.000 a 5.000','R$ 5.000 a 10.000','Mais de R$ 10.000'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(7,'Faixa de faturamento esperado/obtido no evento:',['Até R$ 2.000','R$ 2.000 a 5.000','R$ 5.000 a 10.000','R$ 10.000 a 20.000','Mais de R$ 20.000'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${likert(8,'Como avalia o retorno em relação ao investimento (custo-benefício)?')}
-  ${perg(9,'O movimento comparado à edição anterior foi:',['Muito maior','Maior','Igual','Menor','Muito menor','Primeira participação'],'radio','',null,'Não Sabe/Não Opinou')}
+  ${perg(6,'Faixa de investimento para participar (taxa + estrutura + estoque):',['Até R$ 1.000','R$ 1.000 a 3.000','R$ 3.000 a 5.000','R$ 5.000 a 10.000','Mais de R$ 10.000'],'radio','',null,'Não Sabe/Não Opinou','Mede o capital movimentado pelos expositores. Compõe o impacto econômico pelo lado de quem opera o evento.')}
+  ${perg(7,'Faixa de faturamento esperado/obtido no evento:',['Até R$ 2.000','R$ 2.000 a 5.000','R$ 5.000 a 10.000','R$ 10.000 a 20.000','Mais de R$ 20.000'],'radio','',null,'Não Sabe/Não Opinou','Estima a receita gerada pelos expositores — uma das maiores fontes de movimentação financeira interna do evento.')}
+  ${likert(8,'Como avalia o retorno em relação ao investimento (custo-benefício)?',null,'Mede o ROI percebido. Notas altas comprovam que o evento é uma boa praça de negócios — argumento para atrair mais expositores.')}
+  ${perg(9,'O movimento comparado à edição anterior foi:',['Muito maior','Maior','Igual','Menor','Muito menor','Primeira participação'],'radio','',null,'Não Sabe/Não Opinou','Capta a percepção de crescimento do evento na ótica de quem vende. Complementa o histórico de público (demanda 1).')}
   <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">03 · Avaliação da Operação (Likert)</div>
-  ${aval(10,'Avalie os aspectos da operação para expositores:',['Organização do espaço','Logística de montagem','Energia elétrica','Água e limpeza','Segurança da área','Comunicação da organização','Custo da taxa/aluguel','Fluxo de público nos estandes'])}
+  ${aval(10,'Avalie os aspectos da operação para expositores:',['Organização do espaço','Logística de montagem','Energia elétrica','Água e limpeza','Segurança da área','Comunicação da organização','Custo da taxa/aluguel','Fluxo de público nos estandes'],'Diagnostica a qualidade da estrutura oferecida aos expositores. Pontos fracos aqui afastam vendedores nas próximas edições.')}
   <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">04 · Fidelização</div>
-  ${perg(11,'Pretende participar da edição 2026?',['Sim, com certeza','Talvez','Não pretendo'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${perg(12,'Recomendaria participar a outros expositores?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou')}
-  ${pertexto(13,'Sua sugestão para melhorar a experiência do expositor:','Escreva sua sugestão...')}
+  ${perg(11,'Pretende participar da edição 2026?',['Sim, com certeza','Talvez','Não pretendo'],'radio','',null,'Não Sabe/Não Opinou','Mede a retenção de expositores — base do NPS do operador. Antecipa a ocupação comercial da próxima edição.')}
+  ${perg(12,'Recomendaria participar a outros expositores?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou','NPS de recomendação entre pares. Expositor que indica é o melhor captador de novos comerciantes para o evento.')}
+  ${pertexto(13,'Sua sugestão para melhorar a experiência do expositor:','Escreva sua sugestão...','none','none','Captura demandas operacionais dos vendedores. Melhorias aqui aumentam a retenção e a qualidade da feira.')}
   `;
   aplicarSkipLogic();
 }

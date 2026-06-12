@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just Go · Dashboard — Festival Canaã Cidade Junina 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070E1A; --panel:#0D1B2E; --panel2:#11233A;
+  --navy:#1A2A6C; --cyan:#00C2FF; --cyan-d:#0099CC;
+  --green:#00D68F; --gold:#F5A623; --red:#FF4757; --purple:#9B6DFF;
+  --ink:#EAF2FF; --mut:rgba(234,242,255,0.5); --mut2:rgba(234,242,255,0.3);
+  --line:rgba(0,194,255,0.12); --card:rgba(255,255,255,0.025);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 50% at 15% 0%,rgba(0,194,255,0.07),transparent 60%),
+  radial-gradient(ellipse 60% 50% at 100% 30%,rgba(0,214,143,0.05),transparent 60%)}
+
+/* topbar */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(7,14,26,0.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);padding:0 28px;height:68px;display:flex;align-items:center;gap:20px}
+.logo svg{height:30px;width:auto;display:block}
+.topbar-div{width:1px;height:30px;background:var(--line)}
+.topbar-titulo{flex:1}
+.topbar-titulo h1{font-family:'Syne',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.01em}
+.topbar-titulo p{font-size:0.72rem;color:var(--mut);margin-top:1px}
+.cliente-chip{display:flex;align-items:center;gap:8px;font-size:0.72rem;color:var(--mut);
+  background:var(--card);border:1px solid var(--line);border-radius:100px;padding:6px 14px}
+.cliente-chip b{color:var(--ink)}
+.foccus-mini{display:flex;align-items:flex-end;gap:1.5px;height:14px}
+.foccus-mini i{width:3px;border-radius:1px;background:var(--cyan)}
+.foccus-mini i:nth-child(1){height:6px}.foccus-mini i:nth-child(2){height:10px}.foccus-mini i:nth-child(3){height:14px}
+
+.wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:28px 28px 80px}
+
+/* dev badge */
+.dev{display:inline-flex;align-items:center;gap:7px;background:rgba(245,166,35,0.12);
+  border:1px solid rgba(245,166,35,0.4);border-radius:100px;padding:4px 13px;font-size:0.66rem;
+  font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.dev::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:bl 1.4s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:0.2}}
+
+/* section heading */
+.sec-head{display:flex;align-items:baseline;gap:12px;margin:34px 0 16px}
+.sec-head:first-of-type{margin-top:0}
+.sec-eyebrow{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--cyan)}
+.sec-head h2{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:-0.01em}
+.sec-head .line{flex:1;height:1px;background:var(--line)}
+
+/* KPI hero grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s}
+.kpi:hover{transform:translateY(-4px);border-color:rgba(0,194,255,0.35)}
+.kpi::after{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;opacity:0.08}
+.kpi.c1::after{background:var(--cyan)}.kpi.c2::after{background:var(--green)}
+.kpi.c3::after{background:var(--gold)}.kpi.c4::after{background:var(--purple)}
+.kpi-ico{font-size:1.3rem;margin-bottom:14px;display:block}
+.kpi-val{font-family:'Syne',sans-serif;font-size:2.1rem;font-weight:800;line-height:1;letter-spacing:-0.02em}
+.kpi-val .sm{font-size:1.1rem;color:var(--mut)}
+.kpi-lbl{font-size:0.78rem;color:var(--mut);margin-top:8px;line-height:1.4}
+.kpi-tag{display:inline-flex;align-items:center;gap:4px;font-size:0.68rem;font-weight:600;
+  margin-top:10px;padding:2px 9px;border-radius:100px}
+.kpi-tag.up{background:rgba(0,214,143,0.15);color:var(--green)}
+
+/* panels */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+.panel-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.panel-h h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700}
+.panel-h .badge{font-size:0.66rem;color:var(--mut2);text-transform:uppercase;letter-spacing:0.12em}
+.panel-sub{font-size:0.74rem;color:var(--mut);margin-bottom:18px;line-height:1.5}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-23{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+
+.chart-box{position:relative;height:260px}
+.chart-box.tall{height:300px}
+.chart-box.short{height:210px}
+
+/* NPS gauge */
+.nps-wrap{display:flex;align-items:center;gap:24px}
+.nps-num{font-family:'Syne',sans-serif;font-size:3.4rem;font-weight:800;line-height:1;color:var(--green)}
+.nps-meta{flex:1}
+.nps-bar{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--red) 0%,var(--gold) 50%,var(--green) 100%);position:relative;margin:14px 0 8px}
+.nps-marker{position:absolute;top:-4px;width:4px;height:18px;background:#fff;border-radius:2px;box-shadow:0 0 8px rgba(255,255,255,0.6)}
+.nps-scale{display:flex;justify-content:space-between;font-size:0.64rem;color:var(--mut2)}
+.nps-breakdown{display:flex;gap:8px;margin-top:14px}
+.nps-seg{flex:1;text-align:center;padding:8px;border-radius:10px;background:rgba(255,255,255,0.03)}
+.nps-seg .v{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem}
+.nps-seg .l{font-size:0.64rem;color:var(--mut);margin-top:2px}
+
+/* heat table */
+.heat-table{width:100%;border-collapse:separate;border-spacing:0 4px;font-size:0.78rem}
+.heat-table td{padding:8px 6px}
+.heat-table td:first-child{color:var(--mut);text-align:left;width:46%}
+.heat-cell{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:6px 0;border-radius:7px;font-weight:600;font-size:0.74rem;color:#04111f}
+
+/* legenda economica */
+.eco-list{display:flex;flex-direction:column;gap:11px}
+.eco-row{display:flex;align-items:center;gap:12px}
+.eco-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.eco-name{flex:1;font-size:0.82rem;color:var(--ink)}
+.eco-val{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem}
+.eco-bar-track{height:6px;background:rgba(255,255,255,0.05);border-radius:4px;margin-top:5px;overflow:hidden}
+.eco-bar-fill{height:100%;border-radius:4px}
+
+/* footer */
+.dash-footer{margin-top:50px;padding-top:24px;border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:0.74rem;color:var(--mut2)}
+.dash-footer b{color:var(--mut)}
+
+@media(max-width:1000px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid-2,.grid-23,.grid-3{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .wrap{padding:20px 16px 60px}.topbar{padding:0 16px}
+  .kpi-grid{grid-template-columns:1fr}
+  .topbar-titulo p{display:none}.cliente-chip{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <svg viewBox="0 0 210 32" xmlns="http://www.w3.org/2000/svg">
+      <text x="2" y="26" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#EAF2FF" letter-spacing="-1.5">Just</text>
+      <text x="80" y="26" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#00C2FF" letter-spacing="-1.5">Go</text>
+    </svg>
+  </div>
+  <div class="topbar-div"></div>
+  <div class="topbar-titulo">
+    <h1>Dashboard de Resultados</h1>
+    <p>Festival Canaã Cidade Junina 2026 · Pesquisa de Opinião Pública</p>
+  </div>
+  <div class="cliente-chip">
+    <span>Pesquisa para</span>
+    <div class="foccus-mini"><i></i><i></i><i></i></div>
+    <b>Foccus Pesquisas</b>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="dev">Dados de demonstração · v0.4.0</div>
+
+  <!-- KPIs -->
+  <div class="sec-head">
+    <span class="sec-eyebrow">Visão Geral</span>
+    <h2>Indicadores-chave</h2>
+    <div class="line"></div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi c1">
+      <span class="kpi-ico">💰</span>
+      <div class="kpi-val">R$ 28,4<span class="sm"> mi</span></div>
+      <div class="kpi-lbl">Impacto econômico total estimado</div>
+      <span class="kpi-tag up">▲ 23% vs 2025</span>
+    </div>
+    <div class="kpi c2">
+      <span class="kpi-ico">🎟️</span>
+      <div class="kpi-val">312<span class="sm"> mil</span></div>
+      <div class="kpi-lbl">Público total estimado no período</div>
+      <span class="kpi-tag up">▲ 11% vs 2025</span>
+    </div>
+    <div class="kpi c3">
+      <span class="kpi-ico">⭐</span>
+      <div class="kpi-val">+74</div>
+      <div class="kpi-lbl">NPS — Net Promoter Score geral</div>
+      <span class="kpi-tag up">Zona de excelência</span>
+    </div>
+    <div class="kpi c4">
+      <span class="kpi-ico">👷</span>
+      <div class="kpi-val">1.840</div>
+      <div class="kpi-lbl">Empregos temporários gerados (diretos + indiretos)</div>
+      <span class="kpi-tag up">▲ 18% vs 2025</span>
+    </div>
+  </div>
+
+  <!-- IMPACTO ECONÔMICO -->
+  <div class="sec-head">
+    <span class="sec-eyebrow">Demanda 2 da contratante</span>
+    <h2>Impacto econômico por setor</h2>
+    <div class="line"></div>
+  </div>
+  <div class="grid-23">
+    <div class="panel">
+      <div class="panel-h"><h3>Distribuição da movimentação financeira</h3><span class="badge">R$ 28,4 mi</span></div>
+      <div class="panel-sub">Estimativa por setor a partir do gasto desagregado declarado pelos visitantes (n=600), projetado para o público total.</div>
+      <div class="chart-box"><canvas id="ecoChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Ranking de setores</h3></div>
+      <div class="panel-sub">Onde o dinheiro do festival circula.</div>
+      <div class="eco-list" id="ecoList"></div>
+    </div>
+  </div>
+
+  <!-- HISTÓRICO + TURISMO -->
+  <div class="sec-head">
+    <span class="sec-eyebrow">Demandas 1 e 8</span>
+    <h2>Crescimento histórico & turismo</h2>
+    <div class="line"></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-h"><h3>Evolução do público por edição</h3><span class="badge">2021 → 2026</span></div>
+      <div class="panel-sub">Série histórica do público estimado — base para projetar o crescimento do evento.</div>
+      <div class="chart-box"><canvas id="histChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Origem dos visitantes</h3><span class="badge">Turismo</span></div>
+      <div class="panel-sub">Percentual de público local, de outros municípios e de outros estados.</div>
+      <div class="chart-box"><canvas id="origemChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- NPS + SATISFAÇÃO -->
+  <div class="sec-head">
+    <span class="sec-eyebrow">Lealdade & Satisfação</span>
+    <h2>NPS e mapa de calor</h2>
+    <div class="line"></div>
+  </div>
+  <div class="grid-23">
+    <div class="panel">
+      <div class="panel-h"><h3>Mapa de calor da satisfação</h3><span class="badge">Escala Likert</span></div>
+      <div class="panel-sub">Média por aspecto avaliado (1 = Não Satisfatório · 5 = Ótimo). Vermelho sinaliza prioridade de melhoria.</div>
+      <table class="heat-table" id="heatTable"></table>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Net Promoter Score</h3></div>
+      <div class="panel-sub">Disposição do público em recomendar o festival.</div>
+      <div class="nps-wrap">
+        <div class="nps-num">+74</div>
+        <div class="nps-meta">
+          <div class="nps-bar"><div class="nps-marker" style="left:87%"></div></div>
+          <div class="nps-scale"><span>−100</span><span>0</span><span>+100</span></div>
+        </div>
+      </div>
+      <div class="nps-breakdown">
+        <div class="nps-seg"><div class="v" style="color:var(--green)">79%</div><div class="l">Promotores</div></div>
+        <div class="nps-seg"><div class="v" style="color:var(--gold)">16%</div><div class="l">Neutros</div></div>
+        <div class="nps-seg"><div class="v" style="color:var(--red)">5%</div><div class="l">Detratores</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERFIL + CANAIS -->
+  <div class="sec-head">
+    <span class="sec-eyebrow">Perfil do público</span>
+    <h2>Demografia & divulgação</h2>
+    <div class="line"></div>
+  </div>
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-h"><h3>Faixa etária</h3></div>
+      <div class="panel-sub">Distribuição do público entrevistado.</div>
+      <div class="chart-box short"><canvas id="idadeChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Canais de divulgação</h3></div>
+      <div class="panel-sub">Como o público soube do evento.</div>
+      <div class="chart-box short"><canvas id="canalChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Renda familiar</h3></div>
+      <div class="panel-sub">Em salários mínimos.</div>
+      <div class="chart-box short"><canvas id="rendaChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- EXPOSITORES -->
+  <div class="sec-head">
+    <span class="sec-eyebrow">Demandas 3 e 4 · Questionário C</span>
+    <h2>Expositores & operação</h2>
+    <div class="line"></div>
+  </div>
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-h"><h3>Tipo de operação</h3></div>
+      <div class="panel-sub">Composição dos expositores (n=100).</div>
+      <div class="chart-box short"><canvas id="expTipoChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>ROI percebido</h3></div>
+      <div class="panel-sub">Retorno sobre investimento na ótica do expositor.</div>
+      <div class="chart-box short"><canvas id="roiChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Intenção de retorno em 2027</h3></div>
+      <div class="panel-sub">Fidelização dos expositores.</div>
+      <div class="chart-box short"><canvas id="retornoChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="dash-footer">
+    <div><b>Just Go · Smart Access</b> — plataforma de coleta e análise · dados fictícios para demonstração</div>
+    <div>Pesquisa conduzida pela <b>Foccus Pesquisas</b> · Prefeitura de Canaã dos Carajás — PA</div>
+  </div>
+</div>
+
+<script>
+/* ===== paleta ===== */
+const C={cyan:'#00C2FF',green:'#00D68F',gold:'#F5A623',red:'#FF4757',purple:'#9B6DFF',navy:'#3B5BBF',ink:'#EAF2FF',mut:'rgba(234,242,255,0.5)',grid:'rgba(234,242,255,0.06)'};
+Chart.defaults.font.family="'DM Sans',sans-serif";
+Chart.defaults.color=C.mut;
+Chart.defaults.plugins.legend.labels.boxWidth=12;
+Chart.defaults.plugins.legend.labels.padding=14;
+Chart.defaults.plugins.legend.labels.font={size:11};
+
+/* ===== dados fictícios ===== */
+// Impacto econômico por setor (R$ milhões)
+const eco=[
+  ['Alimentação / Bares / Restaurantes',9.1,C.gold],
+  ['Hospedagem (hotéis e pousadas)',6.3,C.cyan],
+  ['Comércio local (vestuário, lembranças)',4.8,C.green],
+  ['Operação interna (estandes/feira)',3.9,C.purple],
+  ['Supermercados / Distribuidoras',2.6,C.navy],
+  ['Transporte / Combustível / Uber',1.7,C.red],
+];
+const ecoTotal=eco.reduce((a,b)=>a+b[1],0);
+
+// donut impacto
+new Chart(ecoChart,{type:'doughnut',
+  data:{labels:eco.map(e=>e[0]),datasets:[{data:eco.map(e=>e[1]),backgroundColor:eco.map(e=>e[2]),borderColor:'#070E1A',borderWidth:3,hoverOffset:8}]},
+  options:{cutout:'62%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
+    tooltip:{callbacks:{label:c=>` ${c.label}: R$ ${c.parsed.toFixed(1)} mi (${(c.parsed/ecoTotal*100).toFixed(0)}%)`}}}}});
+
+// ranking lista
+ecoList.innerHTML=eco.map(e=>{
+  const pct=(e[1]/ecoTotal*100);
+  return `<div><div class="eco-row"><span class="eco-dot" style="background:${e[2]}"></span>
+    <span class="eco-name">${e[0]}</span><span class="eco-val">R$ ${e[1].toFixed(1)} mi</span></div>
+    <div class="eco-bar-track"><div class="eco-bar-fill" style="width:${pct}%;background:${e[2]}"></div></div></div>`;
+}).join('');
+
+// histórico público (milhares)
+new Chart(histChart,{type:'bar',
+  data:{labels:['2021','2022','2023','2024','2025','2026'],
+    datasets:[{label:'Público (mil)',data:[145,180,235,268,281,312],
+      backgroundColor:'rgba(0,194,255,0.18)',borderColor:C.cyan,borderWidth:2,borderRadius:7}]},
+  options:{plugins:{legend:{display:false}},scales:{
+    y:{grid:{color:C.grid},ticks:{callback:v=>v+'k'}},x:{grid:{display:false}}}}});
+
+// origem visitantes
+new Chart(origemChart,{type:'doughnut',
+  data:{labels:['Canaã (local)','Outros municípios PA','Outros estados'],
+    datasets:[{data:[52,34,14],backgroundColor:[C.navy,C.cyan,C.green],borderColor:'#070E1A',borderWidth:3,hoverOffset:8}]},
+  options:{cutout:'58%',plugins:{legend:{position:'bottom'},
+    tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+
+// mapa de calor satisfação
+const heat=[
+  ['Receptividade',4.6],['Shows e Atrações',4.5],['Competições/Quadrilhas',4.4],
+  ['Gastronomia',4.1],['Acesso/Local',3.9],['Segurança',3.7],
+  ['Infraestrutura',3.4],['Estacionamentos',2.9],['Banheiros',2.4]
+];
+function heatColor(v){
+  if(v>=4.3)return C.green; if(v>=3.8)return '#7FD98F';
+  if(v>=3.3)return C.gold; if(v>=2.8)return '#FF8C42'; return C.red;
+}
+heatTable.innerHTML=heat.map(h=>`<tr><td>${h[0]}</td>
+  <td><span class="heat-cell" style="background:${heatColor(h[1])}">${h[1].toFixed(1)}</span></td></tr>`).join('');
+
+// faixa etária
+new Chart(idadeChart,{type:'bar',
+  data:{labels:['16-19','20-24','25-34','35-44','45-59','60+'],
+    datasets:[{data:[9,18,31,22,15,5],backgroundColor:C.purple,borderRadius:6}]},
+  options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x}%`}}},
+    scales:{x:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}}}});
+
+// canais
+new Chart(canalChart,{type:'bar',
+  data:{labels:['Instagram','WhatsApp','Já conhecia','Rádio/TV','Carro de som','Facebook'],
+    datasets:[{data:[34,26,15,11,8,6],backgroundColor:C.cyan,borderRadius:6}]},
+  options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x}%`}}},
+    scales:{x:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}}}});
+
+// renda
+new Chart(rendaChart,{type:'doughnut',
+  data:{labels:['Até 1 SM','1-2 SM','3-5 SM','+5 SM'],
+    datasets:[{data:[22,41,28,9],backgroundColor:[C.red,C.gold,C.cyan,C.green],borderColor:'#070E1A',borderWidth:3}]},
+  options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
+    tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+
+// expositores tipo
+new Chart(expTipoChart,{type:'doughnut',
+  data:{labels:['Alimentação','Bebidas','Artesanato','Serviços','Diversões'],
+    datasets:[{data:[42,19,21,10,8],backgroundColor:[C.gold,C.red,C.green,C.cyan,C.purple],borderColor:'#070E1A',borderWidth:3}]},
+  options:{cutout:'56%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
+    tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+
+// ROI percebido (likert)
+new Chart(roiChart,{type:'bar',
+  data:{labels:['Ótimo','Muito Bom','Bom','Regular','Não Sat.'],
+    datasets:[{data:[31,28,24,12,5],backgroundColor:[C.green,'#7FD98F',C.gold,'#FF8C42',C.red],borderRadius:6}]},
+  options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.y}%`}}},
+    scales:{y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}});
+
+// retorno 2027
+new Chart(retornoChart,{type:'doughnut',
+  data:{labels:['Sim, com certeza','Talvez','Não pretendo'],
+    datasets:[{data:[81,14,5],backgroundColor:[C.green,C.gold,C.red],borderColor:'#070E1A',borderWidth:3}]},
+  options:{cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
+    tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+</script>
+</body>
+</html>
