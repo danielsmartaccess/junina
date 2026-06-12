@@ -287,7 +287,7 @@ body {
 </head>
 <body>
 <div class="dev-ribbon"></div>
-<div class="dev-badge">DEV · v0.5.0</div>
+<div class="dev-badge">DEV · v0.5.1</div>
 <div class="sync-badge ok" id="sync-badge">✓ Pronto</div>
 
 <!-- CAPA -->
@@ -675,17 +675,25 @@ async function enviar(){
     respostas: coletarRespostas()
   };
 
+  let salvou = false;
   try {
     // 1) SEMPRE salva local primeiro (offline-first)
     await salvarLocal(entrevista);
+    salvou = true;
     await atualizarBadgeSync();
-    // 2) tenta sincronizar se online (não bloqueia)
     if(navigator.onLine) sincronizar();
   } catch(e){
-    console.error('Erro ao salvar local', e);
-    alert('Erro ao salvar. Tente novamente.');
-    btn.textContent='Salvar Registro'; btn.disabled=false; return;
+    console.error('Erro ao salvar local:', e);
+    // tenta fallback em localStorage antes de desistir
+    if(salvarFallback(entrevista)){
+      salvou = true;
+      console.warn('Salvo via fallback (localStorage)');
+    } else {
+      alert('Não foi possível salvar: '+(e.message||'erro desconhecido')+'\n\nVerifique se não está em aba anônima e tente de novo.');
+      btn.textContent='Salvar Registro'; btn.disabled=false; return;
+    }
   }
+  if(!salvou){ btn.textContent='Salvar Registro'; btn.disabled=false; return; }
 
   setTimeout(()=>{
     document.getElementById('app').style.display='none';
@@ -719,7 +727,11 @@ let db = null;
 /* ─── abrir/criar o banco local ─── */
 function abrirDB(){
   return new Promise((resolve, reject)=>{
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    if(!window.indexedDB){ reject(new Error('IndexedDB indisponível (modo privado/anônimo?). Use o navegador normal.')); return; }
+    let req;
+    try { req = indexedDB.open(DB_NAME, DB_VERSION); }
+    catch(err){ reject(new Error('Falha ao abrir armazenamento local: '+err.message)); return; }
+    req.onblocked = ()=>reject(new Error('Armazenamento bloqueado — feche outras abas do app e tente de novo.'));
     req.onupgradeneeded = e=>{
       const d = e.target.result;
       if(!d.objectStoreNames.contains(STORE)){
@@ -736,14 +748,29 @@ function abrirDB(){
 /* ─── salvar entrevista localmente (SEMPRE funciona) ─── */
 async function salvarLocal(entrevista){
   if(!db) await abrirDB();
+  if(!db) throw new Error('Banco local não inicializado.');
   entrevista.sincronizado = 0;          // 0 = pendente, 1 = sincronizado
   entrevista.salvo_em = new Date().toISOString();
   return new Promise((resolve, reject)=>{
-    const tx = db.transaction(STORE, 'readwrite');
-    tx.objectStore(STORE).put(entrevista);
+    let tx;
+    try { tx = db.transaction(STORE, 'readwrite'); }
+    catch(err){ reject(new Error('Transação falhou: '+err.message)); return; }
+    try { tx.objectStore(STORE).put(entrevista); }
+    catch(err){ reject(new Error('Gravação falhou: '+err.message)); return; }
     tx.oncomplete = ()=>resolve(entrevista);
-    tx.onerror = e=>reject(e.target.error);
+    tx.onerror = e=>reject(new Error('Erro na transação: '+(e.target.error?.message||'desconhecido')));
+    tx.onabort = e=>reject(new Error('Gravação abortada: '+(e.target.error?.message||'espaço cheio?')));
   });
+}
+
+// fallback: se IndexedDB falhar totalmente, guarda em localStorage
+function salvarFallback(entrevista){
+  try {
+    const chave = 'pend_'+entrevista.session_id;
+    entrevista.sincronizado = 0; entrevista.fallback = true;
+    localStorage.setItem(chave, JSON.stringify(entrevista));
+    return true;
+  } catch(e){ return false; }
 }
 
 /* ─── contar pendentes ─── */
