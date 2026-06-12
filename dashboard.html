@@ -118,10 +118,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .kpi-grid{grid-template-columns:repeat(2,1fr)}
   .grid-2,.grid-23,.grid-3{grid-template-columns:1fr}
 }
+.modo-toggle{display:flex;gap:2px;background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:100px;padding:3px}
+.modo-btn{background:transparent;border:none;color:var(--mut);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:600;padding:6px 14px;border-radius:100px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.modo-btn.ativo{background:var(--cyan);color:#04111f}
+.modo-banner{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:0 28px}
+.modo-banner-inner{background:rgba(0,194,255,0.07);border:1px solid var(--line);border-radius:12px;padding:11px 16px;font-size:0.78rem;color:var(--mut);display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.modo-banner-inner.real{background:rgba(0,214,143,0.07);border-color:rgba(0,214,143,0.2)}
+.loading{text-align:center;padding:60px 20px;color:var(--mut)}
+.vazio{text-align:center;padding:40px 20px;color:var(--mut2);font-size:0.85rem}
 @media(max-width:560px){
   .wrap{padding:20px 16px 60px}.topbar{padding:0 16px}
   .kpi-grid{grid-template-columns:1fr}
   .topbar-titulo p{display:none}.cliente-chip{display:none}
+  .modo-toggle{margin-left:auto}
 }
 </style>
 </head>
@@ -144,10 +153,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="foccus-mini"><i></i><i></i><i></i></div>
     <b>Foccus Pesquisas</b>
   </div>
+  <div class="modo-toggle">
+    <button class="modo-btn ativo" id="btn-demo" onclick="setModo('demo')">Demonstração</button>
+    <button class="modo-btn" id="btn-real" onclick="setModo('real')">Dados reais</button>
+  </div>
 </div>
 
 <div class="wrap">
-  <div class="dev">Dados de demonstração · v0.4.0</div>
+  <div class="dev" id="dev-badge">Dados de demonstração · v0.5.3</div>
+  <div class="modo-banner"><div class="modo-banner-inner" id="modo-banner">
+    <span>🎭</span><span><b>Modo demonstração</b> — números fictícios para apresentação. Alterne para "Dados reais" para ver a coleta ao vivo.</span>
+  </div></div>
 
   <!-- KPIs -->
   <div class="sec-head">
@@ -156,25 +172,25 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="line"></div>
   </div>
   <div class="kpi-grid">
-    <div class="kpi c1">
+    <div class="kpi c1" id="kpi-impacto">
       <span class="kpi-ico">💰</span>
       <div class="kpi-val">R$ 28,4<span class="sm"> mi</span></div>
       <div class="kpi-lbl">Impacto econômico total estimado</div>
       <span class="kpi-tag up">▲ 23% vs 2025</span>
     </div>
-    <div class="kpi c2">
+    <div class="kpi c2" id="kpi-publico">
       <span class="kpi-ico">🎟️</span>
       <div class="kpi-val">312<span class="sm"> mil</span></div>
       <div class="kpi-lbl">Público total estimado no período</div>
       <span class="kpi-tag up">▲ 11% vs 2025</span>
     </div>
-    <div class="kpi c3">
+    <div class="kpi c3" id="kpi-nps">
       <span class="kpi-ico">⭐</span>
       <div class="kpi-val">+74</div>
       <div class="kpi-lbl">NPS — Net Promoter Score geral</div>
       <span class="kpi-tag up">Zona de excelência</span>
     </div>
-    <div class="kpi c4">
+    <div class="kpi c4" id="kpi-empregos">
       <span class="kpi-ico">👷</span>
       <div class="kpi-val">1.840</div>
       <div class="kpi-lbl">Empregos temporários gerados (diretos + indiretos)</div>
@@ -305,7 +321,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 </div>
 
 <script>
-/* ===== paleta ===== */
+/* ===== verificação de dependência ===== */
+if(typeof Chart === 'undefined'){
+  document.addEventListener('DOMContentLoaded',()=>{
+    const w=document.querySelector('.wrap');
+    if(w) w.insertAdjacentHTML('afterbegin','<div style="background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.3);border-radius:12px;padding:16px;margin-bottom:20px;color:#FF8C42;font-size:0.85rem">⚠️ A biblioteca de gráficos (Chart.js) não carregou. Verifique sua conexão com a internet e recarregue a página.</div>');
+  });
+}
+
+/* ===== config ===== */
+const SUPABASE_URL = 'https://zhioebfzuugfjhblhfwp.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpoaW9lYmZ6dXVnZmpoYmxoZndwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyODU0NDMsImV4cCI6MjA5Njg2MTQ0M30.1peRPKPBTM2GtMh-d6l6ut5kIxmEgn7e-PEY1ztSnS8';
+
 const C={cyan:'#00C2FF',green:'#00D68F',gold:'#F5A623',red:'#FF4757',purple:'#9B6DFF',navy:'#3B5BBF',ink:'#EAF2FF',mut:'rgba(234,242,255,0.5)',grid:'rgba(234,242,255,0.06)'};
 Chart.defaults.font.family="'DM Sans',sans-serif";
 Chart.defaults.color=C.mut;
@@ -313,101 +340,206 @@ Chart.defaults.plugins.legend.labels.boxWidth=12;
 Chart.defaults.plugins.legend.labels.padding=14;
 Chart.defaults.plugins.legend.labels.font={size:11};
 
-/* ===== dados fictícios ===== */
-// Impacto econômico por setor (R$ milhões)
-const eco=[
-  ['Alimentação / Bares / Restaurantes',9.1,C.gold],
-  ['Hospedagem (hotéis e pousadas)',6.3,C.cyan],
-  ['Comércio local (vestuário, lembranças)',4.8,C.green],
-  ['Operação interna (estandes/feira)',3.9,C.purple],
-  ['Supermercados / Distribuidoras',2.6,C.navy],
-  ['Transporte / Combustível / Uber',1.7,C.red],
-];
-const ecoTotal=eco.reduce((a,b)=>a+b[1],0);
+let charts = {};      // referências para destruir ao trocar de modo
+let modoAtual = 'demo';
 
-// donut impacto
-new Chart(ecoChart,{type:'doughnut',
-  data:{labels:eco.map(e=>e[0]),datasets:[{data:eco.map(e=>e[1]),backgroundColor:eco.map(e=>e[2]),borderColor:'#070E1A',borderWidth:3,hoverOffset:8}]},
-  options:{cutout:'62%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
-    tooltip:{callbacks:{label:c=>` ${c.label}: R$ ${c.parsed.toFixed(1)} mi (${(c.parsed/ecoTotal*100).toFixed(0)}%)`}}}}});
+function destruirCharts(){ Object.values(charts).forEach(c=>{ try{c.destroy()}catch(e){} }); charts={}; }
 
-// ranking lista
-ecoList.innerHTML=eco.map(e=>{
-  const pct=(e[1]/ecoTotal*100);
-  return `<div><div class="eco-row"><span class="eco-dot" style="background:${e[2]}"></span>
-    <span class="eco-name">${e[0]}</span><span class="eco-val">R$ ${e[1].toFixed(1)} mi</span></div>
-    <div class="eco-bar-track"><div class="eco-bar-fill" style="width:${pct}%;background:${e[2]}"></div></div></div>`;
-}).join('');
-
-// histórico público (milhares)
-new Chart(histChart,{type:'bar',
-  data:{labels:['2021','2022','2023','2024','2025','2026'],
-    datasets:[{label:'Público (mil)',data:[145,180,235,268,281,312],
-      backgroundColor:'rgba(0,194,255,0.18)',borderColor:C.cyan,borderWidth:2,borderRadius:7}]},
-  options:{plugins:{legend:{display:false}},scales:{
-    y:{grid:{color:C.grid},ticks:{callback:v=>v+'k'}},x:{grid:{display:false}}}}});
-
-// origem visitantes
-new Chart(origemChart,{type:'doughnut',
-  data:{labels:['Canaã (local)','Outros municípios PA','Outros estados'],
-    datasets:[{data:[52,34,14],backgroundColor:[C.navy,C.cyan,C.green],borderColor:'#070E1A',borderWidth:3,hoverOffset:8}]},
-  options:{cutout:'58%',plugins:{legend:{position:'bottom'},
-    tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
-
-// mapa de calor satisfação
-const heat=[
-  ['Receptividade',4.6],['Shows e Atrações',4.5],['Competições/Quadrilhas',4.4],
-  ['Gastronomia',4.1],['Acesso/Local',3.9],['Segurança',3.7],
-  ['Infraestrutura',3.4],['Estacionamentos',2.9],['Banheiros',2.4]
-];
-function heatColor(v){
-  if(v>=4.3)return C.green; if(v>=3.8)return '#7FD98F';
-  if(v>=3.3)return C.gold; if(v>=2.8)return '#FF8C42'; return C.red;
+/* ═══════════ DADOS DEMO (fictícios) ═══════════ */
+function dadosDemo(){
+  return {
+    kpi:{ impacto:'R$ 28,4 mi', publico:'312 mil', nps:'+74', empregos:'1.840',
+          impactoTag:'▲ 23% vs 2025', publicoTag:'▲ 11% vs 2025', npsTag:'Zona de excelência', empregosTag:'▲ 18% vs 2025' },
+    eco:[['Alimentação / Bares / Restaurantes',9.1,C.gold],['Hospedagem (hotéis e pousadas)',6.3,C.cyan],
+         ['Comércio local (vestuário, lembranças)',4.8,C.green],['Operação interna (estandes/feira)',3.9,C.purple],
+         ['Supermercados / Distribuidoras',2.6,C.navy],['Transporte / Combustível / Uber',1.7,C.red]],
+    hist:{labels:['2021','2022','2023','2024','2025','2026'],data:[145,180,235,268,281,312]},
+    origem:{labels:['Canaã (local)','Outros municípios PA','Outros estados'],data:[52,34,14]},
+    heat:[['Receptividade',4.6],['Shows e Atrações',4.5],['Competições/Quadrilhas',4.4],['Gastronomia',4.1],
+          ['Acesso/Local',3.9],['Segurança',3.7],['Infraestrutura',3.4],['Estacionamentos',2.9],['Banheiros',2.4]],
+    nps:{prom:79,neu:16,det:5,valor:74},
+    idade:{labels:['16-19','20-24','25-34','35-44','45-59','60+'],data:[9,18,31,22,15,5]},
+    canal:{labels:['Instagram','WhatsApp','Já conhecia','Rádio/TV','Carro de som','Facebook'],data:[34,26,15,11,8,6]},
+    renda:{labels:['Até 1 SM','1-2 SM','3-5 SM','+5 SM'],data:[22,41,28,9]},
+    expTipo:{labels:['Alimentação','Bebidas','Artesanato','Serviços','Diversões'],data:[42,19,21,10,8]},
+    roi:{labels:['Ótimo','Muito Bom','Bom','Regular','Não Sat.'],data:[31,28,24,12,5]},
+    retorno:{labels:['Sim, com certeza','Talvez','Não pretendo'],data:[81,14,5]}
+  };
 }
-heatTable.innerHTML=heat.map(h=>`<tr><td>${h[0]}</td>
-  <td><span class="heat-cell" style="background:${heatColor(h[1])}">${h[1].toFixed(1)}</span></td></tr>`).join('');
 
-// faixa etária
-new Chart(idadeChart,{type:'bar',
-  data:{labels:['16-19','20-24','25-34','35-44','45-59','60+'],
-    datasets:[{data:[9,18,31,22,15,5],backgroundColor:C.purple,borderRadius:6}]},
-  options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x}%`}}},
-    scales:{x:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}}}});
+/* ═══════════ DADOS REAIS (Supabase) ═══════════ */
+async function sb(view){
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${view}`, {
+    headers:{ 'apikey':SUPABASE_KEY, 'Authorization':`Bearer ${SUPABASE_KEY}` }
+  });
+  if(!r.ok) throw new Error('Falha ao buscar '+view+': '+r.status);
+  return r.json();
+}
 
-// canais
-new Chart(canalChart,{type:'bar',
-  data:{labels:['Instagram','WhatsApp','Já conhecia','Rádio/TV','Carro de som','Facebook'],
-    datasets:[{data:[34,26,15,11,8,6],backgroundColor:C.cyan,borderRadius:6}]},
-  options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x}%`}}},
-    scales:{x:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}}}});
+async function dadosReais(){
+  // busca em paralelo as views
+  const [totais, satisf, faixa, nps, origemEst, renda] = await Promise.all([
+    sb('vw_totais'), sb('vw_satisfacao_media'), sb('vw_faixa_etaria'),
+    sb('vw_nps'), sb('vw_origem_estado'), sb('vw_renda')
+  ]);
 
-// renda
-new Chart(rendaChart,{type:'doughnut',
-  data:{labels:['Até 1 SM','1-2 SM','3-5 SM','+5 SM'],
-    datasets:[{data:[22,41,28,9],backgroundColor:[C.red,C.gold,C.cyan,C.green],borderColor:'#070E1A',borderWidth:3}]},
-  options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
-    tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+  const totalEnt = totais.reduce((a,b)=>a+(+b.total),0);
+  const porTipo = Object.fromEntries(totais.map(t=>[t.tipo, +t.total]));
 
-// expositores tipo
-new Chart(expTipoChart,{type:'doughnut',
-  data:{labels:['Alimentação','Bebidas','Artesanato','Serviços','Diversões'],
-    datasets:[{data:[42,19,21,10,8],backgroundColor:[C.gold,C.red,C.green,C.cyan,C.purple],borderColor:'#070E1A',borderWidth:3}]},
-  options:{cutout:'56%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
-    tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+  // NPS agregado (visitante + expositor)
+  let prom=0,neu=0,det=0,tot=0;
+  nps.forEach(n=>{ prom+=+n.promotores; neu+=+n.neutros; det+=+n.detratores; tot+=+n.total; });
+  const npsValor = tot>0 ? Math.round((prom/tot - det/tot)*100) : 0;
 
-// ROI percebido (likert)
-new Chart(roiChart,{type:'bar',
-  data:{labels:['Ótimo','Muito Bom','Bom','Regular','Não Sat.'],
-    datasets:[{data:[31,28,24,12,5],backgroundColor:[C.green,'#7FD98F',C.gold,'#FF8C42',C.red],borderRadius:6}]},
-  options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.y}%`}}},
-    scales:{y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}});
+  // mapa de calor (top itens por média)
+  const heat = (satisf||[]).filter(s=>s.media!=null)
+    .map(s=>[s.questao, +s.media]).sort((a,b)=>b[1]-a[1]).slice(0,9);
 
-// retorno 2027
-new Chart(retornoChart,{type:'doughnut',
-  data:{labels:['Sim, com certeza','Talvez','Não pretendo'],
-    datasets:[{data:[81,14,5],backgroundColor:[C.green,C.gold,C.red],borderColor:'#070E1A',borderWidth:3}]},
-  options:{cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
-    tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+  return {
+    kpi:{ impacto: totalEnt>0?'em apuração':'—', publico: totalEnt.toLocaleString('pt-BR'),
+          nps: tot>0?(npsValor>=0?'+':'')+npsValor:'—', empregos:'em apuração',
+          impactoTag:'coleta em andamento', publicoTag:`${totalEnt} entrevista(s)`,
+          npsTag: tot>0?`${tot} resposta(s)`:'aguardando dados', empregosTag:'requer expositores' },
+    _vazio: totalEnt===0,
+    _porTipo: porTipo,
+    eco:[], // impacto econômico requer cálculo de projeção — fase de análise
+    hist:null,
+    origem:null,
+    origemEstado: origemEst.map(o=>[o.estado, +o.qtd]),
+    heat,
+    nps:{prom: tot>0?Math.round(prom/tot*100):0, neu: tot>0?Math.round(neu/tot*100):0, det: tot>0?Math.round(det/tot*100):0, valor:npsValor},
+    idade:{labels:faixa.map(f=>f.faixa_etaria), data:faixa.map(f=>+f.qtd)},
+    canal:null,
+    renda:{labels:renda.map(r=>r.faixa_renda), data:renda.map(r=>+r.qtd)},
+    expTipo:null, roi:null, retorno:null
+  };
+}
+
+/* ═══════════ RENDERIZAÇÃO ═══════════ */
+function setKPI(d){
+  const k=d.kpi;
+  document.querySelector('#kpi-impacto .kpi-val').textContent=k.impacto;
+  document.querySelector('#kpi-publico .kpi-val').innerHTML=k.publico;
+  document.querySelector('#kpi-nps .kpi-val').textContent=k.nps;
+  document.querySelector('#kpi-empregos .kpi-val').textContent=k.empregos;
+  document.querySelector('#kpi-impacto .kpi-tag').textContent=k.impactoTag;
+  document.querySelector('#kpi-publico .kpi-tag').textContent=k.publicoTag;
+  document.querySelector('#kpi-nps .kpi-tag').textContent=k.npsTag;
+  document.querySelector('#kpi-empregos .kpi-tag').textContent=k.empregosTag;
+}
+
+function heatColor(v){ if(v>=4.3)return C.green; if(v>=3.8)return '#7FD98F'; if(v>=3.3)return C.gold; if(v>=2.8)return '#FF8C42'; return C.red; }
+
+function renderHeat(heat){
+  const t=document.getElementById('heatTable');
+  if(!heat || !heat.length){ t.innerHTML='<tr><td class="vazio">Sem avaliações ainda</td></tr>'; return; }
+  t.innerHTML=heat.map(h=>`<tr><td>${h[0]}</td><td><span class="heat-cell" style="background:${heatColor(h[1])}">${h[1].toFixed(1)}</span></td></tr>`).join('');
+}
+
+function renderNPS(n){
+  document.querySelector('.nps-num').textContent=(n.valor>=0?'+':'')+n.valor;
+  document.querySelector('.nps-marker').style.left=((n.valor+100)/2)+'%';
+  const segs=document.querySelectorAll('.nps-seg .v');
+  segs[0].textContent=n.prom+'%'; segs[1].textContent=n.neu+'%'; segs[2].textContent=n.det+'%';
+}
+
+function donut(id,labels,data,cores){
+  const el=document.getElementById(id); if(!el) return;
+  if(!data || !data.length || data.every(v=>!v)){ return; }
+  charts[id]=new Chart(el,{type:'doughnut',
+    data:{labels,datasets:[{data,backgroundColor:cores,borderColor:'#070E1A',borderWidth:3,hoverOffset:8}]},
+    options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
+      tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}`}}}}});
+}
+function barra(id,labels,data,cor,horizontal,sufixo='%'){
+  const el=document.getElementById(id); if(!el) return;
+  charts[id]=new Chart(el,{type:'bar',
+    data:{labels,datasets:[{data,backgroundColor:cor,borderRadius:6}]},
+    options:{indexAxis:horizontal?'y':'x',plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>` ${horizontal?c.parsed.x:c.parsed.y}${sufixo}`}}},
+      scales:{[horizontal?'x':'y']:{grid:{color:C.grid},ticks:{callback:v=>v+sufixo}},[horizontal?'y':'x']:{grid:{display:false}}}}});
+}
+
+function render(d){
+  destruirCharts();
+  setKPI(d);
+
+  // impacto econômico (donut + ranking) — só demo tem
+  const ecoList=document.getElementById('ecoList');
+  if(d.eco && d.eco.length){
+    const total=d.eco.reduce((a,b)=>a+b[1],0);
+    charts.eco=new Chart(document.getElementById('ecoChart'),{type:'doughnut',
+      data:{labels:d.eco.map(e=>e[0]),datasets:[{data:d.eco.map(e=>e[1]),backgroundColor:d.eco.map(e=>e[2]),borderColor:'#070E1A',borderWidth:3,hoverOffset:8}]},
+      options:{cutout:'62%',plugins:{legend:{position:'bottom',labels:{font:{size:10}}},
+        tooltip:{callbacks:{label:c=>` ${c.label}: R$ ${c.parsed.toFixed(1)} mi (${(c.parsed/total*100).toFixed(0)}%)`}}}}});
+    ecoList.innerHTML=d.eco.map(e=>{const p=(e[1]/total*100);
+      return `<div><div class="eco-row"><span class="eco-dot" style="background:${e[2]}"></span><span class="eco-name">${e[0]}</span><span class="eco-val">R$ ${e[1].toFixed(1)} mi</span></div><div class="eco-bar-track"><div class="eco-bar-fill" style="width:${p}%;background:${e[2]}"></div></div></div>`;
+    }).join('');
+  } else {
+    document.getElementById('ecoChart').parentElement.innerHTML='<div class="vazio">Impacto econômico é calculado na fase de análise, após a coleta completa.</div>';
+    ecoList.innerHTML='<div class="vazio">Aguardando coleta</div>';
+  }
+
+  // histórico (só demo)
+  if(d.hist) barra('histChart',d.hist.labels,d.hist.data,'rgba(0,194,255,0.18)',false,'k');
+  else document.getElementById('histChart').parentElement.innerHTML='<div class="vazio">Série histórica disponível com dados de edições anteriores</div>';
+
+  // origem
+  if(d.origem) donut('origemChart',d.origem.labels,d.origem.data,[C.navy,C.cyan,C.green]);
+  else if(d.origemEstado && d.origemEstado.length) donut('origemChart',d.origemEstado.map(o=>o[0]),d.origemEstado.map(o=>o[1]),[C.navy,C.cyan,C.green,C.gold,C.purple,C.red]);
+  else document.getElementById('origemChart').parentElement.innerHTML='<div class="vazio">Sem dados de origem ainda</div>';
+
+  renderHeat(d.heat);
+  renderNPS(d.nps);
+
+  // perfil
+  if(d.idade && d.idade.data.length) barra('idadeChart',d.idade.labels,d.idade.data,C.purple,true,modoAtual==='demo'?'%':'');
+  if(d.canal) barra('canalChart',d.canal.labels,d.canal.data,C.cyan,true);
+  else { const e=document.getElementById('canalChart'); if(e) e.parentElement.innerHTML='<div class="vazio">Em apuração</div>'; }
+  if(d.renda && d.renda.data.length) donut('rendaChart',d.renda.labels,d.renda.data,[C.red,C.gold,C.cyan,C.green]);
+
+  // expositores
+  if(d.expTipo) donut('expTipoChart',d.expTipo.labels,d.expTipo.data,[C.gold,C.red,C.green,C.cyan,C.purple]);
+  else { const e=document.getElementById('expTipoChart'); if(e) e.parentElement.innerHTML='<div class="vazio">Aguardando expositores</div>'; }
+  if(d.roi) barra('roiChart',d.roi.labels,d.roi.data,[C.green,'#7FD98F',C.gold,'#FF8C42',C.red],false);
+  else { const e=document.getElementById('roiChart'); if(e) e.parentElement.innerHTML='<div class="vazio">Aguardando expositores</div>'; }
+  if(d.retorno) donut('retornoChart',d.retorno.labels,d.retorno.data,[C.green,C.gold,C.red]);
+  else { const e=document.getElementById('retornoChart'); if(e) e.parentElement.innerHTML='<div class="vazio">Aguardando expositores</div>'; }
+}
+
+/* ═══════════ TROCA DE MODO ═══════════ */
+async function setModo(modo){
+  modoAtual=modo;
+  document.getElementById('btn-demo').classList.toggle('ativo',modo==='demo');
+  document.getElementById('btn-real').classList.toggle('ativo',modo==='real');
+  const banner=document.getElementById('modo-banner');
+  const dev=document.getElementById('dev-badge');
+
+  if(modo==='demo'){
+    banner.className='modo-banner-inner';
+    banner.innerHTML='<span>🎭</span><span><b>Modo demonstração</b> — números fictícios para apresentação. Alterne para "Dados reais" para ver a coleta ao vivo.</span>';
+    dev.textContent='Dados de demonstração · v0.5.3';
+    render(dadosDemo());
+  } else {
+    banner.className='modo-banner-inner real';
+    banner.innerHTML='<span>⏳</span><span>Carregando dados reais do banco...</span>';
+    try {
+      const d=await dadosReais();
+      banner.innerHTML = d._vazio
+        ? '<span>📭</span><span><b>Modo dados reais</b> — banco conectado, ainda sem entrevistas. Os gráficos preenchem conforme a coleta acontece.</span>'
+        : '<span>🟢</span><span><b>Modo dados reais</b> — coleta ao vivo do banco. '+Object.entries(d._porTipo).map(([k,v])=>`${v} ${k.toLowerCase()}`).join(' · ')+'.</span>';
+      dev.textContent='Dados reais · ao vivo';
+      render(d);
+    } catch(e){
+      banner.innerHTML='<span>⚠️</span><span><b>Erro ao conectar</b> — '+e.message+'. Verifique a conexão.</span>';
+      console.error(e);
+    }
+  }
+}
+
+/* iniciar em demo */
+render(dadosDemo());
+
 </script>
 </body>
 </html>
