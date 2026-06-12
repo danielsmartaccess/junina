@@ -287,7 +287,7 @@ body {
 </head>
 <body>
 <div class="dev-ribbon"></div>
-<div class="dev-badge">DEV · v0.5.2</div>
+<div class="dev-badge">DEV · v0.5.3</div>
 <div class="sync-badge ok" id="sync-badge">✓ Pronto</div>
 
 <!-- CAPA -->
@@ -444,6 +444,14 @@ function aval(n,tit,itens,legenda=null){
 function likert(n,txt,cond=null,legenda=null){
   return perg(n,txt,['Ótimo','Muito Bom','Bom','Regular','Não Satisfatório'],'radio','',cond,'Não Sabe/Não Respondeu',legenda);
 }
+// Escala de concordância (para afirmações) — mesma codificação 5→1
+function likertConcorda(n,txt,cond=null,legenda=null){
+  return perg(n,txt,['Concordo totalmente','Concordo','Neutro','Discordo','Discordo totalmente'],'radio','',cond,'Não Sabe/Não Respondeu',legenda);
+}
+// Escala de otimismo (para expectativa) — mesma codificação 5→1
+function likertOtimismo(n,txt,cond=null,legenda=null){
+  return perg(n,txt,['Muito otimista','Otimista','Neutra','Pessimista','Muito pessimista'],'radio','',cond,'Não Sabe/Não Respondeu',legenda);
+}
 
 /* ════════ PROGRESSO + SKIP ════════ */
 function prog(){
@@ -526,7 +534,7 @@ function renderVisitante(){
   ${perg(2,'Como você teve conhecimento do Festival Canaã Cidade Junina 2026?',['Já conhecia','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp','Facebook/Instagram','Mora próximo','Carro de som','Trabalho','Venho todo ano'],'checkbox',outroCampo(),null,null,'Mede a eficácia de cada canal de divulgação. Orienta onde investir o marketing das próximas edições.')}
   <div class="sec-titulo">02 · Comportamento</div>
   ${perg(3,'Você veio ao evento:',['Sozinho','Com parentes/casal','Amigos/colegas'],'radio','',null,'Não Sabe/Não Opinou','Indica o tamanho médio do grupo — multiplica o gasto individual para estimar o impacto por família.')}
-  ${perg(4,'Quantos dias irá participar?',['1 a 5 dias','5 a 10 dias','Todos os dias'],'radio','',null,'Não Sabe/Não Opinou','Mede o tempo de permanência. Quanto mais dias, maior o gasto acumulado e o impacto na rede hoteleira.')}
+  ${perg(4,'Quantos dias irá participar?',['1 a 4 dias','5 a 9 dias','10 dias ou mais','Todos os dias'],'radio','',null,'Não Sabe/Não Opinou','Mede o tempo de permanência. Quanto mais dias, maior o gasto acumulado e o impacto na rede hoteleira.')}
   ${perg(5,'Meio de transporte utilizado para chegar ao evento?',['Carro próprio','Carona','Táxi/Uber','Ônibus de linha','A pé'],'radio',outroCampo(),null,'Não Sabe/Não Opinou','Mapeia a mobilidade. O uso de Táxi/Uber alimenta a estimativa de impacto no setor de transporte (demanda da contratante).')}
   <div class="sec-titulo">03 · Origem &amp; Turismo</div>
   ${perg(6,'Você mora em Canaã dos Carajás?',['Sim','Não'],'radio','',null,null,'Separa morador de turista. É a base para calcular o percentual de visitantes de fora — indicador-chave de atração turística.')}
@@ -537,7 +545,7 @@ function renderVisitante(){
   <div class="sec-titulo">04 · Impacto Econômico (gasto desagregado)</div>
   ${perg(11,'O Festival foi o principal motivo da sua vinda à cidade?',['Sim','Não'],'radio','',null,null,'Isola o impacto atribuível ao evento. Só o gasto de quem veio PELO festival conta como impacto gerado por ele.')}
   ${perg(12,'Faixa de gasto com HOSPEDAGEM (total nos dias):',['Não terei gasto','Até R$ 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou','Estima a movimentação financeira na rede hoteleira (hotéis e pousadas) — item 2b da contratante.')}
-  ${perg(13,'Faixa de gasto com ALIMENTAÇÃO (restaurantes, lanchonetes, bares):',['Até R$ 100','R$ 100 a 300','R$ 300 a 600','Mais de R$ 600'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto em restaurantes, lanchonetes e bares — item 2c da contratante.')}
+  ${perg(13,'Faixa de gasto com ALIMENTAÇÃO (restaurantes, lanchonetes, bares):',['Não terei gasto','Até R$ 100','R$ 100 a 300','R$ 300 a 600','Mais de R$ 600'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto em restaurantes, lanchonetes e bares — item 2c da contratante.')}
   ${perg(14,'Faixa de gasto em SUPERMERCADOS / MERCADOS / DISTRIBUIDORAS:',['Não terei gasto','Até R$ 100','R$ 100 a 300','Mais de R$ 300'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto no varejo de alimentos e distribuidoras — itens 2d e 2e da contratante.')}
   ${perg(15,'Faixa de gasto com TRANSPORTE / COMBUSTÍVEL / UBER:',['Não terei gasto','Até R$ 100','R$ 100 a 300','Mais de R$ 300'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto no setor de transporte e aplicativos — item 2g da contratante.')}
   ${perg(16,'Faixa de gasto com COMPRAS no comércio (vestuário, beleza, lembranças):',['Não terei gasto','R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto no comércio local em geral — item 2f da contratante.')}
@@ -552,7 +560,7 @@ function renderVisitante(){
   ${pertexto(22,'Qual a sua quadrilha favorita?<span class="obrig">*</span>','Ex.: ARRAIÁ DA ALEGRIA',{q:21,val:'Sim'},'upper','Identifica as quadrilhas mais populares — dado útil para a organização valorizar os grupos de maior apelo.')}
   ${perg(23,'Você recomendaria o Festival a amigos e familiares?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou','Base do NPS (Net Promoter Score) — indicador-síntese de aprovação. \"Com certeza\" = promotor; \"Não\" = detrator.')}
   ${likert(24,'Como avalia sua experiência no festival até o momento?',null,'Nota geral de satisfação do visitante. Comparável entre edições para medir evolução da qualidade percebida.')}
-  ${likert(25,'Qual sua expectativa para a continuidade da edição 2026?',null,'Mede o otimismo em relação ao restante do evento — antecipa a tendência de satisfação final.')}
+  ${likertOtimismo(25,'Qual sua expectativa para a continuidade da edição 2026?',null,'Mede o otimismo em relação ao restante do evento — antecipa a tendência de satisfação final. Escala: Muito otimista (5) a Muito pessimista (1).')}
   ${pertexto(26,'Sua sugestão para melhorar edições futuras:','Escreva sua sugestão...','none','none','Captura melhorias na voz do público. Respostas recorrentes viram recomendações no relatório final.')}
   `;
   aplicarSkipLogic();
@@ -579,15 +587,15 @@ function renderPopulacao(){
   ${likert(9,'Como avalia a estrutura física (palco, barracas, banheiros)?',{q:4,val:'Sim'},'Detalha a percepção sobre os equipamentos do evento — banheiros e barracas costumam ser pontos críticos.')}
   ${likert(10,'Como avalia os Shows e Atrações de 2025?',{q:4,val:'Sim'},'Mede a aprovação da programação artística — principal fator de atração de público.')}
   <div class="sec-titulo verde">03 · Impacto na Comunidade</div>
-  ${likert(11,'O festival trouxe benefício econômico para você/sua família?',null,'Mede o impacto econômico percebido pelo morador (renda, vendas, trabalho temporário) — valor social do evento.')}
+  ${likertConcorda(11,'O festival trouxe benefício econômico para você/sua família?',null,'Mede o impacto econômico percebido pelo morador (renda, vendas, trabalho temporário). Escala de concordância: Concordo totalmente = forte benefício; Discordo totalmente = nenhum.')}
   ${perg(12,'Impacto do evento na sua rotina/mobilidade durante os dias de festa:',['Muito positivo','Positivo','Indiferente','Negativo','Muito negativo'],'radio','',null,'Não Sabe/Não Opinou','Captura externalidades negativas (trânsito, barulho) e positivas. Equilibra a visão sobre o evento.')}
-  ${likert(13,'O festival valoriza a imagem e identidade de Canaã dos Carajás?',null,'Mede o orgulho local e o valor simbólico do evento — justifica o investimento público além do retorno financeiro.')}
+  ${likertConcorda(13,'O festival valoriza a imagem e identidade de Canaã dos Carajás?',null,'Mede o orgulho local e o valor simbólico do evento. Escala de concordância: Concordo totalmente = forte valorização; Discordo totalmente = nenhuma.')}
   <div class="sec-titulo verde">04 · Acessibilidade</div>
   ${likert(14,'Como você avalia a acessibilidade e inclusão no evento (rampas, espaços PcD, sinalização)?',null,'Indicador social de acessibilidade percebida pelo morador — item 10b da contratante.')}
   <div class="sec-titulo verde">05 · Expectativa 2026</div>
   ${perg(15,'Você pretende participar do Festival 2026?',['Sim','Não','Ainda não decidi'],'radio','',null,null,'Mede a intenção de participação local — projeta o público morador esperado para a próxima edição.')}
   ${perg(16,'Quanto pretende gastar no evento?',['Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400'],'radio','',{q:15,val:'Sim'},'Não Sabe/Não Opinou','Estima o gasto do público local. Cada faixa representa um nível de injeção financeira do morador: até R$100 (consumo pontual), R$100-200 (moderado), R$200-400 (alto), acima de R$400 (intenso).')}
-  ${likert(17,'Qual sua expectativa geral para o Festival 2026?',null,'Mede o otimismo da comunidade. Expectativa alta indica boa reputação acumulada das edições anteriores.')}
+  ${likertOtimismo(17,'Qual sua expectativa geral para o Festival 2026?',null,'Mede o otimismo da comunidade. Escala: Muito otimista (5) a Muito pessimista (1). Expectativa alta indica boa reputação acumulada.')}
   ${perg(18,'A data de 24/Jun a 12/Jul de 2026, você acha que:',['Ótima — atende ao período junino','Boa, mas poderia ser mais curta','Poderia ser mais longa','Preferia em outro período','Indiferente'],'radio','',null,'Não Sabe/Não Opinou','Avalia a adequação do calendário na ótica de quem vive na cidade. \"Ótima\" valida a janela; respostas dispersas sugerem revisar as datas.')}
   ${pertexto(19,'Sua sugestão para o evento:','Escreva sua sugestão...','none','none','Captura a voz do morador. Sugestões recorrentes sinalizam demandas legítimas da comunidade.')}
   `;
@@ -631,6 +639,8 @@ function validar(){
 // mapa de rótulos Likert → código numérico (para média e mapa de calor)
 const LIKERT_MAP = {
   'Ótimo':5, 'Muito Bom':4, 'Bom':3, 'Regular':2, 'Não Satisfatório':1,
+  'Concordo totalmente':5, 'Concordo':4, 'Neutro':3, 'Discordo':2, 'Discordo totalmente':1,
+  'Muito otimista':5, 'Otimista':4, 'Neutra':3, 'Pessimista':2, 'Muito pessimista':1,
   'Não Sabe/Não Respondeu':9, 'Não Sabe/Não Opinou':9, 'Não sabe/Não opinou':9
 };
 
