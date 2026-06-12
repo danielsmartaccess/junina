@@ -287,7 +287,7 @@ body {
 </head>
 <body>
 <div class="dev-ribbon"></div>
-<div class="dev-badge">DEV · v0.5.1</div>
+<div class="dev-badge">DEV · v0.5.2</div>
 <div class="sync-badge ok" id="sync-badge">✓ Pronto</div>
 
 <!-- CAPA -->
@@ -628,15 +628,23 @@ function validar(){
   }
   return null;
 }
+// mapa de rótulos Likert → código numérico (para média e mapa de calor)
+const LIKERT_MAP = {
+  'Ótimo':5, 'Muito Bom':4, 'Bom':3, 'Regular':2, 'Não Satisfatório':1,
+  'Não Sabe/Não Respondeu':9, 'Não Sabe/Não Opinou':9, 'Não sabe/Não opinou':9
+};
+
 function coletarRespostas(){
   const resp = {};
   // radios e checkboxes (q1, q2, ...)
   document.querySelectorAll('.pcard:not(.oculta) input[type="radio"]:checked, .pcard:not(.oculta) input[type="checkbox"]:checked').forEach(el=>{
     const nome = el.name; const val = decodeURIComponent(el.value);
-    if(nome.startsWith('a')){ // avaliação Likert: a18_0 etc → valor numérico
+    if(nome.startsWith('a')){ // tabela de avaliação: a18_0 etc → valor numérico
       resp[nome] = { valor: val, valor_num: (val==='9'?9:parseInt(val)||null) };
     } else if(el.type==='checkbox'){ // múltipla: acumula
       resp[nome] = resp[nome] ? resp[nome]+'; '+val : val;
+    } else if(val in LIKERT_MAP){ // pergunta Likert avulsa → guarda número também
+      resp[nome] = { valor: val, valor_num: LIKERT_MAP[val] };
     } else {
       resp[nome] = val;
     }
