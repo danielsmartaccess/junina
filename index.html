@@ -1,375 +1,284 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-fsize="">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Just Go · Foccus Pesquisas — Canaã Cidade Junina 2026</title>
+<meta name="theme-color" content="#0F2145">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00C2FF">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<title>Just Go · Coleta — Canaã Junina 2026</title>
 <style>
-:root {
-  --jga-blue:   #0A1628;
-  --jga-navy:   #0F2145;
-  --jga-accent: #00C2FF;
-  --jga-gold:   #F5A623;
-  --jga-green:  #00D68F;
-  --jga-red:    #FF4757;
-  --foccus-navy:#1A2A6C;
-  --foccus-cyan:#1E9BD7;
-  --creme:      #F0F4FF;
-  --muted:      rgba(240,244,255,0.45);
-  --border:     rgba(0,194,255,0.15);
-  --card-bg:    rgba(255,255,255,0.03);
-  --r:          14px;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root{
+  /* PRIMÁRIA — ciano/azul Just Go (mantida) */
+  --jg-cyan:#00A8D6; --jg-cyan-dark:#0077A3; --jg-cyan-mid:#0090BD; --jg-cyan-light:#e0f4fb;
+  --jg-navy:#0F2145; --jg-navy-dark:#0A1628;
+  /* SECUNDÁRIA — âmbar de atenção */
+  --amber:#b45309; --amber-mid:#d97706; --amber-light:#fef3c7;
+  /* DESTAQUE — azul progress */
+  --blue:#1e40af; --blue-mid:#2563eb; --blue-light:#dbeafe;
+  /* ALERTA */
+  --danger:#b91c1c; --danger-light:#fee2e2;
+  /* NEUTROS */
+  --gray-50:#f8f9fa; --gray-100:#f0f1f3; --gray-200:#d1d5db; --gray-400:#6b7280; --gray-600:#374151; --gray-900:#111827; --white:#ffffff;
+  --focus:#fbbf24;
+  /* tipografia fluida */
+  --t-xs:13px; --t-sm:14px; --t-base:16px; --t-md:17px; --t-lg:19px; --t-xl:22px;
+  /* radius */
+  --radius-sm:8px; --radius-md:14px; --radius-lg:20px;
+  /* sombras */
+  --shadow-sm:0 1px 3px rgba(0,0,0,.10); --shadow-md:0 4px 16px rgba(0,0,0,.12);
+  --shadow-btn:0 4px 12px rgba(0,168,214,.32); --shadow-sticky:0 -6px 20px rgba(0,0,0,.10);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--jga-blue);
-  color: var(--creme);
-  min-height: 100vh;
-  overflow-x: hidden;
+:root[data-fsize="lg"]{ --t-xs:14px; --t-sm:15px; --t-base:17px; --t-md:18px; --t-lg:20px; --t-xl:24px; }
+:root[data-fsize="xl"]{ --t-xs:15px; --t-sm:16px; --t-base:18px; --t-md:20px; --t-lg:22px; --t-xl:26px; }
+
+/* ALTO CONTRASTE */
+:root[data-hc="on"]{ --white:#000; --gray-50:#000; --gray-100:#1a1a1a; --gray-200:#fff; --gray-400:#fff; --gray-600:#fff; --gray-900:#fff;
+  --jg-cyan:#fbbf24; --jg-cyan-dark:#fbbf24; --jg-cyan-mid:#fbbf24; --jg-cyan-light:#1a1a1a; --jg-navy:#000; --blue-mid:#fbbf24; }
+:root[data-hc="on"] body{ background:#000; }
+:root[data-hc="on"] .card,:root[data-hc="on"] .option,:root[data-hc="on"] .pcard{ border-color:#fff !important; }
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--gray-900);min-height:100vh;font-size:var(--t-base)}
+
+.app{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:var(--white);position:relative}
+
+/* HEADER sticky */
+.hdr{position:sticky;top:0;z-index:20;background:var(--jg-navy);padding:12px 18px 14px;color:var(--white)}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hdr-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.hdr-brand svg{height:26px;width:auto;flex-shrink:0}
+.hdr-cli{font-size:11px;color:rgba(255,255,255,.6);font-family:'Outfit';font-weight:600;letter-spacing:.3px}
+.hdr-cli b{color:var(--white)}
+.hdr-a11y{display:flex;gap:6px;flex-shrink:0}
+.a11y-btn{min-width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--white);font-family:'Outfit';font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.a11y-btn:hover{background:rgba(255,255,255,.22)}
+.a11y-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.a11y-btn.ativo{background:var(--jg-cyan);border-color:var(--jg-cyan)}
+
+/* progress */
+.prog-wrap2{margin-top:12px}
+.prog-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.prog-label{font-family:'Outfit';font-weight:600;font-size:12px;color:rgba(255,255,255,.85)}
+.prog-count{font-family:'Outfit';font-weight:700;font-size:13px;color:var(--focus)}
+.prog-track{height:6px;background:rgba(255,255,255,.18);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:var(--blue-mid);border-radius:3px;position:relative;overflow:hidden;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.prog-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shimmer 2.5s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* MAIN */
+main{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column}
+.etapa{animation:fadein .2s ease}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+
+.etapa-cat{font-family:'Outfit';font-weight:700;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--jg-cyan-dark);margin-bottom:10px}
+.qtext{font-family:'Outfit';font-weight:700;font-size:var(--t-lg);line-height:1.35;color:var(--gray-900);margin-bottom:6px}
+.qtext .obrig{color:var(--danger);margin-left:3px}
+
+/* legenda pesquisador → vira card-hero */
+.leg-pesq{background:var(--jg-cyan-light);border-left:4px solid var(--jg-cyan);border-radius:var(--radius-md);padding:12px 14px;margin:12px 0 18px;display:flex;gap:9px;align-items:flex-start;font-size:var(--t-xs);color:var(--gray-600);line-height:1.5}
+.leg-pesq strong{color:var(--jg-cyan-dark);font-family:'Outfit';font-weight:700}
+.leg-icon{flex-shrink:0}
+
+/* opções radio/checkbox */
+.opc-lista{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+.opc-item{display:flex;align-items:center;gap:13px;padding:14px 16px;min-height:56px;border:2px solid var(--gray-200);border-radius:var(--radius-md);background:var(--white);box-shadow:var(--shadow-sm);cursor:pointer;transition:all .15s}
+.opc-item:hover{border-color:var(--jg-cyan-mid);background:var(--jg-cyan-light)}
+.opc-item input{position:absolute;opacity:0;width:0;height:0}
+.opc-item .opc-box{display:flex;align-items:center;gap:13px;width:100%;border:none;background:none;padding:0;font-size:var(--t-base);color:var(--gray-900);font-family:'DM Sans'}
+.opc-item .opc-box::before{content:'';width:24px;height:24px;border-radius:50%;border:2.5px solid var(--gray-200);background:var(--white);flex-shrink:0;transition:all .15s}
+.opc-item.chk .opc-box::before{border-radius:7px}
+.opc-item input:checked + .opc-box{color:var(--jg-cyan-dark);font-weight:600}
+.opc-item:has(input:checked){border-color:var(--jg-cyan);background:var(--jg-cyan-light);box-shadow:0 0 0 3px rgba(0,168,214,.18)}
+.opc-item:has(input:checked) .opc-box::before{background:var(--jg-cyan);border-color:var(--jg-cyan);box-shadow:inset 0 0 0 4px var(--white)}
+.opc-item:focus-within{outline:3px solid var(--focus);outline-offset:2px}
+/* NS/NR tracejado */
+.opc-item.nsnr{border-style:dashed;border-color:var(--gray-400)}
+.opc-item.nsnr:has(input:checked){border-style:solid;border-color:var(--gray-400);background:var(--gray-100);box-shadow:0 0 0 3px rgba(107,114,128,.15)}
+.opc-item.nsnr:has(input:checked) .opc-box::before{background:var(--gray-400);border-color:var(--gray-400)}
+.escala-rotulo{font-size:11px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin:6px 0 2px;font-family:'Outfit';font-weight:600}
+
+/* campos texto/numero */
+.inp{width:100%;min-height:52px;background:var(--white);border:2px solid var(--gray-200);border-radius:var(--radius-md);padding:13px 15px;font-family:'DM Sans';font-size:var(--t-base);color:var(--gray-900);outline:none;transition:border-color .15s;-webkit-appearance:none}
+.inp:focus-visible{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--jg-cyan)}
+.inp::placeholder{color:var(--gray-400)}
+
+/* meta bloco (demografia) */
+.meta-bloco{display:flex;flex-direction:column;gap:18px}
+.campo-label{display:block;font-family:'Outfit';font-weight:600;font-size:var(--t-sm);color:var(--gray-600);margin-bottom:9px}
+.campo-label .obrig{color:var(--danger)}
+.pill-grupo{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill span{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:var(--radius-md);border:2px solid var(--gray-200);font-size:var(--t-sm);color:var(--gray-600);font-family:'Outfit';font-weight:600;background:var(--white);cursor:pointer;transition:all .15s}
+.pill input:checked + span{border-color:var(--jg-cyan);background:var(--jg-cyan-light);color:var(--jg-cyan-dark)}
+.pill input:focus-visible + span{outline:3px solid var(--focus);outline-offset:2px}
+
+/* tabela avaliação Likert */
+.aval-table{width:100%;border-collapse:separate;border-spacing:0 6px;font-size:var(--t-xs);margin-top:8px}
+.aval-table th{font-family:'Outfit';font-weight:700;font-size:10px;letter-spacing:.3px;text-transform:uppercase;color:var(--gray-400);padding:0 3px 8px;text-align:center}
+.aval-table th:first-child{text-align:left;min-width:96px}
+.aval-table td{background:var(--gray-50);padding:9px 3px;text-align:center;border:1px solid var(--gray-100);color:var(--gray-600)}
+.aval-table td:first-child{text-align:left;padding-left:10px;border-radius:8px 0 0 8px;font-size:var(--t-xs);color:var(--gray-900);font-weight:500}
+.aval-table td:last-child{border-radius:0 8px 8px 0}
+.raval{position:absolute;opacity:0}
+.raval + label{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:2px solid var(--gray-200);cursor:pointer;font-family:'Outfit';font-weight:700;font-size:11px;color:var(--gray-400);transition:all .15s;background:var(--white)}
+.raval:checked + label{background:var(--jg-cyan);border-color:var(--jg-cyan);color:var(--white)}
+.raval:focus-visible + label{outline:3px solid var(--focus);outline-offset:1px}
+.raval.ns + label{border-style:dashed}
+.raval.ns:checked + label{background:var(--gray-400);border-color:var(--gray-400)}
+.likert-legenda{font-size:11px;color:var(--gray-400);margin:4px 0 8px;line-height:1.5}
+.aval-scroll{overflow-x:auto}
+
+/* NAV BAR inferior */
+.navbar{position:sticky;bottom:0;z-index:10;background:var(--white);border-top:1px solid var(--gray-100);box-shadow:var(--shadow-sticky);padding:12px 16px 18px;display:flex;gap:10px;align-items:center}
+.btn-back{min-width:56px;height:56px;background:var(--gray-100);border:1px solid var(--gray-200);color:var(--gray-600);border-radius:var(--radius-md);font-family:'Outfit';font-weight:600;font-size:var(--t-sm);padding:0 16px;display:flex;align-items:center;gap:5px;cursor:pointer;transition:all .15s}
+.btn-back:hover{background:var(--gray-200)}
+.btn-back:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn-back.hidden{visibility:hidden}
+.btn-primary{flex:1;background:var(--jg-cyan);color:var(--white);border:none;border-radius:var(--radius-md);font-family:'Outfit';font-weight:700;font-size:var(--t-base);min-height:56px;padding:14px 20px;box-shadow:var(--shadow-btn);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:hover{background:var(--jg-cyan-mid)}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn-primary:disabled{background:var(--gray-200);color:var(--gray-400);box-shadow:none;cursor:not-allowed}
+
+/* CAPA (seleção de questionário) */
+.capa{flex:1;display:flex;flex-direction:column;padding:24px 18px 28px;animation:fadein .2s}
+.capa-hero{background:var(--jg-cyan-light);border-left:4px solid var(--jg-cyan);border-radius:var(--radius-lg);padding:20px;margin-bottom:8px}
+.capa-hero h1{font-family:'Outfit';font-weight:800;font-size:var(--t-xl);color:var(--jg-navy);line-height:1.2;margin-bottom:8px}
+.capa-hero p{font-size:var(--t-sm);color:var(--gray-600);line-height:1.55}
+.capa-hero p strong{color:var(--jg-cyan-dark)}
+.capa-label{font-family:'Outfit';font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gray-400);margin:18px 0 10px}
+.qcard{display:flex;flex-direction:column;gap:4px;padding:18px 20px;border:2px solid var(--gray-200);border-radius:var(--radius-lg);background:var(--white);box-shadow:var(--shadow-sm);cursor:pointer;transition:all .15s;margin-bottom:12px;text-align:left;width:100%;font-family:inherit}
+.qcard:hover{border-color:var(--jg-cyan);background:var(--jg-cyan-light)}
+.qcard:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.qcard:active{transform:scale(.99)}
+.qcard-top{display:flex;align-items:center;gap:12px}
+.qcard-ico{font-size:1.6rem}
+.qcard-tipo{font-family:'Outfit';font-weight:700;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--jg-cyan-dark)}
+.qcard-titulo{font-family:'Outfit';font-weight:700;font-size:var(--t-md);color:var(--gray-900)}
+.qcard-desc{font-size:var(--t-xs);color:var(--gray-600);line-height:1.5;margin-top:4px}
+.qcard-meta{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.qcard-amostra{font-family:'Outfit';font-weight:600;font-size:11px;color:var(--gray-400)}
+.qcard-arrow{font-family:'Outfit';font-weight:700;font-size:var(--t-sm);color:var(--jg-cyan)}
+
+/* geo bloco */
+.geo-bloco{background:var(--jg-cyan-light);border:1px solid var(--jg-cyan);border-radius:var(--radius-md);padding:13px 15px;margin-bottom:20px;display:flex;align-items:center;gap:11px}
+.geo-icon{font-size:1.3rem;flex-shrink:0}
+.geo-txt{flex:1;font-size:var(--t-xs);color:var(--gray-600);line-height:1.45}
+.geo-txt strong{color:var(--jg-cyan-dark)}
+.geo-status{font-family:'Outfit';font-weight:700;font-size:11px;padding:5px 11px;border-radius:20px;white-space:nowrap}
+.geo-status.pend{background:var(--amber-light);color:var(--amber)}
+.geo-status.ok{background:#dcfce7;color:#15803d}
+.geo-status.erro{background:var(--danger-light);color:var(--danger)}
+
+/* badge sync */
+.sync-badge{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:30;font-family:'Outfit';font-weight:600;font-size:12px;padding:8px 16px;border-radius:20px;border:1px solid;box-shadow:var(--shadow-md);white-space:nowrap}
+.sync-badge.ok{background:#dcfce7;border-color:#16a34a;color:#15803d}
+.sync-badge.sync{background:var(--jg-cyan-light);border-color:var(--jg-cyan);color:var(--jg-cyan-dark)}
+.sync-badge.pend{background:var(--amber-light);border-color:var(--amber-mid);color:var(--amber)}
+
+/* SUCESSO */
+.sucesso{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;animation:fadein .3s}
+.suc-ring{width:84px;height:84px;border-radius:50%;background:#dcfce7;border:3px solid #16a34a;display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin-bottom:22px;animation:popring .4s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes popring{0%{transform:scale(0)}100%{transform:scale(1)}}
+.suc-titulo{font-family:'Outfit';font-weight:800;font-size:var(--t-xl);color:var(--gray-900);margin-bottom:8px}
+.suc-sub{font-size:var(--t-sm);color:var(--gray-600);max-width:300px;line-height:1.55;margin-bottom:10px}
+.suc-id{font-family:'Outfit';font-size:11px;color:var(--gray-400);margin-bottom:6px}
+.suc-geo{font-size:11px;color:var(--gray-400);margin-bottom:30px}
+
+/* dev badge */
+.dev-badge{position:fixed;top:8px;right:10px;z-index:40;background:var(--amber-light);border:1px solid var(--amber-mid);color:var(--amber);font-family:'Outfit';font-weight:700;font-size:10px;letter-spacing:.5px;padding:3px 9px;border-radius:20px}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
 }
-
-/* DEV */
-.dev-ribbon { position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
-  background: repeating-linear-gradient(-45deg,#F5A623 0,#F5A623 10px,#0A1628 10px,#0A1628 20px); height: 4px; }
-.dev-badge { position: fixed; top: 10px; right: 12px; z-index: 9999;
-  background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.5); border-radius: 100px;
-  padding: 4px 12px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--jga-gold); display: flex; align-items: center; gap: 6px; backdrop-filter: blur(8px); }
-.dev-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--jga-gold); animation:blink 1.4s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-/* CAPA */
-#capa { min-height: 100vh; display: flex; flex-direction: column; padding: 80px 24px 48px; position: relative; overflow: hidden; }
-.grid-bg { position:absolute; inset:0; background-image:
-  linear-gradient(rgba(0,194,255,0.04) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(0,194,255,0.04) 1px,transparent 1px);
-  background-size:48px 48px; pointer-events:none; }
-.glow-1 { position:absolute; top:-120px; left:-80px; width:500px; height:500px; border-radius:50%;
-  background:radial-gradient(circle,rgba(0,194,255,0.12) 0%,transparent 70%); pointer-events:none; }
-.glow-2 { position:absolute; bottom:-100px; right:-60px; width:400px; height:400px; border-radius:50%;
-  background:radial-gradient(circle,rgba(0,214,143,0.10) 0%,transparent 70%); pointer-events:none; }
-
-.capa-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:56px; position:relative; flex-wrap:wrap; gap:16px; }
-.logo-jga { display:flex; align-items:center; gap:10px; }
-.logo-mark { width:38px; height:38px; background:linear-gradient(135deg,var(--jga-accent),var(--jga-green));
-  border-radius:10px; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif;
-  font-weight:800; font-size:0.9rem; color:var(--jga-blue); letter-spacing:-0.05em; flex-shrink:0; }
-.logo-texto { display:flex; flex-direction:column; line-height:1; }
-.logo-nome { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; color:var(--creme); }
-.logo-sub { font-size:0.62rem; color:var(--jga-accent); letter-spacing:0.18em; text-transform:uppercase; font-weight:500; margin-top:2px; }
-
-/* badge cliente Foccus */
-.cliente-card { display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.04);
-  border:1px solid rgba(30,155,215,0.25); border-radius:12px; padding:8px 14px; }
-.foccus-logo { display:flex; align-items:center; gap:7px; }
-.foccus-mark { display:flex; align-items:flex-end; gap:2px; height:22px; }
-.foccus-bar { width:5px; border-radius:1px; background:var(--foccus-navy); }
-.foccus-bar.b1 { height:9px; } .foccus-bar.b2 { height:15px; } .foccus-bar.b3 { height:22px; background:var(--foccus-cyan); }
-.foccus-txt { display:flex; flex-direction:column; line-height:1.1; }
-.foccus-nome { font-family:'Syne',sans-serif; font-weight:800; font-size:0.85rem; color:#fff; letter-spacing:0.02em; }
-.foccus-nome span { color:var(--foccus-cyan); }
-.foccus-sub { font-size:0.55rem; color:var(--muted); letter-spacing:0.25em; text-transform:uppercase; }
-.cliente-rotulo { font-size:0.6rem; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; border-right:1px solid rgba(255,255,255,0.1); padding-right:12px; }
-
-.capa-hero { flex:1; display:flex; flex-direction:column; justify-content:center; position:relative; max-width:700px; margin:0 auto; width:100%; }
-.hero-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(0,194,255,0.08); border:1px solid var(--border);
-  border-radius:100px; padding:5px 14px 5px 8px; font-size:0.72rem; color:var(--jga-accent); font-weight:500;
-  letter-spacing:0.1em; text-transform:uppercase; margin-bottom:24px; width:fit-content; }
-.hero-tag span { background:var(--jga-accent); color:var(--jga-blue); border-radius:100px; padding:2px 8px; font-size:0.65rem; font-weight:700; }
-.hero-titulo { font-family:'Syne',sans-serif; font-size:clamp(2.2rem,7vw,4rem); font-weight:800; line-height:1.05; letter-spacing:-0.03em; margin-bottom:16px; color:var(--creme); }
-.hero-titulo em { font-style:normal; background:linear-gradient(90deg,var(--jga-accent),var(--jga-green));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.hero-desc { font-size:0.95rem; color:var(--muted); line-height:1.7; max-width:480px; margin-bottom:48px; }
-
-.cards-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:40px; }
-.qcard { background:var(--card-bg); border:1.5px solid var(--border); border-radius:var(--r); padding:24px 20px;
-  cursor:pointer; transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1); position:relative; overflow:hidden; }
-.qcard::after { content:''; position:absolute; inset:0; opacity:0; transition:opacity 0.3s; }
-.qcard.visitante::after { background:linear-gradient(135deg,rgba(0,194,255,0.06),transparent); }
-.qcard.populacao::after { background:linear-gradient(135deg,rgba(0,214,143,0.06),transparent); }
-.qcard:hover { transform:translateY(-6px); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
-.qcard.visitante:hover { border-color:rgba(0,194,255,0.5); }
-.qcard.populacao:hover { border-color:rgba(0,214,143,0.5); }
-.qcard:hover::after { opacity:1; }
-.qcard-icon { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:16px; }
-.qcard.visitante .qcard-icon { background:rgba(0,194,255,0.12); }
-.qcard.populacao .qcard-icon { background:rgba(0,214,143,0.12); }
-.qcard-tipo { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:6px; }
-.qcard.visitante .qcard-tipo { color:var(--jga-accent); }
-.qcard.populacao .qcard-tipo { color:var(--jga-green); }
-.qcard-titulo { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; color:var(--creme); margin-bottom:8px; line-height:1.2; }
-.qcard-desc { font-size:0.78rem; color:var(--muted); line-height:1.6; margin-bottom:20px; }
-.qcard-meta { display:flex; align-items:center; justify-content:space-between; font-size:0.7rem; }
-.qcard-qtd { color:rgba(240,244,255,0.3); }
-.qcard-btn { display:flex; align-items:center; gap:4px; font-size:0.75rem; font-weight:600; padding:6px 14px; border-radius:8px; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
-.qcard.visitante .qcard-btn { background:rgba(0,194,255,0.15); color:var(--jga-accent); }
-.qcard.populacao .qcard-btn { background:rgba(0,214,143,0.15); color:var(--jga-green); }
-
-.capa-footer { position:relative; border-top:1px solid rgba(255,255,255,0.06); padding-top:24px; display:flex;
-  align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-.footer-left { font-size:0.72rem; color:rgba(240,244,255,0.22); line-height:1.6; }
-.footer-left strong { color:rgba(240,244,255,0.4); }
-.footer-right { display:flex; align-items:center; gap:8px; font-size:0.68rem; color:rgba(240,244,255,0.2); }
-.footer-dot { width:5px; height:5px; border-radius:50%; background:var(--jga-green); animation:blink 2s infinite; }
-
-/* APP */
-#app { display:none; min-height:100vh; }
-.app-header { position:sticky; top:0; z-index:50; background:rgba(10,22,40,0.96); backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border); padding:0 20px; height:60px; display:flex; align-items:center; gap:16px; }
-.btn-voltar { flex-shrink:0; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px;
-  color:var(--muted); font-size:0.78rem; padding:7px 14px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; white-space:nowrap; }
-.btn-voltar:hover { color:var(--creme); border-color:rgba(255,255,255,0.2); }
-.app-header-mid { flex:1; min-width:0; text-align:center; }
-.app-header-tipo { font-size:0.62rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; }
-.app-header-tipo.v { color:var(--jga-accent); } .app-header-tipo.p { color:var(--jga-green); }
-.app-header-titulo { font-family:'Syne',sans-serif; font-size:0.85rem; font-weight:700; color:var(--creme); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
-.prog-wrap { height:2px; background:rgba(255,255,255,0.05); }
-.prog-bar { height:100%; transition:width 0.6s ease; border-radius:0 2px 2px 0; }
-.prog-bar.v { background:linear-gradient(90deg,var(--jga-accent),var(--jga-green)); }
-.prog-bar.p { background:linear-gradient(90deg,var(--jga-green),#00C2FF); }
-
-.form-body { max-width:640px; margin:0 auto; padding:28px 20px 130px; }
-
-/* meta + consentimento geo */
-.meta-bloco { background:rgba(0,194,255,0.04); border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.meta-full { grid-column:1 / -1; }
-.campo-label { display:block; font-size:0.68rem; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:rgba(240,244,255,0.35); margin-bottom:10px; }
-.campo-label .obrig { color:var(--jga-red); margin-left:3px; }
-
-.geo-bloco { background:rgba(0,214,143,0.05); border:1px solid rgba(0,214,143,0.2); border-radius:12px; padding:14px 16px; margin-bottom:20px; display:flex; align-items:center; gap:14px; }
-.geo-icon { font-size:1.4rem; flex-shrink:0; }
-.geo-txt { flex:1; font-size:0.78rem; color:var(--muted); line-height:1.5; }
-.geo-status { font-size:0.7rem; font-weight:600; padding:5px 12px; border-radius:100px; white-space:nowrap; }
-.geo-status.pend { background:rgba(245,166,35,0.15); color:var(--jga-gold); }
-.geo-status.ok { background:rgba(0,214,143,0.15); color:var(--jga-green); }
-.geo-status.erro { background:rgba(255,71,87,0.15); color:var(--jga-red); }
-
-.pill-grupo { display:flex; flex-wrap:wrap; gap:7px; }
-.pill { display:flex; align-items:center; cursor:pointer; }
-.pill input { display:none; }
-.pill span { padding:5px 13px; border-radius:100px; border:1.5px solid rgba(240,244,255,0.1); font-size:0.78rem; color:var(--muted); cursor:pointer; transition:all 0.2s; user-select:none; }
-.pill input:checked + span { border-color:var(--jga-accent); background:rgba(0,194,255,0.12); color:var(--jga-accent); font-weight:600; }
-
-.inp { width:100%; background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.08); border-radius:10px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--creme); outline:none; transition:border-color 0.2s; -webkit-appearance:none; }
-.inp:focus { border-color:var(--jga-accent); background:rgba(0,194,255,0.04); }
-.inp::placeholder { color:rgba(240,244,255,0.18); }
-.inp.invalido { border-color:var(--jga-red); }
-
-.sec-titulo { font-family:'Syne',sans-serif; font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--jga-accent); padding:24px 0 12px; border-bottom:1px solid rgba(0,194,255,0.12); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
-.sec-titulo.verde { color:var(--jga-green); border-color:rgba(0,214,143,0.12); }
-
-.pcard { background:var(--card-bg); border:1px solid rgba(255,255,255,0.06); border-radius:var(--r); padding:18px 18px 20px; margin-bottom:12px; transition:all 0.25s; }
-.pcard:has(input:checked), .pcard.preenchida { border-color:rgba(0,194,255,0.2); }
-.pcard.oculta { display:none; }
-.pnum { font-size:0.62rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(240,244,255,0.22); margin-bottom:5px; display:flex; align-items:center; gap:8px; }
-.cond-tag { background:rgba(245,166,35,0.15); color:var(--jga-gold); padding:1px 7px; border-radius:100px; font-size:0.55rem; letter-spacing:0.1em; }
-.ptexto { font-size:0.92rem; color:var(--creme); line-height:1.55; margin-bottom:16px; font-weight:400; }
-.ptexto .obrig { color:var(--jga-red); margin-left:3px; }
-
-.opc-lista { display:flex; flex-direction:column; gap:7px; }
-.opc-item { display:flex; cursor:pointer; }
-.opc-item input { display:none; }
-.opc-box { flex:1; padding:10px 14px; border-radius:9px; border:1.5px solid rgba(255,255,255,0.08); font-size:0.84rem; color:var(--muted); cursor:pointer; transition:all 0.18s; background:transparent; user-select:none; display:flex; align-items:center; gap:10px; }
-.opc-box::before { content:''; width:14px; height:14px; border-radius:50%; border:1.5px solid rgba(240,244,255,0.18); flex-shrink:0; transition:all 0.2s; }
-.opc-item.chk .opc-box::before { border-radius:4px; }
-.opc-item input:checked + .opc-box { border-color:var(--jga-accent); background:rgba(0,194,255,0.08); color:var(--creme); font-weight:500; }
-.opc-item input:checked + .opc-box::before { background:var(--jga-accent); border-color:var(--jga-accent); }
-/* NS/NR fora da escala */
-.opc-item.nsnr .opc-box { border-style:dashed; opacity:0.7; font-size:0.8rem; }
-.opc-item.nsnr input:checked + .opc-box { border-color:rgba(240,244,255,0.3); background:rgba(255,255,255,0.04); color:var(--muted); opacity:1; }
-.opc-item.nsnr input:checked + .opc-box::before { background:rgba(240,244,255,0.3); border-color:rgba(240,244,255,0.3); }
-
-.escala-rotulo { font-size:0.62rem; color:rgba(240,244,255,0.25); text-transform:uppercase; letter-spacing:0.15em; margin:6px 0 4px; }
-
-.aval-table { width:100%; border-collapse:separate; border-spacing:0 5px; font-size:0.8rem; margin-top:8px; }
-.aval-table th { font-size:0.62rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(240,244,255,0.25); padding:0 6px 8px; text-align:center; }
-.aval-table th:first-child { text-align:left; min-width:120px; }
-.aval-table td { background:rgba(255,255,255,0.025); padding:9px 6px; text-align:center; border:1px solid rgba(255,255,255,0.04); color:var(--muted); }
-.aval-table td:first-child { text-align:left; padding-left:12px; border-radius:8px 0 0 8px; font-size:0.8rem; color:rgba(240,244,255,0.65); }
-.aval-table td:last-child { border-radius:0 8px 8px 0; }
-.aval-table td.col-ns { background:rgba(255,255,255,0.015); }
-.raval { display:none; }
-.raval + label { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:6px; border:1.5px solid rgba(255,255,255,0.1); cursor:pointer; font-size:0.68rem; font-weight:700; color:rgba(240,244,255,0.3); transition:all 0.18s; }
-.raval:checked + label { background:var(--jga-accent); border-color:var(--jga-accent); color:var(--jga-blue); }
-.raval.ns + label { border-style:dashed; }
-.raval.ns:checked + label { background:rgba(240,244,255,0.3); border-color:rgba(240,244,255,0.3); color:var(--jga-blue); }
-
-.form-footer { position:fixed; bottom:0; left:0; right:0; background:rgba(10,22,40,0.98); backdrop-filter:blur(20px); border-top:1px solid var(--border); padding:14px 20px; }
-.form-footer-inner { max-width:640px; margin:0 auto; display:flex; align-items:center; gap:12px; }
-.prog-info { font-size:0.72rem; color:var(--muted); white-space:nowrap; }
-.prog-info strong { color:var(--jga-accent); }
-.btn-enviar { flex:1; padding:14px; border-radius:10px; border:none; font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.25s; letter-spacing:0.04em; }
-.btn-enviar.v { background:linear-gradient(135deg,var(--jga-accent),#0099CC); color:var(--jga-blue); }
-.btn-enviar.p { background:linear-gradient(135deg,var(--jga-green),#00A86B); color:var(--jga-blue); }
-.btn-enviar:hover { transform:translateY(-2px); filter:brightness(1.08); box-shadow:0 8px 24px rgba(0,0,0,0.4); }
-.btn-enviar:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
-
-#sucesso { display:none; min-height:100vh; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:48px 24px; }
-.suc-icon { width:80px; height:80px; border-radius:50%; background:rgba(0,214,143,0.12); border:2px solid rgba(0,214,143,0.4); display:flex; align-items:center; justify-content:center; font-size:2rem; margin:0 auto 28px; animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
-@keyframes popIn { 0%{transform:scale(0);opacity:0} 100%{transform:scale(1);opacity:1} }
-.suc-titulo { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; color:var(--creme); margin-bottom:10px; }
-.suc-sub { font-size:0.9rem; color:var(--muted); max-width:340px; margin:0 auto 12px; line-height:1.6; }
-.suc-id { font-size:0.72rem; color:rgba(240,244,255,0.25); font-family:monospace; margin-bottom:8px; letter-spacing:0.05em; }
-.suc-geo { font-size:0.68rem; color:rgba(240,244,255,0.2); font-family:monospace; margin-bottom:36px; }
-.btn-nova { padding:14px 32px; border-radius:10px; border:1.5px solid var(--border); background:transparent; color:var(--jga-accent); font-family:'Syne',sans-serif; font-size:0.88rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-.btn-nova:hover { background:rgba(0,194,255,0.08); transform:translateY(-2px); }
-
-.mt8 { margin-top:8px; } .mt12 { margin-top:12px; }
-@media (max-width:480px) {
-  .cards-wrap { grid-template-columns:1fr; }
-  .meta-bloco { grid-template-columns:1fr; }
-  .meta-full { grid-column:1; }
-  .aval-table { font-size:0.72rem; }
-  .aval-table th, .aval-table td { padding:7px 3px; }
-  .hero-titulo { font-size:2rem; }
-  .capa-header { flex-direction:column; align-items:flex-start; }
-}
-
-/* badge de sincronização offline */
-.sync-badge{position:fixed;bottom:88px;right:14px;z-index:200;font-size:0.72rem;font-weight:600;
-  padding:8px 14px;border-radius:100px;backdrop-filter:blur(10px);border:1px solid;transition:all .3s;
-  box-shadow:0 4px 16px rgba(0,0,0,0.3)}
-.sync-badge.ok{background:rgba(0,214,143,0.15);border-color:rgba(0,214,143,0.4);color:#00D68F}
-.sync-badge.sync{background:rgba(0,194,255,0.15);border-color:rgba(0,194,255,0.4);color:#00C2FF}
-.sync-badge.pend{background:rgba(245,166,35,0.15);border-color:rgba(245,166,35,0.4);color:#F5A623}
-.token-modal{position:fixed;inset:0;z-index:500;background:rgba(7,14,26,0.96);backdrop-filter:blur(8px);
-  display:flex;align-items:center;justify-content:center;padding:24px}
-.token-box{background:var(--panel,#0D1B2E);border:1px solid rgba(0,194,255,0.2);border-radius:18px;
-  padding:32px 28px;max-width:340px;width:100%;text-align:center}
-.token-box h3{font-family:'Syne',sans-serif;font-size:1.2rem;margin-bottom:8px;color:var(--ink,#EAF2FF)}
-.token-box p{font-size:0.82rem;color:rgba(234,242,255,0.5);margin-bottom:20px;line-height:1.5}
-.token-box input{width:100%;background:rgba(255,255,255,0.05);border:1.5px solid rgba(0,194,255,0.2);
-  border-radius:10px;padding:13px;font-size:1rem;color:#EAF2FF;text-align:center;letter-spacing:0.1em;
-  text-transform:uppercase;outline:none;margin-bottom:16px;font-family:'DM Sans',sans-serif}
-.token-box button{width:100%;background:linear-gradient(135deg,#00C2FF,#0099CC);color:#070E1A;border:none;
-  border-radius:10px;padding:13px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer}
-</style>
-<style id="extra">
-.cards-wrap { grid-template-columns: 1fr 1fr 1fr; }
-@media (max-width:760px){ .cards-wrap { grid-template-columns:1fr; } }
-.qcard.operacao::after { background:linear-gradient(135deg,rgba(245,166,35,0.07),transparent); }
-.qcard.operacao:hover { border-color:rgba(245,166,35,0.5); }
-.qcard.operacao .qcard-icon { background:rgba(245,166,35,0.14); }
-.qcard.operacao .qcard-tipo { color:var(--jga-gold); }
-.qcard.operacao .qcard-btn { background:rgba(245,166,35,0.18); color:var(--jga-gold); }
-.app-header-tipo.o { color:var(--jga-gold); }
-.prog-bar.o { background:linear-gradient(90deg,var(--jga-gold),#FF8C42); }
-.btn-enviar.o { background:linear-gradient(135deg,var(--jga-gold),#E8841A); color:var(--jga-blue); }
-.likert-legenda { font-size:0.62rem; color:rgba(240,244,255,0.3); margin:4px 0 10px; line-height:1.5; }
-.aval-table th { font-size:0.58rem; }
-.aval-table th:first-child { min-width:110px; }
-</style>
-<style id="leg-css">
-/* Legenda para o pesquisador — DNA da pesquisa */
-.leg-pesq {
-  display:flex; gap:8px; align-items:flex-start;
-  background:rgba(0,194,255,0.06);
-  border-left:3px solid var(--jga-accent);
-  border-radius:0 8px 8px 0;
-  padding:9px 12px; margin:0 0 14px;
-  font-size:0.76rem; color:rgba(240,244,255,0.6); line-height:1.5;
-}
-.leg-pesq strong { color:var(--jga-accent); font-weight:600; }
-.leg-icon { font-size:0.85rem; flex-shrink:0; margin-top:1px; }
-.app-logo-jga { display:flex; align-items:center; height:30px; }
-.app-logo-jga svg { height:26px; width:auto; }
-/* logo na capa */
-.capa-jga-logo { display:flex; align-items:center; gap:11px; }
-.capa-jga-logo svg { height:42px; width:auto; }
 </style>
 
 </head>
 <body>
-<div class="dev-ribbon"></div>
-<div class="dev-badge">DEV · v0.5.3</div>
+<div class="dev-badge">DEV · v0.6.0</div>
 <div class="sync-badge ok" id="sync-badge">✓ Pronto</div>
 
-<!-- CAPA -->
-<section id="capa">
-  <div class="grid-bg"></div><div class="glow-1"></div><div class="glow-2"></div>
-  <div class="capa-header">
-    <div class="capa-jga-logo"><svg viewBox="0 0 210 58" xmlns="http://www.w3.org/2000/svg" aria-label="Just Go Smart Access" style="height:44px;width:auto">
-<text x="2" y="28" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#F0F4FF" letter-spacing="-1.5">Just</text>
-<text x="80" y="28" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#00C2FF" letter-spacing="-1.5">Go</text>
-<text x="2" y="50" font-family="DM Sans, sans-serif" font-weight="600" font-size="10" fill="rgba(240,244,255,0.45)" letter-spacing="4">SMART ACCESS</text>
-</svg></div>
-    <div class="cliente-card">
-      <span class="cliente-rotulo">Pesquisa para</span>
-      <div class="foccus-logo">
-        <div class="foccus-mark"><div class="foccus-bar b1"></div><div class="foccus-bar b2"></div><div class="foccus-bar b3"></div></div>
-        <div class="foccus-txt"><span class="foccus-nome">F<span>occus</span></span><span class="foccus-sub">Pesquisas</span></div>
+<div class="app">
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="hdr-top">
+      <div class="hdr-brand">
+        <svg viewBox="0 0 150 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="19" font-family="Outfit,sans-serif" font-weight="800" font-size="20" fill="#fff" letter-spacing="-1">Just</text><text x="56" y="19" font-family="Outfit,sans-serif" font-weight="800" font-size="20" fill="#00A8D6" letter-spacing="-1">Go</text></svg>
+        <span class="hdr-cli">para <b>Foccus</b></span>
+      </div>
+      <div class="hdr-a11y">
+        <button class="a11y-btn" id="btn-fsize" onclick="toggleFsize()" aria-label="Tamanho da fonte" title="Tamanho da fonte">A</button>
+        <button class="a11y-btn" id="btn-hc" onclick="toggleHC()" aria-label="Alto contraste" aria-pressed="false" title="Alto contraste">◐</button>
       </div>
     </div>
-  </div>
-  <div class="capa-hero">
-    <div class="hero-tag"><span>2026</span>Sistema Digital de Coleta · Festival Canaã Cidade Junina</div>
-    <h1 class="hero-titulo">Pesquisa de<br><em>Opinião Pública</em></h1>
-    <p class="hero-desc">Plataforma de coleta em campo desenvolvida pela <strong>Just Go</strong> para a <strong>Foccus Pesquisas</strong> — Prefeitura de Canaã dos Carajás. Festival de <strong>24 de junho a 12 de julho de 2026</strong>. Três instrumentos, escala Likert padronizada, com orientação ao pesquisador em cada questão.</p>
-    <div class="cards-wrap">
-      <div class="qcard visitante" onclick="iniciar('v')">
-        <div class="qcard-icon">🎪</div><div class="qcard-tipo">Questionário A</div>
-        <div class="qcard-titulo">Visitantes / Turistas</div>
-        <div class="qcard-desc">Perfil, gasto desagregado, turismo e experiência.</div>
-        <div class="qcard-meta"><span class="qcard-qtd">amostra: 600</span><button class="qcard-btn">Iniciar →</button></div>
+    <div class="prog-wrap2" id="prog-wrap" style="display:none">
+      <div class="prog-meta">
+        <span class="prog-label" id="prog-label">Identificação</span>
+        <span class="prog-count" id="prog-count">1 de 1</span>
       </div>
-      <div class="qcard populacao" onclick="iniciar('p')">
-        <div class="qcard-icon">🏘️</div><div class="qcard-tipo">Questionário B</div>
-        <div class="qcard-titulo">Moradores</div>
-        <div class="qcard-desc">Percepção 2025, impacto na comunidade e expectativa 2026.</div>
-        <div class="qcard-meta"><span class="qcard-qtd">amostra: 600</span><button class="qcard-btn">Iniciar →</button></div>
-      </div>
-      <div class="qcard operacao" onclick="iniciar('o')">
-        <div class="qcard-icon">🏪</div><div class="qcard-tipo">Questionário C</div>
-        <div class="qcard-titulo">Expositores / Operação</div>
-        <div class="qcard-desc">Investimento, retorno (ROI), empregos e operação.</div>
-        <div class="qcard-meta"><span class="qcard-qtd">amostra: 100</span><button class="qcard-btn">Iniciar →</button></div>
+      <div class="prog-track" id="prog-bar-aria" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="prog-fill" id="prog-fill" style="width:0%"></div>
       </div>
     </div>
-    <div class="capa-footer">
-      <div class="footer-left"><strong>Just Go · Smart Access</strong> — tecnologia de coleta<br>Pesquisa conduzida pela Foccus Pesquisas · Ambiente de Desenvolvimento</div>
-      <div class="footer-right"><div class="footer-dot"></div>Build dev · Supabase ready · v0.4.0</div>
-    </div>
-  </div>
-</section>
+  </header>
 
-<!-- APP -->
-<div id="app">
-  <div class="app-header">
-    <button class="btn-voltar" onclick="voltarCapa()">←</button>
-    <div class="app-logo-jga"><svg viewBox="0 0 210 32" xmlns="http://www.w3.org/2000/svg" style="height:24px;width:auto">
-<text x="2" y="26" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#F0F4FF" letter-spacing="-1.5">Just</text>
-<text x="80" y="26" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#00C2FF" letter-spacing="-1.5">Go</text>
-</svg></div>
-    <div class="app-header-mid"><div class="app-header-tipo" id="h-tipo"></div><div class="app-header-titulo" id="h-titulo"></div></div>
-    <div style="font-size:0.72rem;color:var(--muted);white-space:nowrap;" id="h-prog"></div>
-  </div>
-  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
-  <div class="form-body" id="form-body"></div>
-  <div class="form-footer"><div class="form-footer-inner">
-    <div class="prog-info" id="prog-label">0%</div>
-    <button class="btn-enviar" id="btn-env" onclick="enviar()">Salvar Registro</button>
-  </div></div>
-</div>
+  <!-- CAPA -->
+  <section class="capa" id="capa">
+    <div class="capa-hero">
+      <h1>Pesquisa de Opinião Pública</h1>
+      <p>Festival <strong>Canaã Cidade Junina 2026</strong> · 24 de junho a 12 de julho. Coleta digital pela <strong>Just Go</strong> para a <strong>Foccus Pesquisas</strong>.</p>
+    </div>
+    <div class="capa-label">Selecione o questionário</div>
+    <button class="qcard" onclick="iniciar('v')">
+      <div class="qcard-top"><span class="qcard-ico">🎪</span><div><div class="qcard-tipo">Questionário A</div><div class="qcard-titulo">Visitantes / Turistas</div></div></div>
+      <div class="qcard-desc">Perfil, gasto desagregado, turismo e experiência.</div>
+      <div class="qcard-meta"><span class="qcard-amostra">amostra: 600</span><span class="qcard-arrow">Iniciar →</span></div>
+    </button>
+    <button class="qcard" onclick="iniciar('p')">
+      <div class="qcard-top"><span class="qcard-ico">🏘️</span><div><div class="qcard-tipo">Questionário B</div><div class="qcard-titulo">Moradores</div></div></div>
+      <div class="qcard-desc">Percepção 2025, impacto na comunidade e expectativa 2026.</div>
+      <div class="qcard-meta"><span class="qcard-amostra">amostra: 600</span><span class="qcard-arrow">Iniciar →</span></div>
+    </button>
+    <button class="qcard" onclick="iniciar('o')">
+      <div class="qcard-top"><span class="qcard-ico">🏪</span><div><div class="qcard-tipo">Questionário C</div><div class="qcard-titulo">Expositores / Operação</div></div></div>
+      <div class="qcard-desc">Investimento, retorno (ROI), empregos e operação.</div>
+      <div class="qcard-meta"><span class="qcard-amostra">amostra: 100</span><span class="qcard-arrow">Iniciar →</span></div>
+    </button>
+  </section>
 
-<!-- SUCESSO -->
-<div id="sucesso">
-  <div class="suc-icon">✓</div>
-  <div class="suc-titulo">Registro salvo!</div>
-  <div class="suc-sub">Dados coletados e prontos para sincronização com o banco.</div>
-  <div class="suc-id" id="suc-id"></div><div class="suc-geo" id="suc-geo"></div>
-  <button class="btn-nova" onclick="voltarCapa()">Nova entrevista</button>
+  <!-- FORM (wizard) -->
+  <main id="app-form" style="display:none">
+    <div class="etapa-cat" id="h-titulo" style="display:none"></div>
+    <div id="form-body"></div>
+  </main>
+
+  <!-- NAV BAR inferior -->
+  <nav class="navbar" id="navbar" style="display:none">
+    <button class="btn-back hidden" id="btn-back" onclick="voltar()"><span class="arrow">←</span> Voltar</button>
+    <button class="btn-primary" id="btn-prim" onclick="avancar()">Próxima →</button>
+  </nav>
+
+  <!-- SUCESSO -->
+  <section class="sucesso" id="sucesso" style="display:none">
+    <div class="suc-ring">✓</div>
+    <div class="suc-titulo">Registro salvo!</div>
+    <div class="suc-sub">Dados coletados e prontos para sincronização com o banco.</div>
+    <div class="suc-id" id="suc-id"></div>
+    <div class="suc-geo" id="suc-geo"></div>
+    <button class="btn-primary" style="max-width:240px" onclick="voltarCapa()">Nova entrevista</button>
+  </section>
 </div>
 
 <script>
 /* ════════ ESTADO ════════ */
 let tipoAtivo = null;
 let geoData = { status:'pendente', lat:null, lng:null, accuracy:null, erro:null };
+let etapaAtual = 0;        // índice da etapa visível
+let etapas = [];           // array de elementos (.wz-step)
 
 /* ════════ GEO ════════ */
 function pedirGeo(){
@@ -385,6 +294,191 @@ function pedirGeo(){
     { enableHighAccuracy:true, timeout:10000, maximumAge:60000 });
 }
 
+/* ════════ ACESSIBILIDADE (fonte + alto contraste) ════════ */
+const FSIZES=['','lg','xl']; let fsizeIdx=0;
+function initA11y(){
+  const fs=localStorage.getItem('fsize')||''; const hc=localStorage.getItem('hc')||'';
+  if(fs){ document.documentElement.setAttribute('data-fsize',fs); fsizeIdx=FSIZES.indexOf(fs); }
+  if(hc==='on'){ document.documentElement.setAttribute('data-hc','on'); const b=document.getElementById('btn-hc'); if(b) b.classList.add('ativo'); }
+  atualizaFsizeLabel();
+}
+function toggleFsize(){
+  fsizeIdx=(fsizeIdx+1)%3; const v=FSIZES[fsizeIdx];
+  if(v) document.documentElement.setAttribute('data-fsize',v); else document.documentElement.removeAttribute('data-fsize');
+  localStorage.setItem('fsize',v); atualizaFsizeLabel();
+}
+function atualizaFsizeLabel(){
+  const b=document.getElementById('btn-fsize'); if(b) b.textContent=['A','A+','A++'][fsizeIdx];
+}
+function toggleHC(){
+  const on=document.documentElement.getAttribute('data-hc')==='on';
+  if(on){ document.documentElement.removeAttribute('data-hc'); localStorage.setItem('hc',''); }
+  else { document.documentElement.setAttribute('data-hc','on'); localStorage.setItem('hc','on'); }
+  const b=document.getElementById('btn-hc'); if(b) b.classList.toggle('ativo',!on);
+}
+
+/* ════════ WIZARD: navegação uma-pergunta-por-tela ════════ */
+function montarEtapas(){
+  // a etapa 0 é sempre o meta-bloco (demografia); as demais são os .pcard
+  const body=document.getElementById('form-body');
+  const meta=body.querySelector('.meta-wrap');
+  const pcards=Array.from(body.querySelectorAll('.pcard'));
+  etapas=[];
+  if(meta) etapas.push(meta);
+  pcards.forEach(pc=>etapas.push(pc));
+  // esconder todas
+  etapas.forEach(el=>{ el.style.display='none'; el.classList.add('wz-step'); });
+  etapaAtual=0;
+  mostrarEtapa(0);
+}
+
+function etapaVisivelValida(idx){
+  // pula .pcard com classe 'oculta' (skip logic)
+  const el=etapas[idx];
+  if(!el) return false;
+  if(el.classList.contains('pcard') && el.classList.contains('oculta')) return false;
+  return true;
+}
+
+function proximaEtapaValida(de, dir){
+  let i=de+dir;
+  while(i>=0 && i<etapas.length){
+    if(etapaVisivelValida(i)) return i;
+    i+=dir;
+  }
+  return -1;
+}
+
+function mostrarEtapa(idx){
+  aplicarSkipLogic(); // recalcula ocultos antes de exibir
+  etapas.forEach(el=>el.style.display='none');
+  const el=etapas[idx];
+  if(!el) return;
+  el.style.display='block';
+  etapaAtual=idx;
+  window.scrollTo(0,0);
+  atualizarNav();
+  atualizarProgresso();
+}
+
+function avancar(){
+  if(!etapaRespondida(etapaAtual)) return;
+  const prox=proximaEtapaValida(etapaAtual,1);
+  if(prox===-1){ enviar(); return; } // última etapa → salva direto (sem revisão)
+  mostrarEtapa(prox);
+}
+function voltar(){
+  const ant=proximaEtapaValida(etapaAtual,-1);
+  if(ant===-1) return;
+  mostrarEtapa(ant);
+}
+
+function etapaRespondida(idx){
+  const el=etapas[idx];
+  if(!el) return false;
+  // meta-bloco: exige sexo, esc, faixa, pesquisador
+  if(el.classList.contains('meta-wrap')){
+    for(const nome of ['sexo','esc','faixa']){
+      if(!el.querySelector(`input[name="${nome}"]:checked`)) return false;
+    }
+    const pesq=el.querySelector('input[name="pesquisador"]');
+    if(pesq && !pesq.value.trim()) return false;
+    return true;
+  }
+  // pcard de avaliação (tabela): considera respondida se ao menos uma linha marcada (ou aceita parcial)
+  if(el.querySelector('.aval-table')){
+    return true; // avaliação é opcional item a item
+  }
+  // pcard normal: exige radio/checkbox marcado OU texto preenchido OU é opcional
+  const temInput=el.querySelector('input[type="radio"],input[type="checkbox"]');
+  if(temInput){
+    return !!el.querySelector('input:checked');
+  }
+  // texto/número: opcional (campos de sugestão), então libera
+  return true;
+}
+
+function atualizarNav(){
+  const back=document.getElementById('btn-back');
+  const prim=document.getElementById('btn-prim');
+  const ant=proximaEtapaValida(etapaAtual,-1);
+  back.classList.toggle('hidden', ant===-1);
+  // texto do botão primário
+  const prox=proximaEtapaValida(etapaAtual,1);
+  prim.innerHTML = prox===-1 ? 'Salvar Registro ✓' : 'Próxima →';
+  // habilitar/desabilitar
+  const ok=etapaRespondida(etapaAtual);
+  prim.disabled=!ok; prim.setAttribute('aria-disabled',(!ok).toString());
+}
+
+function atualizarProgresso(){
+  // contar etapas válidas e posição atual entre elas
+  const validas=etapas.map((_,i)=>i).filter(i=>etapaVisivelValida(i));
+  const posAtual=validas.indexOf(etapaAtual)+1;
+  const total=validas.length;
+  const pct=total>0?Math.round((posAtual/total)*100):0;
+  const fill=document.getElementById('prog-fill'); if(fill) fill.style.width=pct+'%';
+  const lbl=document.getElementById('prog-label'); if(lbl) lbl.textContent=etapaLabel(etapaAtual);
+  const cnt=document.getElementById('prog-count'); if(cnt) cnt.textContent=posAtual+' de '+total;
+  const pb=document.getElementById('prog-bar-aria');
+  if(pb){ pb.setAttribute('aria-valuenow',pct); }
+}
+function etapaLabel(idx){
+  const el=etapas[idx];
+  if(el && el.classList.contains('meta-wrap')) return 'Identificação';
+  // procurar o sec-titulo mais próximo antes deste pcard no DOM original
+  return 'Questão '+(idx); // simplificado; categoria detalhada abaixo
+}
+
+/* recalcula nav quando o usuário responde (habilita Próxima) */
+document.addEventListener('change', ()=>{ if(etapas.length) atualizarNav(); });
+document.addEventListener('input', ()=>{ if(etapas.length) atualizarNav(); });
+
+/* ════════ NAV PRINCIPAL ════════ */
+function iniciar(tipo){
+  tipoAtivo=tipo;
+  document.getElementById('capa').style.display='none';
+  document.getElementById('app-form').style.display='flex';
+  document.getElementById('sucesso').style.display='none';
+  geoData={ status:'pendente', lat:null, lng:null, accuracy:null, erro:null };
+  const cfg={
+    v:['Visitantes / Turistas',renderVisitante],
+    p:['Moradores',renderPopulacao],
+    o:['Expositores / Operação',renderOperacao]
+  }[tipo];
+  document.getElementById('h-titulo').textContent=cfg[0];
+  cfg[1]();              // renderiza (gera os .pcard — lógica intacta)
+  envolverMeta();        // agrupa o meta-bloco numa .meta-wrap
+  montarEtapas();        // ativa o wizard
+  setTimeout(pedirGeo,400);
+}
+
+// agrupa os elementos de demografia (geo + meta-bloco) numa única etapa
+function envolverMeta(){
+  const body=document.getElementById('form-body');
+  const geo=body.querySelector('.geo-bloco');
+  const meta=body.querySelector('.meta-bloco');
+  if(meta && !body.querySelector('.meta-wrap')){
+    const wrap=document.createElement('div');
+    wrap.className='meta-wrap';
+    const cat=document.createElement('div'); cat.className='etapa-cat'; cat.textContent='Identificação do entrevistado';
+    const tit=document.createElement('div'); tit.className='qtext'; tit.textContent='Dados do entrevistado e ponto de coleta';
+    meta.parentNode.insertBefore(wrap, geo||meta);
+    wrap.appendChild(cat); wrap.appendChild(tit);
+    if(geo) wrap.appendChild(geo);
+    wrap.appendChild(meta);
+  }
+}
+
+function voltarCapa(){
+  document.getElementById('app-form').style.display='none';
+  document.getElementById('sucesso').style.display='none';
+  document.getElementById('capa').style.display='flex';
+  etapas=[]; etapaAtual=0;
+}
+
+
+/* ════════ HELPERS (geração — lógica intacta) ════════ */
 /* ════════ HELPERS ════════ */
 function leg(txt){
   return `<div class="leg-pesq"><span class="leg-icon">🎯</span><div><strong>Para o pesquisador:</strong> ${txt}</div></div>`;
@@ -399,8 +493,8 @@ function perg(n,txt,opcoes,tipo='radio',extra='',cond=null,nsnrLabel=null,legend
   let opcHtml=opcoes.map(o=>r(n,o,o,tipo)).join('');
   if(nsnrLabel) opcHtml+=`<div class="escala-rotulo">— sem opinião —</div>`+r(n,nsnrLabel,nsnrLabel,tipo,true);
   return `<div class="pcard${cond?' oculta':''}"${condClass} id="pc${n}">
-    <div class="pnum">Questão ${n<10?'0'+n:n} ${condTag}</div>
-    <div class="ptexto">${txt}</div>
+    <div class="etapa-cat">Questão ${n<10?'0'+n:n}</div>
+    <div class="qtext">${txt}</div>
     ${legenda?leg(legenda):''}
     <div class="opc-lista">${opcHtml}${extra}</div></div>`;
 }
@@ -409,18 +503,18 @@ function pertexto(n,txt,ph='',cond=null,transform='none',legenda=null){
   const condTag=cond?`<span class="cond-tag">condicional</span>`:'';
   const tf=transform==='upper'?'this.value=this.value.toUpperCase();':transform==='title'?'this.value=this.value.replace(/\\w\\S*/g,function(t){return t.charAt(0).toUpperCase()+t.substr(1).toLowerCase()});':'';
   return `<div class="pcard${cond?' oculta':''}"${condClass} id="pc${n}">
-    <div class="pnum">Questão ${n<10?'0'+n:n} ${condTag}</div>
-    <div class="ptexto">${txt}</div>
+    <div class="etapa-cat">Questão ${n<10?'0'+n:n}</div>
+    <div class="qtext">${txt}</div>
     ${legenda?leg(legenda):''}
-    <input class="inp mt12" type="text" placeholder="${ph||'Sua resposta...'}"
+    <input class="inp" type="text" placeholder="${ph||'Sua resposta...'}"
       oninput="${tf}this.closest('.pcard').classList.toggle('preenchida',this.value.trim().length>0);prog()"></div>`;
 }
 function pernum(n,txt,ph='',cond=null,legenda=null){
   const condClass=cond?' data-cond="'+cond.q+'" data-cond-val="'+cond.val+'"':'';
   return `<div class="pcard${cond?' oculta':''}"${condClass} id="pc${n}">
-    <div class="pnum">Questão ${n<10?'0'+n:n}</div><div class="ptexto">${txt}</div>
+    <div class="etapa-cat">Questão ${n<10?'0'+n:n}</div><div class="qtext">${txt}</div>
     ${legenda?leg(legenda):''}
-    <input class="inp mt12" type="number" min="0" placeholder="${ph||'Número...'}"
+    <input class="inp" type="number" min="0" placeholder="${ph||'Número...'}"
       oninput="this.closest('.pcard').classList.toggle('preenchida',this.value.length>0);prog()"></div>`;
 }
 function outroCampo(){
@@ -436,7 +530,7 @@ function aval(n,tit,itens,legenda=null){
     ${esc.map((_,j)=>`<td><input type="radio" class="raval" id="a${n}_${i}_${j}" name="a${n}_${i}" value="${5-j}"><label for="a${n}_${i}_${j}">${cod[j]}</label></td>`).join('')}
     <td class="col-ns"><input type="radio" class="raval ns" id="a${n}_${i}_9" name="a${n}_${i}" value="9"><label for="a${n}_${i}_9">–</label></td>
   </tr>`).join('');
-  return `<div class="pcard"><div class="pnum">Questão ${n<10?'0'+n:n}</div><div class="ptexto">${tit}</div>
+  return `<div class="pcard"><div class="etapa-cat">Questão ${n<10?'0'+n:n}</div><div class="qtext">${tit}</div>
     ${legenda?leg(legenda):''}
     <div class="likert-legenda">Escala Likert: Ó=Ótimo (5) · MB=Muito Bom (4) · B=Bom (3) · R=Regular (2) · NS=Não Satisfatório (1) · N/R=Não sabe/Não respondeu</div>
     <div style="overflow-x:auto"><table class="aval-table"><thead><tr><th>Item</th>${ths}</tr></thead><tbody>${rows}</tbody></table></div></div>`;
@@ -453,48 +547,15 @@ function likertOtimismo(n,txt,cond=null,legenda=null){
   return perg(n,txt,['Muito otimista','Otimista','Neutra','Pessimista','Muito pessimista'],'radio','',cond,'Não Sabe/Não Respondeu',legenda);
 }
 
-/* ════════ PROGRESSO + SKIP ════════ */
-function prog(){
-  const vis=document.querySelectorAll('.pcard:not(.oculta)'); let resp=0;
-  vis.forEach(pc=>{ if(pc.querySelector('input:checked')||pc.classList.contains('preenchida')) resp++; });
-  const total=vis.length, pct=total>0?Math.round((resp/total)*100):0;
-  document.getElementById('prog-bar').style.width=pct+'%';
-  document.getElementById('h-prog').textContent=pct+'%';
-  const lbl=document.getElementById('prog-label'); if(lbl) lbl.innerHTML=`<strong>${pct}%</strong> · ${resp}/${total}`;
-}
+
+
+/* ════════ SKIP LOGIC (intacta) ════════ */
 function aplicarSkipLogic(){
   document.querySelectorAll('.pcard[data-cond]').forEach(pc=>{
     const q=pc.getAttribute('data-cond'), val=pc.getAttribute('data-cond-val');
     const a=document.querySelector(`input[name="q${q}"]:checked`);
     pc.classList.toggle('oculta', !(a && decodeURIComponent(a.value)===val));
   });
-  prog();
-}
-document.addEventListener('change',aplicarSkipLogic);
-
-/* ════════ NAV ════════ */
-function iniciar(tipo){
-  tipoAtivo=tipo;
-  document.getElementById('capa').style.display='none';
-  document.getElementById('app').style.display='block';
-  document.getElementById('sucesso').style.display='none';
-  geoData={ status:'pendente', lat:null, lng:null, accuracy:null, erro:null };
-  const bar=document.getElementById('prog-bar'), btn=document.getElementById('btn-env'), ht=document.getElementById('h-tipo');
-  const cfg={
-    v:['🎪 Questionário A — Visitante','v','Visitantes / Turistas',renderVisitante],
-    p:['🏘️ Questionário B — População','p','Moradores',renderPopulacao],
-    o:['🏪 Questionário C — Operação','o','Expositores / Operação',renderOperacao]
-  }[tipo];
-  ht.textContent=cfg[0]; ht.className='app-header-tipo '+cfg[1];
-  document.getElementById('h-titulo').textContent=cfg[2];
-  bar.className='prog-bar '+cfg[1]; btn.className='btn-enviar '+cfg[1];
-  cfg[3]();
-  prog(); window.scrollTo(0,0); setTimeout(pedirGeo,400);
-}
-function voltarCapa(){
-  document.getElementById('app').style.display='none';
-  document.getElementById('sucesso').style.display='none';
-  document.getElementById('capa').style.display='flex';
 }
 
 /* ════════ META BLOCO ════════ */
@@ -525,24 +586,26 @@ function metaBloco(extra=''){
   </div>`;
 }
 
+
+
 /* ════════ A · VISITANTE ════════ */
 function renderVisitante(){
   document.getElementById('form-body').innerHTML=`
   ${metaBloco()}
-  <div class="sec-titulo">01 · Perfil Socioeconômico</div>
+  
   ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou','Classifica o poder aquisitivo do público. Cruzado com o gasto, mostra quanto cada faixa de renda injeta na economia local.')}
   ${perg(2,'Como você teve conhecimento do Festival Canaã Cidade Junina 2026?',['Já conhecia','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp','Facebook/Instagram','Mora próximo','Carro de som','Trabalho','Venho todo ano'],'checkbox',outroCampo(),null,null,'Mede a eficácia de cada canal de divulgação. Orienta onde investir o marketing das próximas edições.')}
-  <div class="sec-titulo">02 · Comportamento</div>
+  
   ${perg(3,'Você veio ao evento:',['Sozinho','Com parentes/casal','Amigos/colegas'],'radio','',null,'Não Sabe/Não Opinou','Indica o tamanho médio do grupo — multiplica o gasto individual para estimar o impacto por família.')}
   ${perg(4,'Quantos dias irá participar?',['1 a 4 dias','5 a 9 dias','10 dias ou mais','Todos os dias'],'radio','',null,'Não Sabe/Não Opinou','Mede o tempo de permanência. Quanto mais dias, maior o gasto acumulado e o impacto na rede hoteleira.')}
   ${perg(5,'Meio de transporte utilizado para chegar ao evento?',['Carro próprio','Carona','Táxi/Uber','Ônibus de linha','A pé'],'radio',outroCampo(),null,'Não Sabe/Não Opinou','Mapeia a mobilidade. O uso de Táxi/Uber alimenta a estimativa de impacto no setor de transporte (demanda da contratante).')}
-  <div class="sec-titulo">03 · Origem &amp; Turismo</div>
+  
   ${perg(6,'Você mora em Canaã dos Carajás?',['Sim','Não'],'radio','',null,null,'Separa morador de turista. É a base para calcular o percentual de visitantes de fora — indicador-chave de atração turística.')}
   ${pertexto(7,'Em qual cidade você reside?<span class="obrig">*</span>','Ex.: PARAUAPEBAS',{q:6,val:'Não'},'upper','Registra a origem exata. Permite mapear de quantos municípios o evento atrai público (demanda turismo da contratante).')}
   ${perg(8,'Qual o seu estado de origem?',['Pará (PA)','Maranhão (MA)','Tocantins (TO)','Outro estado do Norte','Nordeste','Sul/Sudeste/Centro-Oeste'],'radio','',{q:6,val:'Não'},'Não Sabe/Não Opinou','Quantifica a abrangência geográfica: visitantes de outros estados elevam o status do evento de regional para nacional.')}
   ${perg(9,'Você pernoitou em Canaã dos Carajás?',['Sim','Não'],'radio','',{q:6,val:'Não'},null,'Distingue o turista que dorme na cidade (gera receita hoteleira) do que vem e volta no mesmo dia.')}
   ${perg(10,'Onde você pernoitou?',['Casa de Amigos/Parentes','Hotel/Pousada'],'radio',outroCampo(),{q:9,val:'Sim'},'Não Sabe/Não Opinou','Mede a taxa de ocupação da rede hoteleira (demanda direta da contratante). Hotel/Pousada = receita formal do setor.')}
-  <div class="sec-titulo">04 · Impacto Econômico (gasto desagregado)</div>
+  
   ${perg(11,'O Festival foi o principal motivo da sua vinda à cidade?',['Sim','Não'],'radio','',null,null,'Isola o impacto atribuível ao evento. Só o gasto de quem veio PELO festival conta como impacto gerado por ele.')}
   ${perg(12,'Faixa de gasto com HOSPEDAGEM (total nos dias):',['Não terei gasto','Até R$ 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou','Estima a movimentação financeira na rede hoteleira (hotéis e pousadas) — item 2b da contratante.')}
   ${perg(13,'Faixa de gasto com ALIMENTAÇÃO (restaurantes, lanchonetes, bares):',['Não terei gasto','Até R$ 100','R$ 100 a 300','R$ 300 a 600','Mais de R$ 600'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto em restaurantes, lanchonetes e bares — item 2c da contratante.')}
@@ -550,12 +613,12 @@ function renderVisitante(){
   ${perg(15,'Faixa de gasto com TRANSPORTE / COMBUSTÍVEL / UBER:',['Não terei gasto','Até R$ 100','R$ 100 a 300','Mais de R$ 300'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto no setor de transporte e aplicativos — item 2g da contratante.')}
   ${perg(16,'Faixa de gasto com COMPRAS no comércio (vestuário, beleza, lembranças):',['Não terei gasto','R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],'radio','',null,'Não Sabe/Não Opinou','Estima o impacto no comércio local em geral — item 2f da contratante.')}
   ${pernum(17,'Além de você, quantas pessoas estão incluídas nesses gastos?','Nº de acompanhantes',null,'Converte o gasto individual em gasto do grupo. Essencial para projetar o impacto total a partir da amostra.')}
-  <div class="sec-titulo">05 · Avaliação (Likert)</div>
+  
   ${aval(18,'Avalie os aspectos do evento Canaã Cidade Junina 2026:',['Acesso/Local','Infraestrutura','Segurança','Competições/Quadrilhas','Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)','Artesanato/Produtos','Comidas (qualidade)','Comidas (preço)','Data/Horário','Receptividade'],'Avaliação detalhada por item gera o mapa de calor de satisfação. Itens \"Regular\" ou \"Não Satisfatório\" viram prioridades de melhoria.')}
   ${aval(19,'Avalie a Estrutura, Planejamento e Organização:',['Tema do evento','Local do evento','Divulgação','Estrutura física','Gastronomia','Shows e Atrações','Lixeiras','Banheiros','Estacionamentos','Avaliação Geral'],'Avalia a percepção sobre a gestão do evento. A \"Avaliação Geral\" funciona como nota-síntese da organização.')}
-  <div class="sec-titulo">06 · Acessibilidade &amp; Inclusão</div>
+  
   ${likert(20,'Como você avalia a acessibilidade e inclusão no evento (rampas, espaços para PcD, sinalização)?',null,'Mede a percepção de acessibilidade — indicador social pedido pela contratante (item 10b). Base para ações de inclusão futuras.')}
-  <div class="sec-titulo">07 · Lealdade &amp; Expectativa</div>
+  
   ${perg(21,'Você conhece as Quadrilhas que irão competir?',['Sim','Não'],'radio','',null,null,'Mede o engajamento com o elemento cultural central (quadrilhas). Alta resposta indica forte identificação com a tradição junina.')}
   ${pertexto(22,'Qual a sua quadrilha favorita?<span class="obrig">*</span>','Ex.: ARRAIÁ DA ALEGRIA',{q:21,val:'Sim'},'upper','Identifica as quadrilhas mais populares — dado útil para a organização valorizar os grupos de maior apelo.')}
   ${perg(23,'Você recomendaria o Festival a amigos e familiares?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou','Base do NPS (Net Promoter Score) — indicador-síntese de aprovação. \"Com certeza\" = promotor; \"Não\" = detrator.')}
@@ -574,11 +637,11 @@ function renderPopulacao(){
     <label class="pill"><input type="radio" name="moradia" value="1-5"><span>1 a 5 anos</span></label>
     <label class="pill"><input type="radio" name="moradia" value="5-10"><span>5 a 10 anos</span></label>
     <label class="pill"><input type="radio" name="moradia" value="10+"><span>Mais de 10 anos</span></label></div></div>`)}
-  <div class="sec-titulo verde">01 · Comunicação &amp; Perfil</div>
+  
   ${perg(1,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou','Classifica o perfil socioeconômico do morador. Permite analisar a percepção do evento por faixa de renda.')}
   ${perg(2,'Como você acompanha os eventos de Canaã dos Carajás?',['Sites de notícia','Televisão','Rádio','Celular/WhatsApp','Facebook','Instagram','Jornais impressos'],'checkbox',outroCampo(),null,null,'Mapeia os canais de informação do morador — orienta a comunicação institucional da Prefeitura.')}
   ${pertexto(3,'Em qual bairro você reside?','Nome do bairro...','none','title','Permite análise geográfica: quais bairros mais participam e como a percepção varia por região da cidade.')}
-  <div class="sec-titulo verde">02 · Percepção da edição 2025 (Likert)</div>
+  
   ${perg(4,'Você participou do Festival Canaã Cidade Junina de 2025?',['Sim','Não'],'radio','',null,null,'Filtro essencial: só quem participou avalia 2025. Quem não foi pula direto para expectativas de 2026.')}
   ${likert(5,'Avaliação geral da edição 2025:',{q:4,val:'Sim'},'Nota-síntese da última edição na ótica do morador. Base de comparação para medir evolução em 2026.')}
   ${likert(6,'Como avalia a Segurança do Festival 2025?',{q:4,val:'Sim'},'Segurança é fator decisivo de participação. Notas baixas sinalizam necessidade de reforço no policiamento.')}
@@ -586,13 +649,13 @@ function renderPopulacao(){
   ${likert(8,'Como avalia a Organização geral de 2025?',{q:4,val:'Sim'},'Avalia a gestão do evento. Comparável com a avaliação dos visitantes para checar convergência.')}
   ${likert(9,'Como avalia a estrutura física (palco, barracas, banheiros)?',{q:4,val:'Sim'},'Detalha a percepção sobre os equipamentos do evento — banheiros e barracas costumam ser pontos críticos.')}
   ${likert(10,'Como avalia os Shows e Atrações de 2025?',{q:4,val:'Sim'},'Mede a aprovação da programação artística — principal fator de atração de público.')}
-  <div class="sec-titulo verde">03 · Impacto na Comunidade</div>
+  
   ${likertConcorda(11,'O festival trouxe benefício econômico para você/sua família?',null,'Mede o impacto econômico percebido pelo morador (renda, vendas, trabalho temporário). Escala de concordância: Concordo totalmente = forte benefício; Discordo totalmente = nenhum.')}
   ${perg(12,'Impacto do evento na sua rotina/mobilidade durante os dias de festa:',['Muito positivo','Positivo','Indiferente','Negativo','Muito negativo'],'radio','',null,'Não Sabe/Não Opinou','Captura externalidades negativas (trânsito, barulho) e positivas. Equilibra a visão sobre o evento.')}
   ${likertConcorda(13,'O festival valoriza a imagem e identidade de Canaã dos Carajás?',null,'Mede o orgulho local e o valor simbólico do evento. Escala de concordância: Concordo totalmente = forte valorização; Discordo totalmente = nenhuma.')}
-  <div class="sec-titulo verde">04 · Acessibilidade</div>
+  
   ${likert(14,'Como você avalia a acessibilidade e inclusão no evento (rampas, espaços PcD, sinalização)?',null,'Indicador social de acessibilidade percebida pelo morador — item 10b da contratante.')}
-  <div class="sec-titulo verde">05 · Expectativa 2026</div>
+  
   ${perg(15,'Você pretende participar do Festival 2026?',['Sim','Não','Ainda não decidi'],'radio','',null,null,'Mede a intenção de participação local — projeta o público morador esperado para a próxima edição.')}
   ${perg(16,'Quanto pretende gastar no evento?',['Até R$ 100','De R$ 100 a 200','De R$ 200 a 400','Acima de R$ 400'],'radio','',{q:15,val:'Sim'},'Não Sabe/Não Opinou','Estima o gasto do público local. Cada faixa representa um nível de injeção financeira do morador: até R$100 (consumo pontual), R$100-200 (moderado), R$200-400 (alto), acima de R$400 (intenso).')}
   ${likertOtimismo(17,'Qual sua expectativa geral para o Festival 2026?',null,'Mede o otimismo da comunidade. Escala: Muito otimista (5) a Muito pessimista (1). Expectativa alta indica boa reputação acumulada.')}
@@ -606,20 +669,20 @@ function renderPopulacao(){
 function renderOperacao(){
   document.getElementById('form-body').innerHTML=`
   ${metaBloco()}
-  <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">01 · Perfil do Negócio</div>
+  
   ${perg(1,'Tipo de operação no festival:',['Alimentação/Comidas','Bebidas','Artesanato/Produtos típicos','Serviços (beleza, etc.)','Diversões/Parque'],'radio',outroCampo(),null,null,'Classifica os tipos de negócio presentes. Permite contar e segmentar expositores por categoria (demanda 4 da contratante).')}
   ${perg(2,'Origem do expositor:',['Sou de Canaã dos Carajás','Sou de outra cidade'],'radio','',null,null,'Mede quanto do comércio do evento é local x externo. Expositor local retém renda na cidade; o de fora indica atração regional.')}
   ${pertexto(3,'De qual cidade?<span class="obrig">*</span>','Ex.: MARABÁ',{q:2,val:'Sou de outra cidade'},'upper','Mapeia a origem dos expositores de fora — mostra o alcance econômico do evento como gerador de negócios regionais.')}
   ${perg(4,'Já participou de edições anteriores do festival?',['Não, é a primeira vez','Sim, 1 edição','Sim, 2 a 3 edições','Sim, mais de 3 edições'],'radio','',null,null,'Mede a fidelização do expositor. Alta recorrência indica que o evento dá retorno e vale o reinvestimento.')}
   ${pernum(5,'Quantas pessoas trabalham no seu estande/operação?','Nº de pessoas',null,'Estima a geração de empregos diretos e indiretos durante o evento (demanda 3 da contratante). Somado, projeta o total de postos temporários.')}
-  <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">02 · Investimento &amp; Retorno</div>
+  
   ${perg(6,'Faixa de investimento para participar (taxa + estrutura + estoque):',['Até R$ 1.000','R$ 1.000 a 3.000','R$ 3.000 a 5.000','R$ 5.000 a 10.000','Mais de R$ 10.000'],'radio','',null,'Não Sabe/Não Opinou','Mede o capital movimentado pelos expositores. Compõe o impacto econômico pelo lado de quem opera o evento.')}
   ${perg(7,'Faixa de faturamento esperado/obtido no evento:',['Até R$ 2.000','R$ 2.000 a 5.000','R$ 5.000 a 10.000','R$ 10.000 a 20.000','Mais de R$ 20.000'],'radio','',null,'Não Sabe/Não Opinou','Estima a receita gerada pelos expositores — uma das maiores fontes de movimentação financeira interna do evento.')}
   ${likert(8,'Como avalia o retorno em relação ao investimento (custo-benefício)?',null,'Mede o ROI percebido. Notas altas comprovam que o evento é uma boa praça de negócios — argumento para atrair mais expositores.')}
   ${perg(9,'O movimento comparado à edição anterior foi:',['Muito maior','Maior','Igual','Menor','Muito menor','Primeira participação'],'radio','',null,'Não Sabe/Não Opinou','Capta a percepção de crescimento do evento na ótica de quem vende. Complementa o histórico de público (demanda 1).')}
-  <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">03 · Avaliação da Operação (Likert)</div>
+  
   ${aval(10,'Avalie os aspectos da operação para expositores:',['Organização do espaço','Logística de montagem','Energia elétrica','Água e limpeza','Segurança da área','Comunicação da organização','Custo da taxa/aluguel','Fluxo de público nos estandes'],'Diagnostica a qualidade da estrutura oferecida aos expositores. Pontos fracos aqui afastam vendedores nas próximas edições.')}
-  <div class="sec-titulo" style="color:var(--jga-gold);border-color:rgba(245,166,35,0.12)">04 · Fidelização</div>
+  
   ${perg(11,'Pretende participar da edição 2026?',['Sim, com certeza','Talvez','Não pretendo'],'radio','',null,'Não Sabe/Não Opinou','Mede a retenção de expositores — base do NPS do operador. Antecipa a ocupação comercial da próxima edição.')}
   ${perg(12,'Recomendaria participar a outros expositores?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou','NPS de recomendação entre pares. Expositor que indica é o melhor captador de novos comerciantes para o evento.')}
   ${pertexto(13,'Sua sugestão para melhorar a experiência do expositor:','Escreva sua sugestão...','none','none','Captura demandas operacionais dos vendedores. Melhorias aqui aumentam a retenção e a qualidade da feira.')}
@@ -627,23 +690,15 @@ function renderOperacao(){
   aplicarSkipLogic();
 }
 
-/* ════════ VALIDAÇÃO + ENVIO ════════ */
-function validar(){
-  for(const nome of ['sexo','esc','faixa','pesquisador']){
-    const c=document.getElementsByName(nome); if(!c.length) continue;
-    if(c[0].type==='text'){ if(!c[0].value.trim()) return c[0]; }
-    else { let ok=false; c.forEach(x=>{if(x.checked)ok=true;}); if(!ok) return c[0]; }
-  }
-  return null;
-}
-// mapa de rótulos Likert → código numérico (para média e mapa de calor)
+
+
+// mapa Likert → código numérico (qualidade, concordância, otimismo — todos 5→1)
 const LIKERT_MAP = {
   'Ótimo':5, 'Muito Bom':4, 'Bom':3, 'Regular':2, 'Não Satisfatório':1,
   'Concordo totalmente':5, 'Concordo':4, 'Neutro':3, 'Discordo':2, 'Discordo totalmente':1,
   'Muito otimista':5, 'Otimista':4, 'Neutra':3, 'Pessimista':2, 'Muito pessimista':1,
   'Não Sabe/Não Respondeu':9, 'Não Sabe/Não Opinou':9, 'Não sabe/Não opinou':9
 };
-
 function coletarRespostas(){
   const resp = {};
   // radios e checkboxes (q1, q2, ...)
@@ -670,14 +725,27 @@ function coletarRespostas(){
   return resp;
 }
 
-async function enviar(){
-  const inv=validar();
-  if(inv){ alert('Preencha os campos obrigatórios: sexo, escolaridade, faixa etária e pesquisador.');
-    inv.scrollIntoView({behavior:'smooth',block:'center'}); return; }
-  const btn=document.getElementById('btn-env'); btn.textContent='Salvando...'; btn.disabled=true;
-  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR'}[tipoAtivo];
 
-  // capturar demografia comum
+
+
+/* ════════ VALIDAÇÃO + ENVIO ════════ */
+// prog() legado — agora alimenta a nav do wizard (mantém compatibilidade com oninput dos geradores)
+function prog(){ if(etapas && etapas.length) atualizarNav(); }
+
+async function enviar(){
+  // validação final dos obrigatórios (meta-bloco)
+  const meta=document.querySelector('.meta-wrap');
+  for(const nome of ['sexo','esc','faixa']){
+    if(!document.querySelector(`input[name="${nome}"]:checked`)){
+      alert('Faltou preencher: '+nome+'. Volte à primeira etapa.');
+      mostrarEtapa(0); return;
+    }
+  }
+  const pesqEl=document.querySelector('input[name="pesquisador"]');
+  if(pesqEl && !pesqEl.value.trim()){ alert('Informe o nome do pesquisador.'); mostrarEtapa(0); return; }
+
+  const prim=document.getElementById('btn-prim'); prim.textContent='Salvando...'; prim.disabled=true;
+  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR'}[tipoAtivo];
   const get = nome => { const el=document.querySelector(`input[name="${nome}"]:checked`); return el?decodeURIComponent(el.value):null; };
   const getText = nome => { const el=document.querySelector(`input[name="${nome}"]`); return el?el.value.trim():null; };
 
@@ -686,52 +754,45 @@ async function enviar(){
     session_id: 'SES-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),
     coletado_em: new Date().toISOString(),
     pesquisador: getText('pesquisador'),
-    sexo: get('sexo'),
-    faixa_etaria: get('faixa'),
-    escolaridade: get('esc'),
+    sexo: get('sexo'), faixa_etaria: get('faixa'), escolaridade: get('esc'),
     geo: { lat:geoData.lat, lng:geoData.lng, accuracy:geoData.accuracy, status:geoData.status },
     respostas: coletarRespostas()
   };
 
-  let salvou = false;
+  let salvou=false;
   try {
-    // 1) SEMPRE salva local primeiro (offline-first)
-    await salvarLocal(entrevista);
-    salvou = true;
+    await salvarLocal(entrevista); salvou=true;
     await atualizarBadgeSync();
     if(navigator.onLine) sincronizar();
   } catch(e){
-    console.error('Erro ao salvar local:', e);
-    // tenta fallback em localStorage antes de desistir
-    if(salvarFallback(entrevista)){
-      salvou = true;
-      console.warn('Salvo via fallback (localStorage)');
-    } else {
-      alert('Não foi possível salvar: '+(e.message||'erro desconhecido')+'\n\nVerifique se não está em aba anônima e tente de novo.');
-      btn.textContent='Salvar Registro'; btn.disabled=false; return;
-    }
+    if(salvarFallback(entrevista)){ salvou=true; }
+    else { alert('Não foi possível salvar: '+(e.message||'erro')+'\nVerifique se não está em aba anônima.'); prim.textContent='Salvar Registro ✓'; prim.disabled=false; return; }
   }
-  if(!salvou){ btn.textContent='Salvar Registro'; btn.disabled=false; return; }
+  if(!salvou){ prim.textContent='Salvar Registro ✓'; prim.disabled=false; return; }
 
   setTimeout(()=>{
-    document.getElementById('app').style.display='none';
-    const s=document.getElementById('sucesso'); s.style.display='flex'; s.style.flexDirection='column';
+    document.getElementById('app-form').style.display='none';
+    const s=document.getElementById('sucesso'); s.style.display='flex';
     document.getElementById('suc-id').textContent='ID: '+entrevista.session_id+' · '+entrevista.tipo;
-    document.getElementById('suc-geo').textContent = navigator.onLine
-      ? '☁️ Salvo e sincronizando...'
-      : '📴 Salvo localmente — sincroniza ao reconectar';
-    btn.textContent='Salvar Registro'; btn.disabled=false;
-  },600);
+    document.getElementById('suc-geo').textContent = navigator.onLine ? '☁️ Salvo e sincronizando...' : '📴 Salvo localmente — sincroniza ao reconectar';
+    prim.textContent='Salvar Registro ✓'; prim.disabled=false;
+  },500);
 }
 
-</script>
 
-<script>
-/* ═══════════════════════════════════════════════════════════
-   CAMADA OFFLINE-FIRST · Just Go · Canaã Junina 2026
-   IndexedDB (armazenamento local) + Fila de sincronização
-═══════════════════════════════════════════════════════════ */
+/* mostrar nav e progress quando entra no form */
+const _iniciarOrig = iniciar;
+iniciar = function(t){ _iniciarOrig(t);
+  document.getElementById('navbar').style.display='flex';
+  document.getElementById('prog-wrap').style.display='block';
+};
+const _voltarCapaOrig = voltarCapa;
+voltarCapa = function(){ _voltarCapaOrig();
+  document.getElementById('navbar').style.display='none';
+  document.getElementById('prog-wrap').style.display='none';
+};
 
+/* ════════ OFFLINE-FIRST (IndexedDB + sync — intacto) ════════ */
 const DB_NAME = 'canaa_junina_2026';
 const DB_VERSION = 1;
 const STORE = 'entrevistas_pendentes';
@@ -936,7 +997,15 @@ abrirDB().then(()=>atualizarBadgeSync());
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(e=>console.warn('SW',e)));
 }
-</script>
 
+
+/* registrar service worker */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(e=>console.warn('SW',e)));
+}
+
+/* iniciar acessibilidade */
+initA11y();
+</script>
 </body>
 </html>
