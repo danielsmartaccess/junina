@@ -205,7 +205,7 @@ main{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column}
 
 </head>
 <body>
-<div class="dev-badge">DEV · v0.6.1</div>
+<div class="dev-badge">DEV · v0.6.2</div>
 
 <div class="app">
   <!-- HEADER -->
@@ -291,6 +291,9 @@ let tipoAtivo = null;
 let geoData = { status:'pendente', lat:null, lng:null, accuracy:null, erro:null };
 let etapaAtual = 0;        // índice da etapa visível
 let etapas = [];           // array de elementos (.wz-step)
+let sessionAtual = null;   // session_id fixo da entrevista em andamento
+let iniciadoEm = null;     // hora de início da coleta
+let finalizando = false;   // trava contra duplo-disparo do salvamento final
 
 /* ════════ GEO ════════ */
 function pedirGeo(){
@@ -376,7 +379,7 @@ function mostrarEtapa(idx){
 function avancar(){
   if(!etapaRespondida(etapaAtual)) return;
   const prox=proximaEtapaValida(etapaAtual,1);
-  if(prox===-1){ enviar(); return; } // última etapa → salva direto (sem revisão)
+  if(prox===-1){ enviar(); return; } // última etapa → salva e finaliza
   mostrarEtapa(prox);
 }
 function voltar(){
@@ -443,8 +446,8 @@ function etapaLabel(idx){
 }
 
 /* recalcula nav quando o usuário responde (habilita Próxima) */
-document.addEventListener('change', ()=>{ if(etapas.length) atualizarNav(); });
-document.addEventListener('input', ()=>{ if(etapas.length) atualizarNav(); });
+document.addEventListener('change', ()=>{ if(etapas.length){ atualizarNav(); salvarRascunho(); } });
+document.addEventListener('input', ()=>{ if(etapas.length){ atualizarNav(); salvarRascunho(); } });
 
 /* ════════ NAV PRINCIPAL ════════ */
 function iniciar(tipo){
@@ -453,6 +456,9 @@ function iniciar(tipo){
   document.getElementById('app-form').style.display='flex';
   document.getElementById('sucesso').style.display='none';
   geoData={ status:'pendente', lat:null, lng:null, accuracy:null, erro:null };
+  sessionAtual = 'SES-'+Date.now()+'-'+Math.random().toString(36).slice(2,6);
+  iniciadoEm = new Date().toISOString();
+  finalizando = false;
   const cfg={
     v:['Visitantes / Turistas',renderVisitante],
     p:['Moradores',renderPopulacao],
@@ -744,9 +750,38 @@ function coletarRespostas(){
 // prog() legado — agora alimenta a nav do wizard (mantém compatibilidade com oninput dos geradores)
 function prog(){ if(etapas && etapas.length) atualizarNav(); }
 
+// monta o objeto entrevista a partir do formulário (status: 'rascunho' ou 'completo')
+function montarEntrevista(status){
+  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR'}[tipoAtivo];
+  const get = nome => { const el=document.querySelector(`input[name="${nome}"]:checked`); return el?decodeURIComponent(el.value):null; };
+  const getText = nome => { const el=document.querySelector(`input[name="${nome}"]`); return el?el.value.trim():null; };
+  return {
+    tipo: tipoNome,
+    session_id: sessionAtual,                 // FIXO durante toda a entrevista (evita duplicata)
+    status: status || 'rascunho',
+    coletado_em: iniciadoEm || new Date().toISOString(),
+    pesquisador: getText('pesquisador'),
+    sexo: get('sexo'), faixa_etaria: get('faixa'), escolaridade: get('esc'),
+    geo: { lat:geoData.lat, lng:geoData.lng, accuracy:geoData.accuracy, status:geoData.status },
+    respostas: coletarRespostas()
+  };
+}
+
+// SALVAMENTO PROGRESSIVO — grava rascunho silenciosamente a cada resposta
+let rascunhoTimer=null;
+async function salvarRascunho(){
+  if(!sessionAtual || finalizando) return;       // não rascunha após finalizar
+  // debounce: evita gravar 10x num clique múltiplo
+  clearTimeout(rascunhoTimer);
+  rascunhoTimer=setTimeout(async ()=>{
+    try { await salvarLocal(montarEntrevista('rascunho')); }
+    catch(e){ try{ salvarFallback(montarEntrevista('rascunho')); }catch(_){} }
+  }, 400);
+}
+
 async function enviar(){
+  if(finalizando) return;                          // trava contra duplo-disparo
   // validação final dos obrigatórios (meta-bloco)
-  const meta=document.querySelector('.meta-wrap');
   for(const nome of ['sexo','esc','faixa']){
     if(!document.querySelector(`input[name="${nome}"]:checked`)){
       alert('Faltou preencher: '+nome+'. Volte à primeira etapa.');
@@ -756,20 +791,10 @@ async function enviar(){
   const pesqEl=document.querySelector('input[name="pesquisador"]');
   if(pesqEl && !pesqEl.value.trim()){ alert('Informe o nome do pesquisador.'); mostrarEtapa(0); return; }
 
+  finalizando=true;
+  clearTimeout(rascunhoTimer);                     // cancela rascunho pendente
   const prim=document.getElementById('btn-prim'); prim.textContent='Salvando...'; prim.disabled=true;
-  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR'}[tipoAtivo];
-  const get = nome => { const el=document.querySelector(`input[name="${nome}"]:checked`); return el?decodeURIComponent(el.value):null; };
-  const getText = nome => { const el=document.querySelector(`input[name="${nome}"]`); return el?el.value.trim():null; };
-
-  const entrevista = {
-    tipo: tipoNome,
-    session_id: 'SES-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),
-    coletado_em: new Date().toISOString(),
-    pesquisador: getText('pesquisador'),
-    sexo: get('sexo'), faixa_etaria: get('faixa'), escolaridade: get('esc'),
-    geo: { lat:geoData.lat, lng:geoData.lng, accuracy:geoData.accuracy, status:geoData.status },
-    respostas: coletarRespostas()
-  };
+  const entrevista = montarEntrevista('completo'); // mesmo session_id → sobrescreve o rascunho
 
   let salvou=false;
   try {
@@ -778,12 +803,14 @@ async function enviar(){
     if(navigator.onLine) sincronizar();
   } catch(e){
     if(salvarFallback(entrevista)){ salvou=true; }
-    else { alert('Não foi possível salvar: '+(e.message||'erro')+'\nVerifique se não está em aba anônima.'); prim.textContent='Salvar Registro ✓'; prim.disabled=false; return; }
+    else { alert('Não foi possível salvar: '+(e.message||'erro')+'\nVerifique se não está em aba anônima.'); finalizando=false; prim.textContent='Salvar Registro ✓'; prim.disabled=false; return; }
   }
-  if(!salvou){ prim.textContent='Salvar Registro ✓'; prim.disabled=false; return; }
+  if(!salvou){ finalizando=false; prim.textContent='Salvar Registro ✓'; prim.disabled=false; return; }
 
   setTimeout(()=>{
     document.getElementById('app-form').style.display='none';
+    document.getElementById('navbar').style.display='none';
+    document.getElementById('prog-wrap').style.display='none';
     const s=document.getElementById('sucesso'); s.style.display='flex';
     document.getElementById('suc-id').textContent='ID: '+entrevista.session_id+' · '+entrevista.tipo;
     document.getElementById('suc-geo').textContent = navigator.onLine ? '☁️ Salvo e sincronizando...' : '📴 Salvo localmente — sincroniza ao reconectar';
@@ -869,8 +896,12 @@ async function contarPendentes(){
   if(!db) await abrirDB();
   return new Promise((resolve)=>{
     const tx = db.transaction(STORE, 'readonly');
-    const req = tx.objectStore(STORE).index('sincronizado').count(IDBKeyRange.only(0));
-    req.onsuccess = ()=>resolve(req.result);
+    const req = tx.objectStore(STORE).index('sincronizado').getAll(IDBKeyRange.only(0));
+    req.onsuccess = ()=>{
+      // conta só COMPLETOS pendentes (rascunho em andamento não conta)
+      const completos = (req.result||[]).filter(e => e.status === 'completo' || !e.status);
+      resolve(completos.length);
+    };
     req.onerror = ()=>resolve(0);
   });
 }
@@ -915,6 +946,7 @@ async function enviarEntrevista(ent){
     body: JSON.stringify({
       tipo: ent.tipo,
       session_id: ent.session_id,
+      status: ent.status || 'completo',
       pesquisador: ent.pesquisador || null,
       sexo: ent.sexo || null,
       faixa_etaria: ent.faixa_etaria || null,
@@ -961,8 +993,10 @@ async function enviarEntrevista(ent){
 async function sincronizar(){
   if(!navigator.onLine) return { ok:false, motivo:'offline' };
   const pendentes = await listarPendentes();
+  // só sincroniza entrevistas COMPLETAS — rascunhos ficam protegidos só no celular
+  const completos = pendentes.filter(e => e.status === 'completo' || !e.status);
   let enviadas = 0, falhas = 0;
-  for(const ent of pendentes){
+  for(const ent of completos){
     try{
       await enviarEntrevista(ent);
       await marcarSincronizado(ent.session_id);
@@ -973,7 +1007,7 @@ async function sincronizar(){
     }
   }
   atualizarBadgeSync();
-  return { ok:true, enviadas, falhas, total:pendentes.length };
+  return { ok:true, enviadas, falhas, total:completos.length };
 }
 
 /* ─── badge visual de status de sincronização ─── */
