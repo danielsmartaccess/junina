@@ -1,5 +1,5 @@
 /* Service Worker · Just Go · Canaã Junina 2026 */
-const CACHE = 'canaa-junina-v0.6.0';
+const CACHE = 'canaa-junina-v0.6.1';
 const ASSETS = [
   './',
   './index.html',

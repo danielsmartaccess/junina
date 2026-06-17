@@ -47,13 +47,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--gray
 
 /* HEADER sticky */
 .hdr{position:sticky;top:0;z-index:20;background:var(--jg-navy);padding:12px 18px 14px;color:var(--white)}
-.hdr-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.hdr-brand{display:flex;align-items:center;gap:9px;min-width:0}
-.hdr-brand svg{height:26px;width:auto;flex-shrink:0}
-.hdr-cli{font-size:11px;color:rgba(255,255,255,.6);font-family:'Outfit';font-weight:600;letter-spacing:.3px}
-.hdr-cli b{color:var(--white)}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.hdr-brand{display:flex;align-items:center;gap:9px;min-width:0;flex-shrink:0}
+.hdr-brand svg{height:24px;width:auto;flex-shrink:0}
+.hdr-cli{display:flex;align-items:center;gap:7px;padding:5px 10px;background:rgba(0,168,214,.12);border:1px solid rgba(0,168,214,.3);border-radius:8px;min-width:0}
+.foccus-bars{display:flex;align-items:flex-end;gap:2px;height:13px;flex-shrink:0}
+.foccus-bars i{width:3px;border-radius:1px;background:var(--jg-cyan)}
+.foccus-bars i:nth-child(1){height:5px} .foccus-bars i:nth-child(2){height:9px} .foccus-bars i:nth-child(3){height:13px}
+.hdr-cli-txt{display:flex;flex-direction:column;gap:0;line-height:1.05;min-width:0}
+.hdr-cli-rotulo{font-family:'Outfit';font-weight:500;font-size:8.5px;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.hdr-cli-nome{font-family:'Outfit';font-weight:700;font-size:12.5px;color:#fff;letter-spacing:-.1px;white-space:nowrap}
 .hdr-a11y{display:flex;gap:6px;flex-shrink:0}
-.a11y-btn{min-width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--white);font-family:'Outfit';font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.a11y-btn{min-width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--white);font-family:'Outfit';font-weight:700;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .a11y-btn:hover{background:rgba(255,255,255,.22)}
 .a11y-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .a11y-btn.ativo{background:var(--jg-cyan);border-color:var(--jg-cyan)}
@@ -175,10 +180,11 @@ main{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column}
 .geo-status.erro{background:var(--danger-light);color:var(--danger)}
 
 /* badge sync */
-.sync-badge{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:30;font-family:'Outfit';font-weight:600;font-size:12px;padding:8px 16px;border-radius:20px;border:1px solid;box-shadow:var(--shadow-md);white-space:nowrap}
-.sync-badge.ok{background:#dcfce7;border-color:#16a34a;color:#15803d}
-.sync-badge.sync{background:var(--jg-cyan-light);border-color:var(--jg-cyan);color:var(--jg-cyan-dark)}
-.sync-badge.pend{background:var(--amber-light);border-color:var(--amber-mid);color:var(--amber)}
+.sync-bar{width:100%;font-family:'Outfit';font-weight:600;font-size:11px;letter-spacing:.3px;padding:5px 14px;display:flex;align-items:center;justify-content:center;gap:6px;border-bottom:1px solid transparent;transition:all .2s}
+.sync-bar.ok{background:#dcfce7;color:#15803d;border-bottom-color:#bbf7d0}
+.sync-bar.sync{background:var(--jg-cyan-light);color:var(--jg-cyan-dark);border-bottom-color:var(--jg-cyan)}
+.sync-bar.pend{background:var(--amber-light);color:var(--amber);border-bottom-color:var(--amber-mid)}
+.sync-bar.ok.silenciar{display:none}
 
 /* SUCESSO */
 .sucesso{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;animation:fadein .3s}
@@ -199,16 +205,22 @@ main{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column}
 
 </head>
 <body>
-<div class="dev-badge">DEV · v0.6.0</div>
-<div class="sync-badge ok" id="sync-badge">✓ Pronto</div>
+<div class="dev-badge">DEV · v0.6.1</div>
 
 <div class="app">
   <!-- HEADER -->
   <header class="hdr">
-    <div class="hdr-top">
+    <div class="sync-bar ok" id="sync-bar"><span>✓</span><span>Tudo sincronizado</span></div>
+    <div class="hdr-top" style="padding-top:10px">
       <div class="hdr-brand">
         <svg viewBox="0 0 150 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="19" font-family="Outfit,sans-serif" font-weight="800" font-size="20" fill="#fff" letter-spacing="-1">Just</text><text x="56" y="19" font-family="Outfit,sans-serif" font-weight="800" font-size="20" fill="#00A8D6" letter-spacing="-1">Go</text></svg>
-        <span class="hdr-cli">para <b>Foccus</b></span>
+        <div class="hdr-cli">
+          <div class="foccus-bars"><i></i><i></i><i></i></div>
+          <div class="hdr-cli-txt">
+            <span class="hdr-cli-rotulo">Pesquisa para</span>
+            <span class="hdr-cli-nome">Foccus Pesquisas</span>
+          </div>
+        </div>
       </div>
       <div class="hdr-a11y">
         <button class="a11y-btn" id="btn-fsize" onclick="toggleFsize()" aria-label="Tamanho da fonte" title="Tamanho da fonte">A</button>
@@ -967,16 +979,18 @@ async function sincronizar(){
 /* ─── badge visual de status de sincronização ─── */
 async function atualizarBadgeSync(){
   const pend = await contarPendentes();
-  const badge = document.getElementById('sync-badge');
-  if(!badge) return;
+  const bar = document.getElementById('sync-bar');
+  if(!bar) return;
   if(pend === 0){
-    badge.className = 'sync-badge ok';
-    badge.innerHTML = navigator.onLine ? '☁️ Tudo sincronizado' : '✓ Salvo localmente';
+    bar.className = 'sync-bar ok';
+    bar.innerHTML = navigator.onLine
+      ? '<span>✓</span><span>Tudo sincronizado</span>'
+      : '<span>✓</span><span>Salvo localmente — aguardando internet</span>';
   } else {
-    badge.className = navigator.onLine ? 'sync-badge sync' : 'sync-badge pend';
-    badge.innerHTML = navigator.onLine
-      ? `🔄 Sincronizando ${pend}...`
-      : `📴 ${pend} pendente(s) — offline`;
+    bar.className = navigator.onLine ? 'sync-bar sync' : 'sync-bar pend';
+    bar.innerHTML = navigator.onLine
+      ? `<span>↻</span><span>Sincronizando ${pend} registro(s)...</span>`
+      : `<span>○</span><span>${pend} pendente(s) — offline</span>`;
   }
 }
 
