@@ -355,11 +355,19 @@ async function sb(view){
   return r.json();
 }
 
+// ordena o ROI na sequência da escala (Ótimo→Não Satisfatório), N/R por último
+function ordenarRoi(rows){
+  const ordem={'Ótimo':0,'Muito Bom':1,'Bom':2,'Regular':3,'Não Satisfatório':4,'Não Sabe/Não Respondeu':5};
+  const sorted=[...rows].sort((a,b)=>(ordem[a.nota]??9)-(ordem[b.nota]??9));
+  return {labels:sorted.map(r=>r.nota), data:sorted.map(r=>+r.qtd)};
+}
+
 async function dadosReais(){
   // busca em paralelo as views
-  const [totais, satisf, faixa, nps, origemEst, renda] = await Promise.all([
+  const [totais, satisf, faixa, nps, origemEst, renda, expTipoV, expRoiV, expRetV] = await Promise.all([
     sb('vw_totais'), sb('vw_satisfacao_media'), sb('vw_faixa_etaria'),
-    sb('vw_nps'), sb('vw_origem_estado'), sb('vw_renda')
+    sb('vw_nps'), sb('vw_origem_estado'), sb('vw_renda'),
+    sb('vw_exp_tipo'), sb('vw_exp_roi'), sb('vw_exp_retorno')
   ]);
 
   const totalEnt = totais.reduce((a,b)=>a+(+b.total),0);
@@ -390,7 +398,9 @@ async function dadosReais(){
     idade:{labels:faixa.map(f=>f.faixa_etaria), data:faixa.map(f=>+f.qtd)},
     canal:null,
     renda:{labels:renda.map(r=>r.faixa_renda), data:renda.map(r=>+r.qtd)},
-    expTipo:null, roi:null, retorno:null
+    expTipo: (expTipoV && expTipoV.length) ? {labels:expTipoV.map(x=>x.tipo_operacao), data:expTipoV.map(x=>+x.qtd)} : null,
+    roi: (expRoiV && expRoiV.length) ? ordenarRoi(expRoiV) : null,
+    retorno: (expRetV && expRetV.length) ? {labels:expRetV.map(x=>x.intencao), data:expRetV.map(x=>+x.qtd)} : null
   };
 }
 
@@ -480,7 +490,11 @@ function render(d){
   // expositores
   if(d.expTipo) donut('expTipoChart',d.expTipo.labels,d.expTipo.data,[C.gold,C.red,C.green,C.cyan,C.purple]);
   else { const e=document.getElementById('expTipoChart'); if(e) e.parentElement.innerHTML='<div class="vazio">Aguardando expositores</div>'; }
-  if(d.roi) barra('roiChart',d.roi.labels,d.roi.data,[C.green,'#7FD98F',C.gold,'#FF8C42',C.red],false);
+  if(d.roi){
+    const corRoi={'Ótimo':C.green,'Muito Bom':'#4ade80','Bom':C.gold,'Regular':'#fb923c','Não Satisfatório':C.red,'Não Sabe/Não Respondeu':C.mut};
+    const coresRoi=d.roi.labels.map(l=>corRoi[l]||C.navy);
+    barra('roiChart',d.roi.labels,d.roi.data,coresRoi,false);
+  }
   else { const e=document.getElementById('roiChart'); if(e) e.parentElement.innerHTML='<div class="vazio">Aguardando expositores</div>'; }
   if(d.retorno) donut('retornoChart',d.retorno.labels,d.retorno.data,[C.green,C.gold,C.red]);
   else { const e=document.getElementById('retornoChart'); if(e) e.parentElement.innerHTML='<div class="vazio">Aguardando expositores</div>'; }
