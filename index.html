@@ -260,6 +260,11 @@ main{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column}
       <div class="qcard-desc">Investimento, retorno (ROI), empregos e operação.</div>
       <div class="qcard-meta"><span class="qcard-amostra">amostra: 100</span><span class="qcard-arrow">Iniciar →</span></div>
     </button>
+    <button class="qcard" onclick="iniciar('c')">
+      <div class="qcard-top"><span class="qcard-ico">🏬</span><div><div class="qcard-tipo">Questionário D</div><div class="qcard-titulo">Comerciantes Locais</div></div></div>
+      <div class="qcard-desc">Impacto no comércio da cidade: faturamento, empregos e cadeia.</div>
+      <div class="qcard-meta"><span class="qcard-amostra">amostra: 120</span><span class="qcard-arrow">Iniciar →</span></div>
+    </button>
   </section>
 
   <!-- FORM (wizard) -->
@@ -462,7 +467,8 @@ function iniciar(tipo){
   const cfg={
     v:['Visitantes / Turistas',renderVisitante],
     p:['Moradores',renderPopulacao],
-    o:['Expositores / Operação',renderOperacao]
+    o:['Expositores / Operação',renderOperacao],
+    c:['Comerciantes Locais',renderComerciante]
   }[tipo];
   document.getElementById('h-titulo').textContent=cfg[0];
   cfg[1]();              // renderiza (gera os .pcard — lógica intacta)
@@ -708,6 +714,40 @@ function renderOperacao(){
   aplicarSkipLogic();
 }
 
+/* ════════ D · COMERCIANTES LOCAIS ════════ */
+/* Comércio ESTABELECIDO na cidade (ano todo), distinto do expositor de dentro do evento.
+   Mede o impacto INDIRETO/INDUZIDO: faturamento, emprego temporário e efeito cadeia.
+   Triangula com o gasto declarado pelos visitantes (validação do impacto por setor). */
+function renderComerciante(){
+  document.getElementById('form-body').innerHTML=`
+  ${metaBloco()}
+
+  ${perg(1,'Qual o seu cargo no estabelecimento?',['Proprietário(a)','Gerente','Funcionário(a)'],'radio','',null,null,'Identifica quem respondeu. Proprietários e gerentes têm visão mais precisa do faturamento e da operação do negócio.')}
+  ${perg(2,'Ramo de atividade do estabelecimento:',['Alimentação (restaurante/lanchonete/bar)','Hospedagem (hotel/pousada)','Supermercado/Mercado/Distribuidora','Vestuário/Calçados/Acessórios','Posto de combustível','Transporte/Aplicativo (táxi/moto/van)','Serviços (beleza, farmácia, etc.)'],'radio',outroCampo(),null,null,'Classifica o setor do comércio local. Cruzado com o gasto declarado pelos visitantes, valida o impacto econômico por setor (demanda 2 da contratante).')}
+  ${perg(3,'Onde fica o estabelecimento em relação ao evento?',['No entorno imediato do evento','No centro da cidade','Em outro bairro'],'radio','',null,'Não Sabe/Não Opinou','A proximidade do evento influencia o impacto capturado — negócios próximos tendem a absorver mais o fluxo de público.')}
+  ${perg(4,'Porte do negócio — funcionários fixos (fora épocas de pico):',['Só o proprietário','1 a 2','3 a 5','6 a 10','Mais de 10'],'radio','',null,'Não Sabe/Não Opinou','Dimensiona o tamanho do negócio. Cruzado com a contratação temporária, mostra o impacto proporcional no emprego.')}
+  ${perg(5,'Há quanto tempo o estabelecimento funciona na cidade?',['Menos de 1 ano','1 a 3 anos','3 a 5 anos','Mais de 5 anos'],'radio','',null,null,'Negócios mais antigos têm base de comparação entre edições — avaliam melhor a evolução do evento ao longo do tempo.')}
+
+  ${perg(6,'Durante o festival, o movimento/faturamento do seu negócio:',['Aumenta','Fica igual','Diminui','Varia conforme o dia'],'radio','',null,'Não Sabe/Não Opinou','Medida central do impacto direto sobre o comércio existente. Confirma, pelo lado da oferta, o gasto declarado pelos visitantes.')}
+  ${perg(7,'Em quanto você estima esse aumento de faturamento no período?',['Até 10%','11% a 25%','26% a 50%','51% a 100%','Mais de 100%'],'radio','',{q:6,val:'Aumenta'},'Não Sabe/Não Opinou','Quantifica o impacto — base para estimar a injeção indireta do evento na economia local (efeito multiplicador).')}
+  ${perg(8,'Você contrata funcionários temporários por causa do festival?',['Sim','Não'],'radio','',null,null,'Mede a geração de emprego indireto pelo comércio existente (demanda 3) — complementa os empregos diretos dos expositores.')}
+  ${pernum(9,'Quantos temporários costuma contratar no período?','Nº de pessoas',{q:8,val:'Sim'},'Dimensiona o emprego temporário gerado FORA do recinto do evento. Somado, projeta o total de postos criados na cidade.')}
+  ${perg(10,'Você aumenta o estoque/compras de fornecedores para o festival?',['Sim, aumento bastante','Aumento um pouco','Não altero'],'radio','',null,'Não Sabe/Não Opinou','Captura o efeito cadeia (supply chain): o festival movimenta também fornecedores e distribuidoras a montante do comércio.')}
+
+  ${perg(11,'O que você faz de diferente durante o festival?',['Estendo o horário de funcionamento','Faço promoções especiais','Decoro com tema junino','Contrato mais gente','Aumento o estoque','Nada de diferente'],'checkbox',outroCampo(),null,null,'Mede o engajamento do comércio com o evento. Quanto mais ações, maior a integração da cidade ao festival.')}
+  ${aval(12,'Avalie os aspectos que afetam seu negócio durante o festival:',['Fluxo de clientes','Acesso e mobilidade (trânsito)','Estacionamento para clientes','Segurança na região','Limpeza urbana','Energia e infraestrutura','Divulgação que inclui o comércio','Apoio da Prefeitura ao comércio'],'Diagnostica externalidades positivas e negativas. Gargalos (trânsito, estacionamento) afastam clientes mesmo com o evento atraindo público.')}
+  ${perg(13,'O festival atrapalha alguma parte da sua operação?',['Não atrapalha','Atrapalha um pouco','Atrapalha bastante'],'radio','',null,'Não Sabe/Não Opinou','Equilibra a visão: mede o custo operacional (trânsito, ruído, bloqueios de via) que o evento impõe ao comércio.')}
+
+  ${likertConcorda(14,'O festival é importante para a economia da cidade.',null,'Mede o reconhecimento do evento como motor econômico pela ótica de quem vive do comércio local.')}
+  ${likertConcorda(15,'O festival é bom para o MEU negócio especificamente.',null,'Separa o benefício coletivo (cidade) do benefício individual (negócio) — nem todo setor lucra igual com o evento.')}
+  ${likert(16,'Como avalia o apoio e o diálogo da organização com o comércio local?',null,'Avalia a integração entre a organização do evento e os comerciantes — base para ações conjuntas nas próximas edições.')}
+  ${likertOtimismo(17,'Qual sua expectativa para o comércio no Festival 2026?',null,'Termômetro de confiança do comércio. Expectativa alta indica histórico positivo de retorno em edições anteriores.')}
+  ${perg(18,'Você apoia que a Prefeitura continue investindo no festival?',['Sim, com certeza','Talvez','Não apoio'],'radio','',null,'Não Sabe/Não Opinou','NPS de apoio do comércio local à política pública do evento — argumento de legitimidade social para a contratante.')}
+  ${pertexto(19,'Sua sugestão para o festival beneficiar mais o comércio local:','Escreva sua sugestão...','none','none','Capta demandas específicas do comércio. Melhorias aqui ampliam o impacto econômico distribuído pela cidade.')}
+  `;
+  aplicarSkipLogic();
+}
+
 
 
 // mapa Likert → código numérico (qualidade, concordância, otimismo — todos 5→1)
@@ -752,7 +792,7 @@ function prog(){ if(etapas && etapas.length) atualizarNav(); }
 
 // monta o objeto entrevista a partir do formulário (status: 'rascunho' ou 'completo')
 function montarEntrevista(status){
-  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR'}[tipoAtivo];
+  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR',c:'COMERCIANTE'}[tipoAtivo];
   const get = nome => { const el=document.querySelector(`input[name="${nome}"]:checked`); return el?decodeURIComponent(el.value):null; };
   const getText = nome => { const el=document.querySelector(`input[name="${nome}"]`); return el?el.value.trim():null; };
   return {

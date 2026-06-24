@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just Go · Relatório por Público — Festival Canaã Cidade Junina 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+:root{
+  --jg-cyan:#00A8D6; --jg-cyan-dark:#0077A3; --jg-cyan-mid:#0090BD; --jg-cyan-light:#e0f4fb;
+  --jg-navy:#0F2145; --jg-navy-dark:#0A1628;
+  --green:#15803d; --green-light:#dcfce7; --amber:#b45309; --amber-mid:#d97706; --amber-light:#fef3c7;
+  --blue:#1e40af; --blue-mid:#2563eb; --blue-light:#dbeafe; --danger:#b91c1c; --purple:#6d28d9;
+  --gray-50:#f8f9fa; --gray-100:#f0f1f3; --gray-200:#d1d5db; --gray-400:#6b7280; --gray-600:#374151; --gray-900:#111827; --white:#fff;
+  --radius-sm:8px; --radius-md:14px; --radius-lg:20px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08); --shadow-md:0 4px 16px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--gray-900);min-height:100vh}
+
+/* topbar */
+.topbar{position:sticky;top:0;z-index:50;background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 28px;height:66px;display:flex;align-items:center;gap:18px;box-shadow:var(--shadow-sm)}
+.logo svg{height:28px;width:auto;display:block}
+.topbar-div{width:1px;height:28px;background:var(--gray-200)}
+.topbar-titulo{flex:1}
+.topbar-titulo h1{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;color:var(--jg-navy)}
+.topbar-titulo p{font-size:0.72rem;color:var(--gray-400);margin-top:1px}
+.cliente-chip{display:flex;align-items:center;gap:8px;font-size:0.72rem;color:var(--gray-600);background:var(--jg-cyan-light);border:1px solid var(--jg-cyan);border-radius:100px;padding:6px 14px;font-family:'Outfit';font-weight:600}
+.cliente-chip b{color:var(--jg-cyan-dark)}
+.foccus-mini{display:flex;align-items:flex-end;gap:1.5px;height:14px}
+.foccus-mini i{width:3px;border-radius:1px;background:var(--jg-cyan)}
+.foccus-mini i:nth-child(1){height:6px}.foccus-mini i:nth-child(2){height:10px}.foccus-mini i:nth-child(3){height:14px}
+.btn-print{display:inline-flex;align-items:center;gap:7px;background:var(--jg-navy);color:#fff;border:none;border-radius:100px;padding:9px 16px;font-family:'Outfit';font-weight:600;font-size:0.75rem;cursor:pointer;transition:background .2s}
+.btn-print:hover{background:var(--jg-navy-dark)}
+.btn-link{display:inline-flex;align-items:center;gap:6px;color:var(--gray-600);text-decoration:none;font-family:'Outfit';font-weight:600;font-size:0.74rem;padding:8px 12px;border-radius:100px;border:1px solid var(--gray-200);transition:all .2s}
+.btn-link:hover{border-color:var(--jg-cyan);color:var(--jg-cyan-dark)}
+
+.wrap{max-width:1320px;margin:0 auto;padding:24px 28px 80px}
+
+/* seletor de público */
+.pub-sel{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.pub-btn{flex:1;min-width:220px;display:flex;align-items:center;gap:14px;background:var(--white);border:2px solid var(--gray-200);border-radius:16px;padding:16px 18px;cursor:pointer;transition:all .2s;text-align:left}
+.pub-btn:hover{border-color:var(--jg-cyan-mid);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.pub-btn.ativo{border-color:var(--jg-cyan);background:var(--jg-cyan-light)}
+.pub-btn .ico{font-size:1.7rem;flex-shrink:0}
+.pub-btn .meta{min-width:0}
+.pub-btn .meta .nm{font-family:'Outfit';font-weight:700;font-size:0.95rem;color:var(--jg-navy)}
+.pub-btn .meta .sub{font-size:0.72rem;color:var(--gray-400);margin-top:2px}
+.pub-btn .meta .n{font-family:'Outfit';font-weight:800;font-size:0.78rem;color:var(--jg-cyan-dark)}
+
+.modo-banner-inner{background:var(--green-light);border:1px solid var(--green);border-radius:12px;padding:11px 16px;font-size:0.8rem;color:var(--gray-600);display:flex;align-items:center;gap:10px;margin-bottom:20px;font-family:'DM Sans'}
+.modo-banner-inner b{color:var(--green);font-family:'Outfit';font-weight:700}
+.modo-banner-inner.warn{background:var(--amber-light);border-color:var(--amber-mid)}
+.modo-banner-inner.warn b{color:var(--amber)}
+
+/* cabeçalho de relatório */
+.rep-head{background:linear-gradient(120deg,var(--jg-navy),var(--jg-navy-dark));border-radius:20px;padding:26px 28px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden}
+.rep-head::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:var(--jg-cyan);opacity:.12}
+.rep-head .eyebrow{font-family:'Outfit';font-weight:700;font-size:0.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--jg-cyan)}
+.rep-head h2{font-family:'Outfit';font-weight:800;font-size:1.7rem;margin-top:6px}
+.rep-head p{font-size:0.82rem;color:rgba(255,255,255,.7);margin-top:6px;max-width:680px;line-height:1.5}
+
+.sec-head{display:flex;align-items:baseline;gap:12px;margin:34px 0 16px}
+.sec-eyebrow{font-family:'Outfit',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--jg-cyan-dark)}
+.sec-head h3{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:700;color:var(--jg-navy)}
+.sec-head .line{flex:1;height:1px;background:var(--gray-200)}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kpi{background:var(--white);border:1px solid var(--gray-200);border-radius:18px;padding:20px;box-shadow:var(--shadow-sm)}
+.kpi-ico{font-size:1.2rem;margin-bottom:10px;display:block}
+.kpi-val{font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;line-height:1;color:var(--jg-navy)}
+.kpi-val .sm{font-size:0.95rem;color:var(--gray-400)}
+.kpi-lbl{font-size:0.74rem;color:var(--gray-600);margin-top:8px;line-height:1.4}
+
+/* resumo executivo */
+.resumo{background:var(--white);border:1px solid var(--gray-200);border-left:4px solid var(--jg-cyan);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow-sm)}
+.resumo h4{font-family:'Outfit';font-weight:700;font-size:0.95rem;color:var(--jg-navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.resumo ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.resumo li{font-size:0.86rem;color:var(--gray-600);line-height:1.5;padding-left:22px;position:relative}
+.resumo li::before{content:'▸';position:absolute;left:4px;color:var(--jg-cyan-dark);font-weight:700}
+.resumo li b{color:var(--jg-navy);font-family:'Outfit';font-weight:700}
+
+/* grids de painel */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-23{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.panel{background:var(--white);border:1px solid var(--gray-200);border-radius:16px;padding:20px;box-shadow:var(--shadow-sm)}
+.q-tag{display:inline-block;font-family:'Outfit';font-weight:700;font-size:0.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--jg-cyan-dark);background:var(--jg-cyan-light);padding:3px 9px;border-radius:6px;margin-bottom:8px}
+.q-tag.cond{color:var(--amber);background:var(--amber-light)}
+.panel-h h4{font-family:'Outfit',sans-serif;font-size:0.98rem;font-weight:700;color:var(--jg-navy);line-height:1.35}
+.panel-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0}
+.pill-n{font-family:'Outfit';font-size:0.68rem;font-weight:600;color:var(--gray-400);background:var(--gray-50);border:1px solid var(--gray-100);padding:3px 9px;border-radius:100px}
+.pill-media{font-family:'Outfit';font-size:0.72rem;font-weight:700;color:#fff;padding:3px 10px;border-radius:100px}
+.panel-sub{font-size:0.74rem;color:var(--gray-400);margin:6px 0 14px;line-height:1.5}
+.chart-box{position:relative;height:240px}
+.chart-box.short{height:200px}.chart-box.tall{height:300px}
+
+/* heatmap */
+.heat-table{width:100%;border-collapse:separate;border-spacing:0 4px;font-size:0.8rem}
+.heat-table td{padding:7px 6px}
+.heat-table td:first-child{color:var(--gray-600);text-align:left;width:58%}
+.heat-cell{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:6px 0;border-radius:7px;font-family:'Outfit';font-weight:700;font-size:0.74rem;color:#fff}
+.heat-n{font-family:'Outfit';font-size:0.66rem;color:var(--gray-400);text-align:right;width:42px}
+
+/* NPS */
+.nps-wrap{display:flex;align-items:center;gap:24px}
+.nps-num{font-family:'Outfit',sans-serif;font-size:3rem;font-weight:800;line-height:1}
+.nps-meta{flex:1}
+.nps-bar{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--danger) 0%,var(--amber-mid) 50%,var(--green) 100%);position:relative;margin:14px 0 8px}
+.nps-marker{position:absolute;top:-4px;width:4px;height:18px;background:var(--gray-900);border-radius:2px}
+.nps-scale{display:flex;justify-content:space-between;font-size:0.64rem;color:var(--gray-400)}
+.nps-breakdown{display:flex;gap:8px;margin-top:14px}
+.nps-seg{flex:1;text-align:center;padding:8px;border-radius:10px;background:var(--gray-50);border:1px solid var(--gray-100)}
+.nps-seg .v{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem}
+.nps-seg .l{font-size:0.62rem;color:var(--gray-400);margin-top:2px}
+
+/* verbatim */
+.verbatim{max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:6px}
+.verbatim .vb{background:var(--gray-50);border:1px solid var(--gray-100);border-left:3px solid var(--jg-cyan);border-radius:8px;padding:9px 12px;font-size:0.82rem;color:var(--gray-600);line-height:1.5}
+.verbatim .vb::before{content:'“';color:var(--jg-cyan);font-weight:700}
+.verbatim .vb::after{content:'”';color:var(--jg-cyan);font-weight:700}
+
+/* num stats */
+.numstats{display:flex;gap:14px;flex-wrap:wrap}
+.numstat{flex:1;min-width:90px;text-align:center;background:var(--gray-50);border:1px solid var(--gray-100);border-radius:12px;padding:14px}
+.numstat .v{font-family:'Outfit';font-weight:800;font-size:1.5rem;color:var(--jg-navy)}
+.numstat .l{font-size:0.68rem;color:var(--gray-400);margin-top:4px}
+
+.vazio{text-align:center;padding:34px 18px;color:var(--gray-400);font-size:0.84rem}
+.loading{text-align:center;padding:60px 20px;color:var(--gray-400);font-size:0.9rem}
+
+.dash-footer{margin-top:50px;padding-top:24px;border-top:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:0.74rem;color:var(--gray-400)}
+.dash-footer b{color:var(--gray-600);font-family:'Outfit';font-weight:600}
+
+@media(max-width:1000px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.grid-2,.grid-23,.grid-3{grid-template-columns:1fr}}
+@media(max-width:560px){.wrap{padding:18px 14px 60px}.topbar{padding:0 14px}.kpi-grid{grid-template-columns:1fr}.topbar-titulo p,.cliente-chip{display:none}}
+
+/* ===== impressão / PDF ===== */
+@media print{
+  @page{margin:14mm}
+  body{background:#fff}
+  .topbar{position:static;box-shadow:none;border-bottom:1px solid #ccc;height:auto;padding:10px 0}
+  .btn-print,.btn-link,.pub-sel,.modo-banner-inner,.topbar .modo-toggle{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .panel,.kpi,.resumo,.rep-head{break-inside:avoid;box-shadow:none}
+  .rep-head{background:var(--jg-navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .heat-cell,.pill-media,.nps-bar,.kpi,.q-tag{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec-head{break-after:avoid}
+  .grid-2,.grid-3,.grid-23{break-inside:auto}
+  canvas{max-width:100%!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <svg viewBox="0 0 210 32" xmlns="http://www.w3.org/2000/svg">
+      <text x="2" y="26" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#0F2145" letter-spacing="-1.5">Just</text>
+      <text x="80" y="26" font-family="Syne, sans-serif" font-weight="800" font-size="28" fill="#00A8D6" letter-spacing="-1.5">Go</text>
+    </svg>
+  </div>
+  <div class="topbar-div"></div>
+  <div class="topbar-titulo">
+    <h1>Relatório por Público</h1>
+    <p>Festival Canaã Cidade Junina 2026 · Análise por instrumento de coleta</p>
+  </div>
+  <div class="cliente-chip">
+    <span>Pesquisa para</span>
+    <div class="foccus-mini"><i></i><i></i><i></i></div>
+    <b>Foccus Pesquisas</b>
+  </div>
+  <a class="btn-link" href="dashboard.html">← Dashboard geral</a>
+  <button type="button" class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+</div>
+
+<div class="wrap">
+
+  <!-- seletor de público -->
+  <div class="pub-sel" id="pubSel"></div>
+
+  <div class="modo-banner-inner" id="banner">
+    <span>⏳</span><span>Carregando dados reais do banco...</span>
+  </div>
+
+  <div id="report"><div class="loading">Carregando relatório...</div></div>
+
+  <div class="dash-footer">
+    <div><b>Just Go · Smart Access</b> — plataforma de coleta e análise · dados reais (somente leitura)</div>
+    <div>Pesquisa conduzida pela <b>Foccus Pesquisas</b> · Prefeitura de Canaã dos Carajás — PA</div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   RELATÓRIO POR PÚBLICO — Festival Canaã Cidade Junina 2026
+   100% somente leitura: agrega no navegador a partir das tabelas
+   brutas (entrevistas + respostas) via embed do PostgREST.
+   NENHUMA escrita no banco.
+   ════════════════════════════════════════════════════════════════ */
+if(typeof Chart==='undefined'){
+  document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('report').innerHTML='<div class="vazio">⚠️ A biblioteca de gráficos (Chart.js) não carregou. Verifique a conexão e recarregue.</div>';
+  });
+}
+
+const SUPABASE_URL='https://zhioebfzuugfjhblhfwp.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpoaW9lYmZ6dXVnZmpoYmxoZndwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyODU0NDMsImV4cCI6MjA5Njg2MTQ0M30.1peRPKPBTM2GtMh-d6l6ut5kIxmEgn7e-PEY1ztSnS8';
+
+const C={cyan:'#00A8D6',green:'#15803d',gold:'#d97706',red:'#dc2626',purple:'#7c3aed',navy:'#1e40af',ink:'#111827',mut:'rgba(55,65,81,0.6)',grid:'rgba(17,24,39,0.08)'};
+const PAL=[C.cyan,C.green,C.gold,C.purple,C.navy,C.red,'#4ade80','#fb923c','#22d3ee','#a78bfa','#f87171'];
+const ESC_QUALI=['Ótimo','Muito Bom','Bom','Regular','Não Satisfatório'];
+const ESC_CONC=['Concordo totalmente','Concordo','Neutro','Discordo','Discordo totalmente'];
+const ESC_OTIM=['Muito otimista','Otimista','Neutra','Pessimista','Muito pessimista'];
+const ESC_COR=['#15803d','#4ade80','#d97706','#fb923c','#dc2626']; // 5→1
+const NSNR=['Não Sabe/Não Respondeu','Não Sabe/Não Opinou','Não sabe/Não opinou','Não Sabe/Não opinou'];
+const ehNSNR=v=>v!=null && NSNR.some(n=>n.toLowerCase()===String(v).toLowerCase());
+
+if(typeof Chart!=='undefined'){
+  Chart.defaults.font.family="'DM Sans',sans-serif";
+  Chart.defaults.color=C.mut;
+  Chart.defaults.animation=false; // garante render completo p/ impressão
+  Chart.defaults.plugins.legend.labels.boxWidth=12;
+  Chart.defaults.plugins.legend.labels.padding=12;
+  Chart.defaults.plugins.legend.labels.font={size:10};
+}
+
+/* ─────────── METADADOS DOS INSTRUMENTOS ─────────── */
+// tipos: radio | checkbox | likert | conc | otim | aval | num | textfreq | texto
+const PUBLICOS={
+  VISITANTE:{ nome:'Visitantes / Turistas', ico:'🎪', cor:C.cyan, quest:'Questionário A', meta:800,
+    desc:'Perfil, origem, gasto desagregado por setor, satisfação e lealdade do público visitante. Base do cálculo de impacto econômico e atração turística do evento.',
+    perguntas:[
+      {id:'q1',tipo:'radio',t:'Renda familiar',op:['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],nsnr:1,leg:'Classifica o poder aquisitivo do público; cruzado com o gasto, mostra quanto cada faixa injeta na economia local.'},
+      {id:'q2',tipo:'checkbox',t:'Como teve conhecimento do Festival 2026?',op:['Já conhecia','Sites da Prefeitura','Rádio/TV','Celular/WhatsApp','Facebook/Instagram','Mora próximo','Carro de som','Trabalho','Venho todo ano'],leg:'Mede a eficácia de cada canal de divulgação — orienta onde investir o marketing das próximas edições.'},
+      {id:'q3',tipo:'radio',t:'Você veio ao evento:',op:['Sozinho','Com parentes/casal','Amigos/colegas'],nsnr:1,leg:'Indica o tamanho médio do grupo — multiplica o gasto individual para estimar impacto por família.'},
+      {id:'q4',tipo:'radio',t:'Quantos dias irá participar?',op:['1 a 4 dias','5 a 9 dias','10 dias ou mais','Todos os dias'],nsnr:1,leg:'Mede o tempo de permanência — quanto mais dias, maior o gasto acumulado e o impacto na rede hoteleira.'},
+      {id:'q5',tipo:'radio',t:'Meio de transporte para chegar ao evento',op:['Carro próprio','Carona','Táxi/Uber','Ônibus de linha','A pé'],nsnr:1,leg:'Mapeia a mobilidade; o uso de Táxi/Uber alimenta a estimativa de impacto no setor de transporte.'},
+      {id:'q6',tipo:'radio',t:'Você mora em Canaã dos Carajás?',op:['Sim','Não'],leg:'Separa morador de turista — base para calcular o percentual de visitantes de fora.'},
+      {id:'q7',tipo:'textfreq',t:'Em qual cidade você reside?',cond:'q6 = Não',leg:'Registra a origem exata; mostra de quantos municípios o evento atrai público.'},
+      {id:'q8',tipo:'radio',t:'Estado de origem',op:['Pará (PA)','Maranhão (MA)','Tocantins (TO)','Outro estado do Norte','Nordeste','Sul/Sudeste/Centro-Oeste'],nsnr:1,cond:'q6 = Não',leg:'Quantifica a abrangência geográfica — visitantes de outros estados elevam o status do evento.'},
+      {id:'q9',tipo:'radio',t:'Você pernoitou em Canaã dos Carajás?',op:['Sim','Não'],cond:'q6 = Não',leg:'Distingue o turista que dorme na cidade (gera receita hoteleira) do que vem e volta no mesmo dia.'},
+      {id:'q10',tipo:'radio',t:'Onde você pernoitou?',op:['Casa de Amigos/Parentes','Hotel/Pousada'],nsnr:1,cond:'q9 = Sim',leg:'Mede a taxa de ocupação da rede hoteleira — Hotel/Pousada = receita formal do setor.'},
+      {id:'q11',tipo:'radio',t:'O Festival foi o principal motivo da sua vinda?',op:['Sim','Não'],leg:'Isola o impacto atribuível ao evento — só o gasto de quem veio PELO festival conta como impacto gerado por ele.'},
+      {id:'q12',tipo:'radio',t:'Gasto com HOSPEDAGEM (total nos dias)',op:['Não terei gasto','Até R$ 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],nsnr:1,leg:'Estima a movimentação na rede hoteleira (hotéis e pousadas).'},
+      {id:'q13',tipo:'radio',t:'Gasto com ALIMENTAÇÃO (restaurantes, bares)',op:['Não terei gasto','Até R$ 100','R$ 100 a 300','R$ 300 a 600','Mais de R$ 600'],nsnr:1,leg:'Estima o impacto em restaurantes, lanchonetes e bares.'},
+      {id:'q14',tipo:'radio',t:'Gasto em SUPERMERCADOS / MERCADOS / DISTRIBUIDORAS',op:['Não terei gasto','Até R$ 100','R$ 100 a 300','Mais de R$ 300'],nsnr:1,leg:'Estima o impacto no varejo de alimentos e distribuidoras.'},
+      {id:'q15',tipo:'radio',t:'Gasto com TRANSPORTE / COMBUSTÍVEL / UBER',op:['Não terei gasto','Até R$ 100','R$ 100 a 300','Mais de R$ 300'],nsnr:1,leg:'Estima o impacto no setor de transporte e aplicativos.'},
+      {id:'q16',tipo:'radio',t:'Gasto com COMPRAS no comércio (vestuário, beleza, lembranças)',op:['Não terei gasto','R$ 100 a 200','R$ 200 a 500','R$ 500 a 1.000','Mais de R$ 1.000'],nsnr:1,leg:'Estima o impacto no comércio local em geral.'},
+      {id:'q17',tipo:'num',t:'Além de você, quantas pessoas estão incluídas nesses gastos?',leg:'Converte o gasto individual em gasto do grupo — essencial para projetar o impacto total a partir da amostra.'},
+      {id:'a18',tipo:'aval',t:'Avaliação dos aspectos do evento',it:['Acesso/Local','Infraestrutura','Segurança','Competições/Quadrilhas','Hotéis/Pousadas (qualidade)','Hotéis/Pousadas (preço)','Artesanato/Produtos','Comidas (qualidade)','Comidas (preço)','Data/Horário','Receptividade'],leg:'Mapa de calor de satisfação por item — “Regular” ou “Não Satisfatório” viram prioridades de melhoria.'},
+      {id:'a19',tipo:'aval',t:'Avaliação da Estrutura, Planejamento e Organização',it:['Tema do evento','Local do evento','Divulgação','Estrutura física','Gastronomia','Shows e Atrações','Lixeiras','Banheiros','Estacionamentos','Avaliação Geral'],leg:'Percepção sobre a gestão do evento; a “Avaliação Geral” é a nota-síntese da organização.'},
+      {id:'q20',tipo:'likert',t:'Acessibilidade e inclusão (rampas, espaços PcD, sinalização)',leg:'Percepção de acessibilidade — indicador social (item 10b da contratante).'},
+      {id:'q21',tipo:'radio',t:'Você conhece as Quadrilhas que irão competir?',op:['Sim','Não'],leg:'Engajamento com o elemento cultural central — alta resposta indica identificação com a tradição junina.'},
+      {id:'q22',tipo:'textfreq',t:'Qual a sua quadrilha favorita?',cond:'q21 = Sim',leg:'Identifica as quadrilhas mais populares — útil para a organização valorizar os grupos de maior apelo.'},
+      {id:'q23',tipo:'radio',t:'Você recomendaria o Festival a amigos e familiares?',op:['Sim, com certeza','Talvez','Não recomendaria'],nsnr:1,nps:{prom:['Sim, com certeza'],neu:['Talvez'],det:['Não recomendaria']},leg:'Base do NPS — “Com certeza” = promotor; “Não recomendaria” = detrator.'},
+      {id:'q24',tipo:'likert',t:'Como avalia sua experiência no festival até o momento?',leg:'Nota geral de satisfação do visitante — comparável entre edições.'},
+      {id:'q25',tipo:'otim',t:'Expectativa para a continuidade da edição 2026',leg:'Otimismo quanto ao restante do evento — antecipa a tendência de satisfação final.'},
+      {id:'q26',tipo:'texto',t:'Sugestões para melhorar edições futuras',leg:'Melhorias na voz do público — respostas recorrentes viram recomendações no relatório.'}
+    ]},
+
+  MORADOR:{ nome:'Moradores', ico:'🏘️', cor:C.green, quest:'Questionário B', meta:400,
+    desc:'Percepção da comunidade local sobre as edições do festival, benefício econômico percebido, impacto na rotina, valorização da cidade e intenção de participação em 2026.',
+    // Instrumento conforme efetivamente aplicado em campo (jun/2026): 10 questões.
+    // As questões da versão ampliada do questionário (bairro, bateria de avaliação 2025,
+    // gasto pretendido e sugestões abertas) NÃO foram coletadas e, portanto, não integram
+    // este instrumento nem o relatório de entrega. ids preservados p/ leitura do banco; rótulo renumerado 1–10.
+    perguntas:[
+      {id:'q1',rot:'Questão 1',tipo:'radio',t:'Renda familiar',op:['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],nsnr:1,leg:'Perfil socioeconômico do morador — permite analisar a percepção por faixa de renda.'},
+      {id:'q2',rot:'Questão 2',tipo:'checkbox',t:'Como você acompanha os eventos de Canaã dos Carajás?',op:['Sites de notícia','Televisão','Rádio','Celular/WhatsApp','Facebook','Instagram','Jornais impressos'],leg:'Canais de informação do morador — orienta a comunicação institucional da Prefeitura.'},
+      {id:'q4',rot:'Questão 3',tipo:'radio',t:'Você participou do Festival 2025?',op:['Sim','Não'],leg:'Mede o alcance da edição anterior junto à comunidade — distingue quem já vivenciou o evento de quem ainda não participou.'},
+      {id:'q11',rot:'Questão 4',tipo:'conc',t:'O festival trouxe benefício econômico para você/sua família?',leg:'Impacto econômico percebido pelo morador (renda, vendas, trabalho temporário).'},
+      {id:'q12',rot:'Questão 5',tipo:'radio',t:'Impacto do evento na sua rotina/mobilidade',op:['Muito positivo','Positivo','Indiferente','Negativo','Muito negativo'],nsnr:1,leg:'Captura externalidades negativas (trânsito, barulho) e positivas — equilibra a visão sobre o evento.'},
+      {id:'q13',rot:'Questão 6',tipo:'conc',t:'O festival valoriza a imagem e identidade de Canaã dos Carajás?',leg:'Orgulho local e valor simbólico do evento.'},
+      {id:'q14',rot:'Questão 7',tipo:'likert',t:'Acessibilidade e inclusão (rampas, espaços PcD, sinalização)',leg:'Acessibilidade percebida pelo morador (item 10b da contratante).'},
+      {id:'q15',rot:'Questão 8',tipo:'radio',t:'Você pretende participar do Festival 2026?',op:['Sim','Não','Ainda não decidi'],leg:'Intenção de participação local — projeta o público morador esperado para 2026.'},
+      {id:'q17',rot:'Questão 9',tipo:'otim',t:'Expectativa geral para o Festival 2026',leg:'Otimismo da comunidade — expectativa alta indica boa reputação acumulada.'},
+      {id:'q18',rot:'Questão 10',tipo:'radio',t:'A data de 24/Jun a 12/Jul de 2026, você acha que:',op:['Ótima — atende ao período junino','Boa, mas poderia ser mais curta','Poderia ser mais longa','Preferia em outro período','Indiferente'],nsnr:1,leg:'Adequação do calendário na ótica de quem vive na cidade.'}
+    ]},
+
+  EXPOSITOR:{ nome:'Expositores / Operação', ico:'🏪', cor:C.gold, quest:'Questionário C', meta:100,
+    desc:'Perfil dos expositores, capital investido e faturamento, ROI percebido, qualidade da estrutura operacional e intenção de retorno — lado da oferta do impacto econômico.',
+    perguntas:[
+      {id:'q1',tipo:'radio',t:'Tipo de operação no festival',op:['Alimentação/Comidas','Bebidas','Artesanato/Produtos típicos','Serviços (beleza, etc.)','Diversões/Parque'],leg:'Classifica os tipos de negócio presentes (demanda 4 da contratante).'},
+      {id:'q2',tipo:'radio',t:'Origem do expositor',op:['Sou de Canaã dos Carajás','Sou de outra cidade'],leg:'Quanto do comércio é local x externo — local retém renda na cidade; de fora indica atração regional.'},
+      {id:'q3',tipo:'textfreq',t:'De qual cidade?',cond:'q2 = Sou de outra cidade',leg:'Origem dos expositores de fora — alcance econômico do evento como gerador de negócios regionais.'},
+      {id:'q4',tipo:'radio',t:'Já participou de edições anteriores?',op:['Não, é a primeira vez','Sim, 1 edição','Sim, 2 a 3 edições','Sim, mais de 3 edições'],leg:'Fidelização do expositor — alta recorrência indica que o evento dá retorno.'},
+      {id:'q5',tipo:'num',t:'Quantas pessoas trabalham no seu estande/operação?',leg:'Geração de empregos diretos e indiretos (demanda 3 da contratante).'},
+      {id:'q6',tipo:'radio',t:'Investimento para participar (taxa + estrutura + estoque)',op:['Até R$ 1.000','R$ 1.000 a 3.000','R$ 3.000 a 5.000','R$ 5.000 a 10.000','Mais de R$ 10.000'],nsnr:1,leg:'Capital movimentado pelos expositores — compõe o impacto pelo lado de quem opera o evento.'},
+      {id:'q7',tipo:'radio',t:'Faturamento esperado/obtido no evento',op:['Até R$ 2.000','R$ 2.000 a 5.000','R$ 5.000 a 10.000','R$ 10.000 a 20.000','Mais de R$ 20.000'],nsnr:1,leg:'Receita gerada pelos expositores — uma das maiores fontes de movimentação interna.'},
+      {id:'q8',tipo:'likert',t:'Retorno em relação ao investimento (custo-benefício)',leg:'ROI percebido — notas altas comprovam que o evento é boa praça de negócios.'},
+      {id:'q9',tipo:'radio',t:'O movimento comparado à edição anterior foi:',op:['Muito maior','Maior','Igual','Menor','Muito menor','Primeira participação'],nsnr:1,leg:'Percepção de crescimento na ótica de quem vende.'},
+      {id:'a10',tipo:'aval',t:'Avaliação dos aspectos da operação',it:['Organização do espaço','Logística de montagem','Energia elétrica','Água e limpeza','Segurança da área','Comunicação da organização','Custo da taxa/aluguel','Fluxo de público nos estandes'],leg:'Qualidade da estrutura oferecida — pontos fracos afastam vendedores nas próximas edições.'},
+      {id:'q11',tipo:'radio',t:'Pretende participar da edição 2026?',op:['Sim, com certeza','Talvez','Não pretendo'],nsnr:1,nps:{prom:['Sim, com certeza'],neu:['Talvez'],det:['Não pretendo']},leg:'Retenção de expositores — antecipa a ocupação comercial da próxima edição.'},
+      {id:'q12',tipo:'radio',t:'Recomendaria participar a outros expositores?',op:['Sim, com certeza','Talvez','Não recomendaria'],nsnr:1,nps:{prom:['Sim, com certeza'],neu:['Talvez'],det:['Não recomendaria']},leg:'NPS de recomendação entre pares — quem indica é o melhor captador de novos comerciantes.'},
+      {id:'q13',tipo:'texto',t:'Sugestões para melhorar a experiência do expositor',leg:'Demandas operacionais dos vendedores — melhorias aumentam retenção e qualidade da feira.'}
+    ]},
+
+  COMERCIANTE:{ nome:'Comerciantes Locais', ico:'🏬', cor:C.purple, quest:'Questionário D', meta:100,
+    desc:'Comércio estabelecido na cidade (ano todo), distinto do expositor de dentro do evento. Mede o impacto indireto e induzido do festival: variação de faturamento, emprego temporário e efeito cadeia — triangulando com o gasto declarado pelos visitantes.',
+    perguntas:[
+      {id:'q1',tipo:'radio',t:'Cargo do respondente',op:['Proprietário(a)','Gerente','Funcionário(a)'],leg:'Identifica quem respondeu — proprietários e gerentes têm visão mais precisa do faturamento.'},
+      {id:'q2',tipo:'radio',t:'Ramo de atividade do estabelecimento',op:['Alimentação (restaurante/lanchonete/bar)','Hospedagem (hotel/pousada)','Supermercado/Mercado/Distribuidora','Vestuário/Calçados/Acessórios','Posto de combustível','Transporte/Aplicativo (táxi/moto/van)','Serviços (beleza, farmácia, etc.)'],leg:'Classifica o setor; cruzado com o gasto declarado pelos visitantes, valida o impacto econômico por setor (demanda 2).'},
+      {id:'q3',tipo:'radio',t:'Localização em relação ao evento',op:['No entorno imediato do evento','No centro da cidade','Em outro bairro'],nsnr:1,leg:'A proximidade do evento influencia o impacto capturado — negócios próximos absorvem mais o fluxo de público.'},
+      {id:'q4',tipo:'radio',t:'Porte do negócio (funcionários fixos)',op:['Só o proprietário','1 a 2','3 a 5','6 a 10','Mais de 10'],nsnr:1,leg:'Dimensiona o negócio; cruzado com a contratação temporária mostra o impacto proporcional no emprego.'},
+      {id:'q5',tipo:'radio',t:'Tempo de funcionamento na cidade',op:['Menos de 1 ano','1 a 3 anos','3 a 5 anos','Mais de 5 anos'],leg:'Negócios mais antigos têm base de comparação entre edições — avaliam melhor a evolução do evento.'},
+      {id:'q6',tipo:'radio',t:'Durante o festival, o movimento/faturamento do negócio:',op:['Aumenta','Fica igual','Diminui','Varia conforme o dia'],nsnr:1,leg:'Medida central do impacto direto sobre o comércio existente — confirma, pelo lado da oferta, o gasto dos visitantes.'},
+      {id:'q7',tipo:'radio',t:'Estimativa de aumento de faturamento no período',op:['Até 10%','11% a 25%','26% a 50%','51% a 100%','Mais de 100%'],nsnr:1,cond:'q6 = Aumenta',leg:'Quantifica o impacto — base para estimar a injeção indireta do evento na economia local (efeito multiplicador).'},
+      {id:'q8',tipo:'radio',t:'Contrata funcionários temporários por causa do festival?',op:['Sim','Não'],leg:'Geração de emprego indireto pelo comércio existente (demanda 3) — complementa os empregos diretos dos expositores.'},
+      {id:'q9',tipo:'num',t:'Quantos temporários costuma contratar?',cond:'q8 = Sim',leg:'Dimensiona o emprego temporário gerado fora do recinto — somado, projeta o total de postos na cidade.'},
+      {id:'q10',tipo:'radio',t:'Aumenta estoque/compras de fornecedores para o festival?',op:['Sim, aumento bastante','Aumento um pouco','Não altero'],nsnr:1,leg:'Efeito cadeia (supply chain): o festival movimenta também fornecedores e distribuidoras a montante.'},
+      {id:'q11',tipo:'checkbox',t:'O que você faz de diferente durante o festival?',op:['Estendo o horário de funcionamento','Faço promoções especiais','Decoro com tema junino','Contrato mais gente','Aumento o estoque','Nada de diferente'],leg:'Engajamento do comércio com o evento — quanto mais ações, maior a integração da cidade ao festival.'},
+      {id:'a12',tipo:'aval',t:'Avaliação dos aspectos que afetam o negócio',it:['Fluxo de clientes','Acesso e mobilidade (trânsito)','Estacionamento para clientes','Segurança na região','Limpeza urbana','Energia e infraestrutura','Divulgação que inclui o comércio','Apoio da Prefeitura ao comércio'],leg:'Externalidades positivas e negativas — gargalos (trânsito, estacionamento) afastam clientes mesmo com o evento atraindo público.'},
+      {id:'q13',tipo:'radio',t:'O festival atrapalha alguma parte da sua operação?',op:['Não atrapalha','Atrapalha um pouco','Atrapalha bastante'],nsnr:1,leg:'Custo operacional (trânsito, ruído, bloqueios) imposto ao comércio — equilibra a visão sobre o evento.'},
+      {id:'q14',tipo:'conc',t:'O festival é importante para a economia da cidade',leg:'Reconhecimento do evento como motor econômico pela ótica de quem vive do comércio local.'},
+      {id:'q15',tipo:'conc',t:'O festival é bom para o MEU negócio especificamente',leg:'Separa o benefício coletivo (cidade) do individual (negócio) — nem todo setor lucra igual.'},
+      {id:'q16',tipo:'likert',t:'Apoio e diálogo da organização com o comércio local',leg:'Integração entre organização e comerciantes — base para ações conjuntas nas próximas edições.'},
+      {id:'q17',tipo:'otim',t:'Expectativa para o comércio no Festival 2026',leg:'Termômetro de confiança do comércio — expectativa alta indica histórico positivo de retorno.'},
+      {id:'q18',tipo:'radio',t:'Você apoia que a Prefeitura continue investindo no festival?',op:['Sim, com certeza','Talvez','Não apoio'],nsnr:1,nps:{prom:['Sim, com certeza'],neu:['Talvez'],det:['Não apoio']},leg:'NPS de apoio do comércio à política pública do evento — argumento de legitimidade social para a contratante.'},
+      {id:'q19',tipo:'texto',t:'Sugestões para o festival beneficiar mais o comércio local',leg:'Demandas específicas do comércio — melhorias ampliam o impacto econômico distribuído pela cidade.'}
+    ]}
+};
+
+/* ─────────── ACESSO AO BANCO (somente leitura) ─────────── */
+async function carregarPublico(tipo){
+  const url=`${SUPABASE_URL}/rest/v1/entrevistas`
+    +`?select=id,sexo,faixa_etaria,escolaridade,pesquisador,coletado_em,respostas(questao,valor,valor_num)`
+    +`&tipo=eq.${tipo}&status=eq.completo&limit=5000`;
+  const r=await fetch(url,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
+  if(!r.ok) throw new Error('Falha ao buscar '+tipo+': '+r.status);
+  return sanitizar(await r.json());
+}
+
+// Saneamento de validade (não altera valores nem percentuais — só remove ruído de coleta):
+//  • descarta registros status=completo SEM nenhuma resposta (questionários em branco/abandonados);
+//  • remove respostas duplicadas da mesma questão na mesma entrevista (mantém a 1ª ocorrência) —
+//    neutraliza a gravação em dobro do salvamento progressivo/finalização automática.
+// Resultado: n passa a refletir apenas questionários válidos respondidos.
+function sanitizar(entrevistas){
+  return (entrevistas||[]).map(e=>{
+    const vistos=new Set(), limpa=[];
+    (e.respostas||[]).forEach(r=>{ if(!vistos.has(r.questao)){ vistos.add(r.questao); limpa.push(r); } });
+    return Object.assign({}, e, {respostas:limpa});
+  }).filter(e=>e.respostas.length>0);
+}
+
+/* ─────────── AGREGAÇÃO ─────────── */
+// indexa respostas por questão -> array de {valor, valor_num}
+function indexar(entrevistas){
+  const m={};
+  entrevistas.forEach(e=>(e.respostas||[]).forEach(r=>{(m[r.questao]=m[r.questao]||[]).push(r);}));
+  return m;
+}
+// contagem de categóricas (radio) na ordem das opções; desconhecidos -> "Outros"
+function contarCategoria(arr,opcoes){
+  const cont={}; opcoes.forEach(o=>cont[o]=0); let outros=0, nsnr=0;
+  (arr||[]).forEach(r=>{
+    const v=r.valor; if(v==null||v==='') return;
+    if(ehNSNR(v)){nsnr++; return;}
+    if(v in cont) cont[v]++; else outros++;
+  });
+  const labels=opcoes.slice(), data=opcoes.map(o=>cont[o]);
+  if(outros>0){labels.push('Outros');data.push(outros);}
+  return {labels,data,nsnr,n:data.reduce((a,b)=>a+b,0)};
+}
+// múltipla escolha (checkbox): valor "a; b; c"
+function contarMultipla(arr,opcoes){
+  const cont={}; opcoes.forEach(o=>cont[o]=0); let outros=0; let respondentes=0;
+  (arr||[]).forEach(r=>{
+    if(r.valor==null||r.valor==='') return; respondentes++;
+    String(r.valor).split(';').map(s=>s.trim()).filter(Boolean).forEach(v=>{
+      if(ehNSNR(v)) return;
+      if(v in cont) cont[v]++; else outros++;
+    });
+  });
+  const labels=opcoes.slice(), data=opcoes.map(o=>cont[o]);
+  if(outros>0){labels.push('Outros');data.push(outros);}
+  return {labels,data,n:respondentes};
+}
+// escala likert/concordância/otimismo: distribuição + média
+function agregarEscala(arr,escala){
+  const cont={}; escala.forEach(o=>cont[o]=0); let nsnr=0, soma=0, validos=0;
+  (arr||[]).forEach(r=>{
+    const v=r.valor;
+    if(ehNSNR(v)||r.valor_num===9){nsnr++; return;}
+    if(v in cont){cont[v]++;}
+    const n=r.valor_num; if(typeof n==='number'&&n>=1&&n<=5){soma+=n;validos++;}
+  });
+  return {labels:escala,data:escala.map(o=>cont[o]),media:validos?soma/validos:null,nsnr,n:validos};
+}
+// tabela de avaliação: para cada item a<id>_<i> -> média
+function agregarAval(idx,id,itens){
+  return itens.map((it,i)=>{
+    const arr=idx[id+'_'+i]||[]; let soma=0,validos=0,nsnr=0;
+    arr.forEach(r=>{const n=r.valor_num; if(n===9){nsnr++;return;} if(typeof n==='number'&&n>=1&&n<=5){soma+=n;validos++;}});
+    return {item:it,media:validos?soma/validos:null,n:validos,nsnr};
+  });
+}
+// numérica
+function agregarNum(arr){
+  const nums=(arr||[]).map(r=>parseFloat(r.valor)).filter(v=>!isNaN(v));
+  if(!nums.length) return {n:0};
+  const soma=nums.reduce((a,b)=>a+b,0);
+  return {n:nums.length,soma,media:soma/nums.length,max:Math.max(...nums),min:Math.min(...nums)};
+}
+// texto -> frequência (top) ou verbatim
+function coletarTexto(arr){
+  return (arr||[]).map(r=>(r.valor||'').trim()).filter(Boolean);
+}
+function freqTexto(arr,top){
+  const cont={};
+  coletarTexto(arr).forEach(v=>{const k=v.toUpperCase();cont[k]=(cont[k]||0)+1;});
+  const ord=Object.entries(cont).sort((a,b)=>b[1]-a[1]).slice(0,top||10);
+  return {labels:ord.map(x=>x[0]),data:ord.map(x=>x[1]),n:coletarTexto(arr).length,distintos:Object.keys(cont).length};
+}
+// NPS a partir de categórica
+function calcularNPS(arr,map){
+  let prom=0,neu=0,det=0,tot=0;
+  (arr||[]).forEach(r=>{const v=r.valor; if(v==null||ehNSNR(v))return;
+    if(map.prom.includes(v))prom++; else if(map.det.includes(v))det++; else neu++; tot++;});
+  return {prom,neu,det,tot,valor:tot?Math.round((prom/tot-det/tot)*100):0,
+    pProm:tot?Math.round(prom/tot*100):0,pNeu:tot?Math.round(neu/tot*100):0,pDet:tot?Math.round(det/tot*100):0};
+}
+
+/* ─────────── HELPERS DE GRÁFICO ─────────── */
+let CHARTS=[];
+function limparCharts(){CHARTS.forEach(c=>{try{c.destroy()}catch(e){}});CHARTS=[];}
+function mkDonut(id,labels,data,cores){
+  const el=document.getElementById(id); if(!el)return;
+  CHARTS.push(new Chart(el,{type:'doughnut',
+    data:{labels,datasets:[{data,backgroundColor:cores,borderColor:'#fff',borderWidth:3,hoverOffset:6}]},
+    options:{cutout:'58%',plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed} (${pct(c.parsed,data)})`}}}}}));
+}
+function mkBar(id,labels,data,cor,horizontal,sufixo){
+  const el=document.getElementById(id); if(!el)return;
+  CHARTS.push(new Chart(el,{type:'bar',
+    data:{labels,datasets:[{data,backgroundColor:cor,borderRadius:6}]},
+    options:{indexAxis:horizontal?'y':'x',plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>` ${horizontal?c.parsed.x:c.parsed.y}${sufixo||''}`}}},
+      scales:{[horizontal?'x':'y']:{grid:{color:C.grid},beginAtZero:true,ticks:{precision:0}},[horizontal?'y':'x']:{grid:{display:false}}}}}));
+}
+function pct(v,arr){const t=arr.reduce((a,b)=>a+b,0);return t?Math.round(v/t*100)+'%':'0%';}
+function corMedia(v){if(v==null)return C.mut;if(v>=4.3)return C.green;if(v>=3.8)return '#7FD98F';if(v>=3.3)return C.gold;if(v>=2.8)return '#fb923c';return C.red;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ─────────── RENDER DE UMA QUESTÃO ─────────── */
+let UID=0;
+function cardQuestao(q,idx,nTotal){
+  const id='cv_'+(UID++);
+  const arr=idx[q.id]||[];
+  const rotulo=q.rot?esc(q.rot):q.id.toUpperCase().replace('Q','Questão ').replace('A','Avaliação ');
+  const tag=`<span class="q-tag${q.cond?' cond':''}">${rotulo}${q.cond?' · condicional ('+esc(q.cond)+')':''}</span>`;
+  const head=`${tag}<div class="panel-h"><h4>${esc(q.t)}</h4></div>`;
+  const legenda=q.leg?`<div class="panel-sub">${esc(q.leg)}</div>`:'';
+
+  // ----- escalas -----
+  if(q.tipo==='likert'||q.tipo==='conc'||q.tipo==='otim'){
+    const escala=q.tipo==='conc'?ESC_CONC:q.tipo==='otim'?ESC_OTIM:ESC_QUALI;
+    const ag=agregarEscala(arr,escala);
+    const badge=ag.media!=null?`<span class="pill-media" style="background:${corMedia(ag.media)}">média ${ag.media.toFixed(2)} / 5</span>`:'';
+    const meta=`<div class="panel-meta">${badge}<span class="pill-n">${ag.n} resp.</span>${ag.nsnr?`<span class="pill-n">${ag.nsnr} NS/NR</span>`:''}</div>`;
+    const corpo=ag.n?`<div class="chart-box short"><canvas id="${id}"></canvas></div>`:'<div class="vazio">Sem respostas nesta amostra</div>';
+    if(ag.n) pend.push(()=>mkBar(id,ag.labels,ag.data,ESC_COR,true));
+    return `<div class="panel">${head}${legenda}${meta}${corpo}</div>`;
+  }
+  // ----- avaliação (heatmap) -----
+  if(q.tipo==='aval'){
+    const rows=agregarAval(idx,q.id,q.it).slice().sort((a,b)=>(b.media??-1)-(a.media??-1));
+    const algum=rows.some(r=>r.media!=null);
+    const corpo=algum?`<table class="heat-table">${rows.map(r=>
+      `<tr><td>${esc(r.item)}</td><td>${r.media!=null?`<span class="heat-cell" style="background:${corMedia(r.media)}">${r.media.toFixed(2)}</span>`:'<span class="pill-n">—</span>'}</td><td class="heat-n">${r.n}</td></tr>`).join('')}</table>`
+      :'<div class="vazio">Sem avaliações nesta amostra</div>';
+    return `<div class="panel">${head}${legenda}<div class="panel-meta"><span class="pill-n">escala 1 (Não Satisf.) → 5 (Ótimo)</span></div>${corpo}</div>`;
+  }
+  // ----- numérica -----
+  if(q.tipo==='num'){
+    const ag=agregarNum(arr);
+    const corpo=ag.n?`<div class="numstats">
+      <div class="numstat"><div class="v">${ag.media.toFixed(1)}</div><div class="l">média</div></div>
+      <div class="numstat"><div class="v">${ag.soma.toLocaleString('pt-BR')}</div><div class="l">soma total</div></div>
+      <div class="numstat"><div class="v">${ag.max}</div><div class="l">máximo</div></div>
+      <div class="numstat"><div class="v">${ag.n}</div><div class="l">respostas</div></div></div>`
+      :'<div class="vazio">Sem respostas nesta amostra</div>';
+    return `<div class="panel">${head}${legenda}${corpo}</div>`;
+  }
+  // ----- texto: frequência -----
+  if(q.tipo==='textfreq'){
+    const f=freqTexto(arr,12);
+    const meta=`<div class="panel-meta"><span class="pill-n">${f.n} resp.</span><span class="pill-n">${f.distintos} distintos</span></div>`;
+    const corpo=f.n?`<div class="chart-box ${f.labels.length>7?'tall':'short'}"><canvas id="${id}"></canvas></div>`:'<div class="vazio">Sem respostas nesta amostra</div>';
+    if(f.n) pend.push(()=>mkBar(id,f.labels,f.data,PUBLICOS_COR,true));
+    return `<div class="panel">${head}${legenda}${meta}${corpo}</div>`;
+  }
+  // ----- texto aberto: verbatim -----
+  if(q.tipo==='texto'){
+    const lst=coletarTexto(arr);
+    const corpo=lst.length?`<div class="verbatim">${lst.map(v=>`<div class="vb">${esc(v)}</div>`).join('')}</div>`:'<div class="vazio">Sem sugestões registradas</div>';
+    return `<div class="panel">${head}${legenda}<div class="panel-meta"><span class="pill-n">${lst.length} sugestão(ões)</span></div>${corpo}</div>`;
+  }
+  // ----- categórica (radio) + NPS opcional -----
+  const ag=contarCategoria(arr,q.op||[]);
+  const meta=`<div class="panel-meta"><span class="pill-n">${ag.n} resp.</span>${ag.nsnr?`<span class="pill-n">${ag.nsnr} NS/NR</span>`:''}</div>`;
+  let npsHtml='';
+  if(q.nps){
+    const nps=calcularNPS(arr,q.nps);
+    if(nps.tot){
+      const cor=nps.valor>=50?C.green:nps.valor>=0?C.gold:C.red;
+      npsHtml=`<div style="margin-top:14px;border-top:1px dashed var(--gray-200);padding-top:14px">
+        <div class="nps-wrap"><div class="nps-num" style="color:${cor}">${nps.valor>=0?'+':''}${nps.valor}</div>
+        <div class="nps-meta"><div style="font-family:Outfit;font-weight:700;font-size:.74rem;color:var(--gray-600)">NPS — Net Promoter Score</div>
+        <div class="nps-bar"><div class="nps-marker" style="left:${(nps.valor+100)/2}%"></div></div>
+        <div class="nps-scale"><span>−100</span><span>0</span><span>+100</span></div></div></div>
+        <div class="nps-breakdown">
+          <div class="nps-seg"><div class="v" style="color:${C.green}">${nps.pProm}%</div><div class="l">Promotores</div></div>
+          <div class="nps-seg"><div class="v" style="color:${C.gold}">${nps.pNeu}%</div><div class="l">Neutros</div></div>
+          <div class="nps-seg"><div class="v" style="color:${C.red}">${nps.pDet}%</div><div class="l">Detratores</div></div>
+        </div></div>`;
+    }
+  }
+  const usaBarra=(q.op||[]).length>4;
+  const corpo=ag.n?`<div class="chart-box ${usaBarra?'short':''}"><canvas id="${id}"></canvas></div>`:'<div class="vazio">Sem respostas nesta amostra</div>';
+  if(ag.n){
+    if(usaBarra) pend.push(()=>mkBar(id,ag.labels,ag.data,PUBLICOS_COR,true));
+    else pend.push(()=>mkDonut(id,ag.labels,ag.data,ag.labels.map((_,i)=>PAL[i%PAL.length])));
+  }
+  return `<div class="panel">${head}${legenda}${meta}${corpo}${npsHtml}</div>`;
+}
+
+/* ─────────── RENDER DO RELATÓRIO COMPLETO ─────────── */
+let pend=[];           // fila de criação de charts após injetar HTML
+let PUBLICOS_COR=C.cyan;
+function renderRelatorio(tipo,entrevistas){
+  limparCharts(); pend=[]; UID=0;
+  const cfg=PUBLICOS[tipo]; PUBLICOS_COR=cfg.cor;
+  const n=entrevistas.length;
+  const idx=indexar(entrevistas);
+  // meta contratada (transparência realizado vs. contratado) — NÃO altera percentuais nem a margem de erro,
+  // que continuam calculados sobre o n real coletado.
+  const meta=cfg.meta||null;
+  const pctMeta=meta?Math.round(n/meta*100):null;
+  const corMeta=pctMeta==null?C.mut:(pctMeta>=100?C.green:pctMeta>=70?C.gold:C.red);
+
+  if(n===0){
+    document.getElementById('report').innerHTML=
+      `<div class="rep-head"><span class="eyebrow">${cfg.quest}</span><h2>${cfg.ico} ${cfg.nome}</h2><p>${cfg.desc}</p></div>
+       <div class="panel"><div class="vazio">📭 Ainda não há entrevistas <b>completas</b> deste público no banco.<br>O relatório será preenchido automaticamente conforme a coleta acontecer.${meta?`<br><br>Meta contratada: <b>${meta}</b> entrevistas · realizado: <b>0</b> (0%).`:''}</div></div>`;
+    return;
+  }
+
+  // ficha técnica
+  const datas=entrevistas.map(e=>e.coletado_em).filter(Boolean).sort();
+  const fmt=d=>{try{return new Date(d).toLocaleDateString('pt-BR')}catch(e){return '—'}};
+  const periodo=datas.length?`${fmt(datas[0])} a ${fmt(datas[datas.length-1])}`:'—';
+  const pesquisadores=new Set(entrevistas.map(e=>(e.pesquisador||'').trim()).filter(Boolean)).size;
+  const me=(1.96*Math.sqrt(0.25/n)*100).toFixed(1);
+
+  // demografia (colunas da entrevista)
+  const demo=campo=>{const c={};entrevistas.forEach(e=>{const v=(e[campo]||'—');c[v]=(c[v]||0)+1;});return c;};
+  const sexo=demo('sexo'), faixa=demo('faixa_etaria'), escol=demo('escolaridade');
+  const ordFaixa=['16-19','20-24','25-34','35-44','45-59','60+'];
+  const ordEsc=['Analfabeto','Fundamental','Médio','Superior'];
+
+  // cobertura do instrumento (questões com dados nesta amostra)
+  // nº de respostas de uma questão (para avaliação, o item mais respondido)
+  const qNResp=q=> q.tipo==='aval' ? Math.max(0,...q.it.map((_,i)=>(idx[q.id+'_'+i]||[]).length)) : (idx[q.id]||[]).length;
+  // limiar de coleta: descarta questões zeradas ou com respostas-fantasma (ex.: 1 de 429)
+  const MIN_AMOSTRA=Math.max(3,Math.round(n*0.01));
+  const temDados=q=>qNResp(q)>=MIN_AMOSTRA;
+  const comDados=cfg.perguntas.filter(temDados).length;
+
+  // resumo executivo (auto)
+  const bullets=[];
+  bullets.push(`Amostra de <b>${n}</b> entrevista(s) completa(s)${meta?` — <b style="color:${corMeta}">${pctMeta}%</b> da meta contratada de <b>${meta}</b>`:''}, coletadas entre <b>${periodo}</b> por <b>${pesquisadores||'—'}</b> pesquisador(es).`);
+  if(comDados<cfg.perguntas.length) bullets.push(`Cobertura: <b>${comDados} de ${cfg.perguntas.length}</b> questões com coleta efetiva nesta amostra — as demais foram incluídas no questionário após esta coleta e estão omitidas da análise.`);
+  // NPS principal
+  const qNps=cfg.perguntas.find(p=>p.nps);
+  if(qNps){const nps=calcularNPS(idx[qNps.id],qNps.nps);if(nps.tot)bullets.push(`<b>NPS de ${nps.valor>=0?'+':''}${nps.valor}</b> (${nps.pProm}% promotores · ${nps.pDet}% detratores) — ${nps.valor>=50?'zona de excelência':nps.valor>=0?'zona de aperfeiçoamento':'zona crítica'}.`);}
+  // satisfação: junta todos os aval + likert qualidade
+  const heat=[];
+  cfg.perguntas.forEach(p=>{
+    if(p.tipo==='aval') agregarAval(idx,p.id,p.it).forEach(r=>{if(r.media!=null)heat.push([r.item,r.media]);});
+    if(p.tipo==='likert'){const a=agregarEscala(idx[p.id],ESC_QUALI);if(a.media!=null)heat.push([p.t,a.media]);}
+  });
+  heat.sort((a,b)=>b[1]-a[1]);
+  if(heat.length){
+    let s=`Melhor avaliação: <b>${esc(heat[0][0])}</b> (${heat[0][1].toFixed(2)}/5).`;
+    if(heat.length>1) s+=` Maior oportunidade de melhoria: <b>${esc(heat[heat.length-1][0])}</b> (${heat[heat.length-1][1].toFixed(2)}/5).`;
+    bullets.push(s);
+  }
+  // canal principal (checkbox)
+  const qCanal=cfg.perguntas.find(p=>p.tipo==='checkbox');
+  if(qCanal){const cc=contarMultipla(idx[qCanal.id],qCanal.op);const top=cc.labels.map((l,i)=>[l,cc.data[i]]).sort((a,b)=>b[1]-a[1])[0];if(top&&top[1])bullets.push(`Principal canal de informação: <b>${esc(top[0])}</b> (${top[1]} menções).`);}
+
+  // monta HTML
+  let html=`<div class="rep-head"><span class="eyebrow">${cfg.quest} · Relatório Final</span><h2>${cfg.ico} ${cfg.nome}</h2><p>${cfg.desc}</p></div>`;
+
+  // ficha técnica
+  html+=`<div class="sec-head"><span class="sec-eyebrow">Ficha técnica</span><h3>Visão geral da amostra</h3><div class="line"></div></div>
+  <div class="kpi-grid">
+    <div class="kpi"><span class="kpi-ico">🗂️</span><div class="kpi-val">${n}${meta?`<span class="sm"> / ${meta}</span>`:''}</div><div class="kpi-lbl">${meta?`Realizadas de <b>${meta}</b> contratadas · <b style="color:${corMeta}">${pctMeta}%</b>`:'Entrevistas completas'}</div></div>
+    <div class="kpi"><span class="kpi-ico">📅</span><div class="kpi-val" style="font-size:1rem;padding-top:6px">${periodo}</div><div class="kpi-lbl">Período de coleta</div></div>
+    <div class="kpi"><span class="kpi-ico">🧑‍💼</span><div class="kpi-val">${pesquisadores||'—'}</div><div class="kpi-lbl">Pesquisadores em campo</div></div>
+    <div class="kpi"><span class="kpi-ico">🎯</span><div class="kpi-val">±${me}<span class="sm">%</span></div><div class="kpi-lbl">Margem de erro estimada (p=50%, 95%)</div></div>
+  </div>`;
+
+  // resumo executivo
+  html+=`<div class="sec-head"><span class="sec-eyebrow">Síntese</span><h3>Resumo executivo</h3><div class="line"></div></div>
+  <div class="resumo"><h4>📌 Principais leituras</h4><ul>${bullets.map(b=>`<li>${b}</li>`).join('')}</ul></div>`;
+
+  // perfil demográfico
+  html+=`<div class="sec-head"><span class="sec-eyebrow">Perfil</span><h3>Quem respondeu</h3><div class="line"></div></div>
+  <div class="grid-3">
+    <div class="panel"><div class="panel-h"><h4>Sexo</h4></div><div class="chart-box short"><canvas id="d_sexo"></canvas></div></div>
+    <div class="panel"><div class="panel-h"><h4>Faixa etária</h4></div><div class="chart-box short"><canvas id="d_faixa"></canvas></div></div>
+    <div class="panel"><div class="panel-h"><h4>Escolaridade</h4></div><div class="chart-box short"><canvas id="d_esc"></canvas></div></div>
+  </div>`;
+  pend.push(()=>{
+    const sx=Object.keys(sexo); mkDonut('d_sexo',sx.map(k=>k==='M'?'Masculino':k==='F'?'Feminino':k),sx.map(k=>sexo[k]),[C.cyan,C.purple,C.mut]);
+    mkBar('d_faixa',ordFaixa,ordFaixa.map(k=>faixa[k]||0),C.purple,true);
+    mkBar('d_esc',ordEsc,ordEsc.map(k=>escol[k]||0),C.navy,true);
+  });
+
+  // todas as questões
+  const perguntasExibidas=cfg.perguntas.filter(temDados);
+  const omitidas=cfg.perguntas.length-perguntasExibidas.length;
+  html+=`<div class="sec-head"><span class="sec-eyebrow">Resultados completos</span><h3>Questões com dados coletados</h3><div class="line"></div></div>
+  ${omitidas?`<div class="panel-sub" style="margin:-6px 0 14px">ℹ️ ${omitidas} questão(ões) do instrumento omitida(s) por ainda não terem coleta efetiva (incluídas após o início desta coleta). Reaparecem automaticamente quando começarem a ser respondidas.</div>`:''}
+  <div class="grid-2">${perguntasExibidas.map(q=>cardQuestao(q,idx,n)).join('')}</div>`;
+
+  document.getElementById('report').innerHTML=html;
+  // cria os gráficos
+  pend.forEach(fn=>{try{fn()}catch(e){console.warn('chart erro',e);}});
+}
+
+/* ─────────── ORQUESTRAÇÃO ─────────── */
+const CACHE={};
+let tipoAtivo=null;
+function botoesPublico(contagens){
+  const sel=document.getElementById('pubSel');
+  sel.innerHTML=Object.entries(PUBLICOS).map(([k,v])=>{
+    const n=contagens[k]; const txt=n==null?'…':(n+' entrevista'+(n===1?'':'s'));
+    return `<button class="pub-btn${k===tipoAtivo?' ativo':''}" data-tipo="${k}" onclick="selecionar('${k}')">
+      <span class="ico">${v.ico}</span><div class="meta"><div class="nm">${v.nome}</div>
+      <div class="sub">${v.quest}</div><div class="n">${txt}</div></div></button>`;
+  }).join('');
+}
+async function selecionar(tipo){
+  tipoAtivo=tipo;
+  document.querySelectorAll('.pub-btn').forEach(b=>b.classList.toggle('ativo',b.dataset.tipo===tipo));
+  const banner=document.getElementById('banner');
+  document.getElementById('report').innerHTML='<div class="loading">Carregando relatório de '+PUBLICOS[tipo].nome+'...</div>';
+  try{
+    if(!CACHE[tipo]) CACHE[tipo]=await carregarPublico(tipo);
+    const dados=CACHE[tipo];
+    banner.className='modo-banner-inner'+(dados.length?'':' warn');
+    banner.innerHTML=dados.length
+      ? `<span>🟢</span><span><b>Dados reais (somente leitura)</b> — ${dados.length} entrevista(s) completa(s) de ${PUBLICOS[tipo].nome.toLowerCase()}. Nada é gravado no banco.</span>`
+      : `<span>📭</span><span><b>Sem coleta ainda</b> — o instrumento de ${PUBLICOS[tipo].nome.toLowerCase()} existe, mas nenhuma entrevista completa foi registrada.</span>`;
+    renderRelatorio(tipo,dados);
+  }catch(e){
+    banner.className='modo-banner-inner warn';
+    banner.innerHTML='<span>⚠️</span><span><b>Erro ao conectar</b> — '+esc(e.message)+'</span>';
+    document.getElementById('report').innerHTML='<div class="vazio">Não foi possível carregar os dados.</div>';
+  }
+}
+async function init(){
+  botoesPublico({VISITANTE:null,MORADOR:null,EXPOSITOR:null});
+  // pré-carrega tudo para mostrar contagens e escolher o público com dados
+  const tipos=Object.keys(PUBLICOS);
+  const res=await Promise.all(tipos.map(t=>carregarPublico(t).then(d=>{CACHE[t]=d;return d.length;}).catch(()=>0)));
+  const cont={}; tipos.forEach((t,i)=>cont[t]=res[i]);
+  // público inicial = o que tiver mais dados (senão o primeiro)
+  let inicial=tipos[0],max=-1; tipos.forEach(t=>{if(cont[t]>max){max=cont[t];inicial=t;}});
+  tipoAtivo=inicial;
+  botoesPublico(cont);
+  selecionar(inicial);
+}
+if(typeof Chart!=='undefined') init();
+</script>
+</body>
+</html>
