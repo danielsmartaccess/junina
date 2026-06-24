@@ -972,17 +972,23 @@ async function marcarSincronizado(session_id){
   });
 }
 
-/* ─── enviar UMA entrevista ao Supabase ─── */
+/* ─── enviar UMA entrevista ao Supabase (IDEMPOTENTE) ───
+   Reenvio nunca duplica nem deixa entrevista órfã (sem respostas):
+   - entrevista: upsert ON CONFLICT(session_id) DO NOTHING; se já existia, recupera o id;
+   - respostas:  upsert ON CONFLICT(entrevista_id,questao) DO NOTHING.
+   Usa só INSERT+SELECT (compatível com a RLS anon — não exige UPDATE).            */
 async function enviarEntrevista(ent){
-  // 1) inserir a entrevista (registro-pai)
-  const respEnt = await fetch(`${SUPABASE_URL}/rest/v1/entrevistas`, {
+  const H = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type':'application/json'
+  };
+
+  // 1) upsert idempotente da entrevista (registro-pai)
+  let entrevista_id = null;
+  const respEnt = await fetch(`${SUPABASE_URL}/rest/v1/entrevistas?on_conflict=session_id`, {
     method:'POST',
-    headers:{
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Content-Type':'application/json',
-      'Prefer':'return=representation'
-    },
+    headers:{ ...H, 'Prefer':'return=representation,resolution=ignore-duplicates' },
     body: JSON.stringify({
       tipo: ent.tipo,
       session_id: ent.session_id,
@@ -999,55 +1005,65 @@ async function enviarEntrevista(ent){
       device_info: navigator.userAgent.slice(0,120)
     })
   });
-  if(!respEnt.ok){
-    // se for conflito (já existe), trata como sucesso (idempotência)
-    if(respEnt.status === 409) return true;
+  if(respEnt.ok){
+    const arr = await respEnt.json().catch(()=>[]);
+    if(arr && arr.length) entrevista_id = arr[0].id;
+  } else if(respEnt.status !== 409){
     throw new Error('Falha ao inserir entrevista: ' + respEnt.status);
   }
-  const [criada] = await respEnt.json();
-  const entrevista_id = criada.id;
+  // já existia (conflito → não retornou linha): recupera o id por session_id
+  if(!entrevista_id){
+    const g = await fetch(`${SUPABASE_URL}/rest/v1/entrevistas?session_id=eq.${encodeURIComponent(ent.session_id)}&select=id`, { headers:H });
+    if(!g.ok) throw new Error('Falha ao localizar entrevista: ' + g.status);
+    const gj = await g.json();
+    if(!gj.length) throw new Error('Entrevista não encontrada após conflito');
+    entrevista_id = gj[0].id;
+  }
 
-  // 2) inserir as respostas (lote)
+  // 2) upsert idempotente das respostas (lote) — reenvio não duplica
   const respostas = Object.entries(ent.respostas || {}).map(([questao, v])=>({
     entrevista_id,
     questao,
     valor: (typeof v === 'object' ? v.valor : v),
-    valor_num: (typeof v === 'object' ? v.valor_num : (isNaN(+v)?null:null))
+    valor_num: (typeof v === 'object' ? v.valor_num : null)
   }));
   if(respostas.length){
-    const respResp = await fetch(`${SUPABASE_URL}/rest/v1/respostas`, {
+    const respResp = await fetch(`${SUPABASE_URL}/rest/v1/respostas?on_conflict=entrevista_id,questao`, {
       method:'POST',
-      headers:{
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type':'application/json'
-      },
+      headers:{ ...H, 'Prefer':'resolution=ignore-duplicates' },
       body: JSON.stringify(respostas)
     });
-    if(!respResp.ok) throw new Error('Falha ao inserir respostas: ' + respResp.status);
+    if(!respResp.ok && respResp.status !== 409) throw new Error('Falha ao inserir respostas: ' + respResp.status);
   }
   return true;
 }
 
 /* ─── SINCRONIZAR a fila inteira ─── */
+let sincronizando = false;   // trava: impede execução concorrente (3 gatilhos: enviar, online, interval)
 async function sincronizar(){
   if(!navigator.onLine) return { ok:false, motivo:'offline' };
-  const pendentes = await listarPendentes();
-  // só sincroniza entrevistas COMPLETAS — rascunhos ficam protegidos só no celular
-  const completos = pendentes.filter(e => e.status === 'completo' || !e.status);
-  let enviadas = 0, falhas = 0;
-  for(const ent of completos){
-    try{
-      await enviarEntrevista(ent);
-      await marcarSincronizado(ent.session_id);
-      enviadas++;
-    }catch(e){
-      falhas++;
-      console.warn('Falha ao sincronizar', ent.session_id, e.message);
+  if(sincronizando)     return { ok:false, motivo:'em_andamento' };   // evita corrida → duplicação
+  sincronizando = true;
+  try {
+    const pendentes = await listarPendentes();
+    // só sincroniza entrevistas COMPLETAS — rascunhos ficam protegidos só no celular
+    const completos = pendentes.filter(e => e.status === 'completo' || !e.status);
+    let enviadas = 0, falhas = 0;
+    for(const ent of completos){
+      try{
+        await enviarEntrevista(ent);
+        await marcarSincronizado(ent.session_id);
+        enviadas++;
+      }catch(e){
+        falhas++;
+        console.warn('Falha ao sincronizar', ent.session_id, e.message);
+      }
     }
+    atualizarBadgeSync();
+    return { ok:true, enviadas, falhas, total:completos.length };
+  } finally {
+    sincronizando = false;
   }
-  atualizarBadgeSync();
-  return { ok:true, enviadas, falhas, total:completos.length };
 }
 
 /* ─── badge visual de status de sincronização ─── */
