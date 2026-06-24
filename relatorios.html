@@ -281,6 +281,32 @@ const PUBLICOS={
       {id:'q18',rot:'Questão 10',tipo:'radio',t:'A data de 24/Jun a 12/Jul de 2026, você acha que:',op:['Ótima — atende ao período junino','Boa, mas poderia ser mais curta','Poderia ser mais longa','Preferia em outro período','Indiferente'],nsnr:1,leg:'Adequação do calendário na ótica de quem vive na cidade.'}
     ]},
 
+  MORADOR_PERCEP:{ nome:'Moradores · Percepção & Satisfação', ico:'⭐', cor:C.navy, quest:'Questionário E', meta:400,
+    desc:'Pesquisa de satisfação e percepção de impacto do festival na ótica do morador (distinta do Questionário B). Mede satisfação geral (CSAT) e por aspecto, percepção de impacto multidimensional (econômico, cultural, social, imagem/turismo), custos percebidos, saldo líquido (Teoria da Troca Social), NPS de destino e apoio ao investimento público.',
+    perguntas:[
+      {id:'q1',tipo:'textfreq',t:'Em qual bairro você reside?',leg:'Segmentação geográfica — cruza satisfação e percepção de impacto por região da cidade.'},
+      {id:'q2',tipo:'radio',t:'Há quanto tempo mora em Canaã dos Carajás?',op:['Menos de 1 ano','1 a 5 anos','5 a 10 anos','Mais de 10 anos'],leg:'Tempo de vínculo com a cidade — moradores antigos comparam edições e avaliam a evolução do evento.'},
+      {id:'q3',tipo:'radio',t:'Renda familiar',op:['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],nsnr:1,leg:'Perfil socioeconômico — permite analisar satisfação e percepção de benefício por faixa de renda.'},
+      {id:'q4',tipo:'radio',t:'Frequência com que vai ao festival',op:['Vou todos os anos','Vou de vez em quando','Já fui poucas vezes','Nunca fui'],leg:'Engajamento do morador — quem frequenta avalia diferente de quem nunca foi.'},
+      {id:'q5',tipo:'checkbox',t:'Como se informa sobre o festival?',op:['Instagram','Facebook','WhatsApp','Rádio','Televisão','Sites de notícia','Carro de som','Boca a boca (amigos/família)'],leg:'Canais de comunicação efetivos com a população — orienta a divulgação da Prefeitura.'},
+      {id:'q6',tipo:'likert',t:'Satisfação geral com o festival (CSAT)',leg:'Indicador-síntese de aprovação do morador. Escala Ótimo (5) → Não Satisfatório (1).'},
+      {id:'a7',tipo:'aval',t:'Satisfação por aspecto do festival',it:['Programação e quadrilhas','Shows e atrações','Organização geral','Segurança','Limpeza urbana','Estrutura e banheiros','Praça de alimentação','Acessibilidade e inclusão','Divulgação do evento','Trânsito e mobilidade'],leg:'Mapa de calor de satisfação por aspecto — itens baixos viram prioridades de melhoria para 2026.'},
+      {id:'q8',tipo:'conc',t:'O festival aquece a economia e gera trabalho e renda na cidade',leg:'Percepção de impacto ECONÔMICO percebido pelo morador.'},
+      {id:'q9',tipo:'conc',t:'O festival fortalece a cultura e a identidade da cidade',leg:'Percepção de impacto CULTURAL / identidade — valor simbólico do evento.'},
+      {id:'q10',tipo:'conc',t:'O festival une a comunidade e aumenta o orgulho de morar na cidade',leg:'Percepção de impacto SOCIAL / orgulho local (capital social).'},
+      {id:'q11',tipo:'conc',t:'O festival melhora a imagem da cidade e atrai turismo',leg:'Percepção de impacto em IMAGEM / TURISMO — projeção externa da cidade.'},
+      {id:'q12',tipo:'checkbox',t:'Incômodos percebidos durante o festival',op:['Trânsito e dificuldade de locomoção','Barulho à noite','Lixo e sujeira nas ruas','Sensação de insegurança','Aumento de preços','Aglomeração','Nenhum incômodo'],leg:'CUSTOS percebidos (externalidades negativas) — lado "custo" da Teoria da Troca Social.'},
+      {id:'q13',tipo:'conc',t:'Pesando benefícios e incômodos, o saldo do festival é positivo para mim',leg:'Item-CHAVE de saldo líquido (benefício − custo) — resume a atitude do morador.'},
+      {id:'q14',tipo:'conc',t:'Eu e minha família nos sentimos diretamente beneficiados',leg:'Benefício PESSOAL percebido — distingue do coletivo (q15).'},
+      {id:'q15',tipo:'radio',t:'Quem mais se beneficia com o festival?',op:['A cidade como um todo','Comerciantes e empresários','O poder público / políticos','Apenas alguns grupos','Ninguém se beneficia'],nsnr:1,leg:'Percepção de DISTRIBUIÇÃO dos benefícios — "alguns grupos/poder público" sinaliza percepção de captura desigual.'},
+      {id:'q16',tipo:'radio',t:'Recomendaria pessoas de outras cidades virem durante o festival?',op:['Sim, com certeza','Talvez','Não recomendaria'],nsnr:1,nps:{prom:['Sim, com certeza'],neu:['Talvez'],det:['Não recomendaria']},leg:'NPS de DESTINO (advocacy turístico) — o morador como promotor da cidade.'},
+      {id:'q17',tipo:'radio',t:'Apoia o investimento público da Prefeitura no festival?',op:['Sim, com certeza','Talvez','Não apoio'],nsnr:1,nps:{prom:['Sim, com certeza'],neu:['Talvez'],det:['Não apoio']},leg:'NPS de LEGITIMIDADE da política pública — apoio social ao investimento, argumento central para a contratante.'},
+      {id:'q18',tipo:'radio',t:'A Prefeitura deveria, quanto ao investimento:',op:['Investir mais no festival','Manter o investimento atual','Investir menos','Não investir no festival'],nsnr:1,leg:'Direção desejada do investimento público — complementa o apoio (q17) com a intensidade/sentido.'},
+      {id:'q19',tipo:'otim',t:'Expectativa para o Festival 2026',leg:'Termômetro de otimismo da comunidade. Escala Muito otimista (5) → Muito pessimista (1).'},
+      {id:'q20',tipo:'texto',t:'O que mais precisa melhorar no festival',leg:'Verbatim de melhoria — recorrências viram recomendações priorizadas.'},
+      {id:'q21',tipo:'texto',t:'O que você mais gosta no festival',leg:'Verbatim positivo — pontos fortes a preservar e usar na comunicação (marketing).'}
+    ]},
+
   EXPOSITOR:{ nome:'Expositores / Operação', ico:'🏪', cor:C.gold, quest:'Questionário C', meta:100,
     desc:'Perfil dos expositores, capital investido e faturamento, ROI percebido, qualidade da estrutura operacional e intenção de retorno — lado da oferta do impacto econômico.',
     perguntas:[

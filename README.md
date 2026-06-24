@@ -22,6 +22,11 @@ Prefeitura de Canaã dos Carajás — PA. Plataforma **Just Go · Smart Access**
 | `MORADOR` | Moradores (Questionário B) | 19 |
 | `EXPOSITOR` | Expositores / Operação (Questionário C) | 13 |
 | `COMERCIANTE` | Comerciantes Locais (Questionário D) | 19 |
+| `MORADOR_PERCEP` | Moradores · Percepção & Satisfação (Questionário E) | 21 |
+
+> **Questionário E** é uma 2ª onda do público morador com lente de **satisfação/percepção de impacto**
+> (CSAT, NPS de destino e de apoio ao investimento público, impacto multidimensional e saldo líquido
+> via Teoria da Troca Social), distinta do Questionário B (participação/2025). Meta contratada: 400.
 
 ## Modelo de dados (Supabase)
 

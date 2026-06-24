@@ -205,7 +205,7 @@ main{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column}
 
 </head>
 <body>
-<div class="dev-badge">v0.7.1</div>
+<div class="dev-badge">v0.7.2</div>
 
 <div class="app">
   <!-- HEADER -->
@@ -264,6 +264,11 @@ main{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column}
       <div class="qcard-top"><span class="qcard-ico">🏬</span><div><div class="qcard-tipo">Questionário D</div><div class="qcard-titulo">Comerciantes Locais</div></div></div>
       <div class="qcard-desc">Impacto no comércio da cidade: faturamento, empregos e cadeia.</div>
       <div class="qcard-meta"><span class="qcard-amostra">amostra: 120</span><span class="qcard-arrow">Iniciar →</span></div>
+    </button>
+    <button class="qcard" onclick="iniciar('s')">
+      <div class="qcard-top"><span class="qcard-ico">⭐</span><div><div class="qcard-tipo">Questionário E</div><div class="qcard-titulo">Moradores · Percepção & Satisfação</div></div></div>
+      <div class="qcard-desc">Satisfação (CSAT/NPS) e percepção de impacto do evento para o morador.</div>
+      <div class="qcard-meta"><span class="qcard-amostra">amostra: 400</span><span class="qcard-arrow">Iniciar →</span></div>
     </button>
   </section>
 
@@ -468,7 +473,8 @@ function iniciar(tipo){
     v:['Visitantes / Turistas',renderVisitante],
     p:['Moradores',renderPopulacao],
     o:['Expositores / Operação',renderOperacao],
-    c:['Comerciantes Locais',renderComerciante]
+    c:['Comerciantes Locais',renderComerciante],
+    s:['Moradores · Percepção & Satisfação',renderMoradorPercep]
   }[tipo];
   document.getElementById('h-titulo').textContent=cfg[0];
   cfg[1]();              // renderiza (gera os .pcard — lógica intacta)
@@ -748,6 +754,46 @@ function renderComerciante(){
   aplicarSkipLogic();
 }
 
+/* ════════ E · MORADORES · PERCEPÇÃO & SATISFAÇÃO ════════
+   Segunda onda do público morador, com lente de SATISFAÇÃO e PERCEPÇÃO DE IMPACTO
+   (distinta do Questionário B, focado em participação/2025). Framework: Teoria da Troca
+   Social (benefícios percebidos × incômodos) + CSAT + NPS + impacto multidimensional
+   (econômico, cultural, social, imagem/turismo) + legitimidade do investimento público.
+   Meta: 400 entrevistas. */
+function renderMoradorPercep(){
+  document.getElementById('form-body').innerHTML=`
+  ${metaBloco()}
+
+  ${pertexto(1,'Em qual bairro você reside?','Nome do bairro...','none','title','Segmentação geográfica: cruza satisfação e percepção de impacto por região da cidade.')}
+  ${perg(2,'Há quanto tempo você mora em Canaã dos Carajás?',['Menos de 1 ano','1 a 5 anos','5 a 10 anos','Mais de 10 anos'],'radio','',null,null,'Tempo de vínculo com a cidade. Moradores mais antigos comparam edições e avaliam melhor a evolução do evento.')}
+  ${perg(3,'Qual a sua renda familiar?',['Até 1 salário mínimo','De 1 a 2 salários','De 3 a 5 salários','Mais de 5 salários'],'radio','',null,'Não sabe/Não opinou','Perfil socioeconômico. Permite analisar satisfação e percepção de benefício por faixa de renda.')}
+  ${perg(4,'Com que frequência você vai ao festival?',['Vou todos os anos','Vou de vez em quando','Já fui poucas vezes','Nunca fui'],'radio','',null,null,'Engajamento do morador com o evento. Cruza com satisfação: quem frequenta avalia diferente de quem nunca foi.')}
+  ${perg(5,'Como você costuma se informar sobre o festival?',['Instagram','Facebook','WhatsApp','Rádio','Televisão','Sites de notícia','Carro de som','Boca a boca (amigos/família)'],'checkbox',outroCampo(),null,null,'Mapeia os canais de comunicação efetivos com a população — orienta a divulgação da Prefeitura.')}
+
+  ${likert(6,'De forma geral, qual o seu nível de satisfação com o Festival Canaã Cidade Junina?',null,'CSAT — satisfação geral, indicador-síntese de aprovação do morador. Escala Ótimo (5) → Não Satisfatório (1).')}
+  ${aval(7,'Avalie sua satisfação com cada aspecto do festival:',['Programação e quadrilhas','Shows e atrações','Organização geral','Segurança','Limpeza urbana','Estrutura e banheiros','Praça de alimentação','Acessibilidade e inclusão','Divulgação do evento','Trânsito e mobilidade'],'Mapa de calor de satisfação por aspecto. Itens \"Regular\"/\"Não Satisfatório\" viram prioridades de melhoria para 2026.')}
+
+  ${likertConcorda(8,'O festival aquece a economia e gera trabalho e renda na cidade.',null,'Percepção de impacto ECONÔMICO. Concordo totalmente = forte percepção de geração de renda; Discordo totalmente = nenhuma.')}
+  ${likertConcorda(9,'O festival fortalece a cultura e a identidade de Canaã dos Carajás.',null,'Percepção de impacto CULTURAL/identidade — valor simbólico do evento para a comunidade.')}
+  ${likertConcorda(10,'O festival une a comunidade e aumenta o orgulho de morar na cidade.',null,'Percepção de impacto SOCIAL/orgulho local (capital social) — coesão e pertencimento.')}
+  ${likertConcorda(11,'O festival melhora a imagem da cidade e atrai turismo.',null,'Percepção de impacto em IMAGEM/TURISMO — projeção externa de Canaã dos Carajás.')}
+
+  ${perg(12,'Quais incômodos você percebe durante o festival?',['Trânsito e dificuldade de locomoção','Barulho à noite','Lixo e sujeira nas ruas','Sensação de insegurança','Aumento de preços','Aglomeração','Nenhum incômodo'],'checkbox',outroCampo(),null,null,'Mede os CUSTOS percebidos (externalidades negativas) — lado \"custo\" da Teoria da Troca Social, equilibra a leitura de benefícios.')}
+  ${likertConcorda(13,'Pesando os benefícios e os incômodos, o saldo do festival para mim é positivo.',null,'Item-CHAVE de saldo líquido (benefício − custo). Resume a atitude do morador na Teoria da Troca Social.')}
+  ${likertConcorda(14,'Eu e minha família nos sentimos diretamente beneficiados pelo festival.',null,'Benefício PESSOAL percebido — distingue do coletivo (q15). Nem todo morador captura ganho direto.')}
+  ${perg(15,'Na sua opinião, quem mais se beneficia com o festival?',['A cidade como um todo','Comerciantes e empresários','O poder público / políticos','Apenas alguns grupos','Ninguém se beneficia'],'radio','',null,'Não Sabe/Não Opinou','Percepção de DISTRIBUIÇÃO dos benefícios. \"Apenas alguns/poder público\" sinaliza percepção de captura desigual — risco reputacional.')}
+
+  ${perg(16,'Você recomendaria a pessoas de outras cidades virem a Canaã durante o festival?',['Sim, com certeza','Talvez','Não recomendaria'],'radio','',null,'Não Sabe/Não Opinou','NPS de DESTINO (advocacy turístico) — o morador como promotor da cidade. \"Com certeza\" = promotor; \"Não\" = detrator.')}
+  ${perg(17,'Você apoia que a Prefeitura continue investindo recursos públicos no festival?',['Sim, com certeza','Talvez','Não apoio'],'radio','',null,'Não Sabe/Não Opinou','NPS de LEGITIMIDADE da política pública — apoio social ao investimento. Argumento central para a contratante.')}
+  ${perg(18,'Na sua opinião, a Prefeitura deveria:',['Investir mais no festival','Manter o investimento atual','Investir menos','Não investir no festival'],'radio','',null,'Não Sabe/Não Opinou','Direção desejada do investimento público — intensidade/sentido da expectativa orçamentária, complementa o apoio (q17).')}
+
+  ${likertOtimismo(19,'Qual a sua expectativa para o Festival 2026?',null,'Termômetro de otimismo da comunidade. Escala Muito otimista (5) → Muito pessimista (1). Expectativa alta = reputação positiva acumulada.')}
+  ${pertexto(20,'Na sua opinião, o que mais precisa melhorar no festival?','Escreva sua resposta...','none','none','Verbatim de melhoria — sugestões recorrentes viram recomendações priorizadas no relatório.')}
+  ${pertexto(21,'O que você mais gosta no festival?','Escreva sua resposta...','none','none','Verbatim positivo — pontos fortes a preservar e a usar na comunicação (marketing).')}
+  `;
+  aplicarSkipLogic();
+}
+
 
 
 // mapa Likert → código numérico (qualidade, concordância, otimismo — todos 5→1)
@@ -792,7 +838,7 @@ function prog(){ if(etapas && etapas.length) atualizarNav(); }
 
 // monta o objeto entrevista a partir do formulário (status: 'rascunho' ou 'completo')
 function montarEntrevista(status){
-  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR',c:'COMERCIANTE'}[tipoAtivo];
+  const tipoNome={v:'VISITANTE',p:'MORADOR',o:'EXPOSITOR',c:'COMERCIANTE',s:'MORADOR_PERCEP'}[tipoAtivo];
   const get = nome => { const el=document.querySelector(`input[name="${nome}"]:checked`); return el?decodeURIComponent(el.value):null; };
   const getText = nome => { const el=document.querySelector(`input[name="${nome}"]`); return el?el.value.trim():null; };
   return {
