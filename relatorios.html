@@ -600,7 +600,21 @@ function renderRelatorio(tipo,entrevistas){
   // resumo executivo (auto)
   const bullets=[];
   bullets.push(`Amostra de <b>${n}</b> entrevista(s) completa(s)${meta?` — <b style="color:${corMeta}">${pctMeta}%</b> da meta contratada de <b>${meta}</b>`:''}, coletadas entre <b>${periodo}</b> por <b>${pesquisadores||'—'}</b> pesquisador(es).`);
-  if(comDados<cfg.perguntas.length) bullets.push(`Cobertura: <b>${comDados} de ${cfg.perguntas.length}</b> questões com coleta efetiva nesta amostra — as demais foram incluídas no questionário após esta coleta e estão omitidas da análise.`);
+  if(comDados<cfg.perguntas.length){
+    // Classifica as questões sem dado para explicar a omissão com precisão (em vez de um motivo único e genérico):
+    //  • condicional  → só um subgrupo responde (skip-logic); ainda sem amostra suficiente nesta etapa.
+    //  • aberta/opcional (texto) → ninguém escreveu o suficiente.
+    //  • núcleo sem dado → questão inexistente na versão do questionário usada nesta coleta (ex.: Morador jun/2026).
+    const semDados=cfg.perguntas.filter(q=>!temDados(q));
+    const nCond =semDados.filter(q=>q.cond).length;
+    const nAbert=semDados.filter(q=>!q.cond&&q.tipo==='texto').length;
+    const nAusen=semDados.filter(q=>!q.cond&&q.tipo!=='texto').length;
+    const motivos=[];
+    if(nCond)  motivos.push(`<b>${nCond}</b> condicional(is), aplicável(is) apenas a um subgrupo e ainda sem amostra suficiente`);
+    if(nAbert) motivos.push(`<b>${nAbert}</b> aberta(s)/opcional(is) sem respostas suficientes`);
+    if(nAusen) motivos.push(`<b>${nAusen}</b> incluída(s) no questionário após esta coleta`);
+    bullets.push(`Cobertura: <b>${comDados} de ${cfg.perguntas.length}</b> questões com coleta efetiva nesta amostra. As demais estão omitidas da análise — ${motivos.join('; ')}.`);
+  }
   // NPS principal
   const qNps=cfg.perguntas.find(p=>p.nps);
   if(qNps){const nps=calcularNPS(idx[qNps.id],qNps.nps);if(nps.tot)bullets.push(`<b>NPS de ${nps.valor>=0?'+':''}${nps.valor}</b> (${nps.pProm}% promotores · ${nps.pDet}% detratores) — ${nps.valor>=50?'zona de excelência':nps.valor>=0?'zona de aperfeiçoamento':'zona crítica'}.`);}
@@ -683,7 +697,7 @@ async function selecionar(tipo){
     const dados=CACHE[tipo];
     banner.className='modo-banner-inner'+(dados.length?'':' warn');
     banner.innerHTML=dados.length
-      ? `<span>🟢</span><span><b>Dados reais (somente leitura)</b> — ${dados.length} entrevista(s) completa(s) de ${PUBLICOS[tipo].nome.toLowerCase()}. Nada é gravado no banco.</span>`
+      ? `<span>🟢</span><span><b>Dados reais (somente leitura)</b> — ${dados.length} entrevista(s) completa(s) de ${PUBLICOS[tipo].nome.toLowerCase()}. ✓ Banco de dados conectado; este relatório apenas consulta os dados, sem alterá-los.</span>`
       : `<span>📭</span><span><b>Sem coleta ainda</b> — o instrumento de ${PUBLICOS[tipo].nome.toLowerCase()} existe, mas nenhuma entrevista completa foi registrada.</span>`;
     renderRelatorio(tipo,dados);
   }catch(e){
