@@ -140,7 +140,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--gray
 </div>
 
 <div class="wrap">
-  <div class="dev" id="dev-badge">Dados de demonstração · v0.7.3</div>
+  <div class="dev" id="dev-badge">Dados de demonstração · v0.7.4</div>
   <div class="modo-banner"><div class="modo-banner-inner" id="modo-banner">
     <span>🎭</span><span><b>Modo demonstração</b> — números fictícios para apresentação. Alterne para "Dados reais" para ver a coleta ao vivo.</span>
   </div></div>
@@ -512,7 +512,7 @@ async function setModo(modo){
   if(modo==='demo'){
     banner.className='modo-banner-inner';
     banner.innerHTML='<span>🎭</span><span><b>Modo demonstração</b> — números fictícios para apresentação. Alterne para "Dados reais" para ver a coleta ao vivo.</span>';
-    dev.textContent='Dados de demonstração · v0.7.3';
+    dev.textContent='Dados de demonstração · v0.7.4';
     render(dadosDemo());
   } else {
     banner.className='modo-banner-inner real';
